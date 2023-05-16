@@ -13,7 +13,12 @@ import './App.css'
 
 // for routing
 import Home from './pages/index.tsx'
-import About from './pages/about.tsx';
+
+import Title from './pages/title.tsx';
+import Waiting from './pages/waiting.tsx';
+import Game from './pages/game.tsx';
+import Voting from './pages/voting.tsx';
+import Result from './pages/result.tsx';
 
 const transport = createConnectTransport({
   baseUrl: "/api",
@@ -26,8 +31,24 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/about",
-    element: <About />,
+    path: "/title",
+    element: <Title />,
+  },
+  {
+    path: "/waiting",
+    element: <Waiting />,
+  },
+  {
+    path: "/game",
+    element: <Game />,
+  },
+  {
+    path: "/voting",
+    element: <Voting />,
+  },
+  {
+    path: "/result",
+    element: <Result />,
   },
 ]);
 
