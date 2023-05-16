@@ -14,14 +14,19 @@ message JoinRequest {
   string name = 1;
 }
 
+message User {
+  string id = 1;
+  string name = 2;
+}
+
 message UserJoinedEvent {
   string name = 1;
-  repeated string current_users = 2;
+  repeated User current_users = 2;
 }
 
 message UserLeftEvent {
   string name = 1;
-  repeated string current_users = 2;
+  repeated User current_users = 2;
 }
 
 message Event {

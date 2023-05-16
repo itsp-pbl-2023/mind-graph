@@ -2,39 +2,38 @@ package handler
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/bufbuild/connect-go"
 	"github.com/samber/lo"
 
 	"github.com/itsp-pbl-2023/mind-graph/grpc/pb"
+	"github.com/itsp-pbl-2023/mind-graph/utils"
 )
 
 type userConnection struct {
+	id   string
 	name string
 	send chan<- *pb.Event
 }
 
-func (m *mindGraphService) currentUsers() []string {
+func (m *mindGraphService) currentUsers() []*pb.User {
 	m.lock.Lock()
 	defer m.lock.Unlock()
 
-	return lo.Map(m.users, func(user *userConnection, _ int) string { return user.name })
+	return lo.Map(m.users, func(user *userConnection, _ int) *pb.User {
+		return &pb.User{
+			Id:   user.id,
+			Name: user.name,
+		}
+	})
 }
 
-func (m *mindGraphService) addUser(conn *userConnection) error {
+func (m *mindGraphService) addUser(conn *userConnection) {
 	m.lock.Lock()
 	defer m.lock.Unlock()
 
-	conflict := lo.ContainsBy(m.users, func(user *userConnection) bool {
-		return user.name == conn.name
-	})
-	if conflict {
-		return fmt.Errorf("user with name %v already exists", conn.name)
-	}
 	m.users = append(m.users, conn)
-	return nil
 }
 
 func (m *mindGraphService) removeUser(conn *userConnection) {
@@ -60,14 +59,14 @@ func (m *mindGraphService) broadcast(event *pb.Event) {
 func (m *mindGraphService) Join(ctx context.Context, c *connect.Request[pb.JoinRequest], s *connect.ServerStream[pb.Event]) error {
 	ch := make(chan *pb.Event, 10)
 	conn := &userConnection{
+		id:   utils.NewID(),
 		name: c.Msg.Name,
 		send: ch,
 	}
+	log.Printf("new user connection id: %v, name: %v\n", conn.id, conn.name)
+	defer log.Printf("close user connection id: %v, name: %v\n", conn.id, conn.name)
 
-	err := m.addUser(conn)
-	if err != nil {
-		return connect.NewError(connect.CodeInvalidArgument, err)
-	}
+	m.addUser(conn)
 
 	// send joined event
 	m.broadcast(&pb.Event{Event: &pb.Event_Joined{Joined: &pb.UserJoinedEvent{
