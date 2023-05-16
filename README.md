@@ -18,5 +18,6 @@ Career Code Warriorsの開発リポジトリ。
 - Sakashita Yuzuki
 - Bui Le Ngan Ha
 - Eri Nagatomo
+- Ishiyama Yu
 
 (c) 2023 Career Code Warriors All Rights Reserved.
