@@ -1,0 +1,29 @@
+name: CI (Server)
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+
+jobs:
+  mod:
+    name: Install modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: ./server/go.mod
+      - run: cd server && go mod download
+
+  build:
+    name: Build server
+    runs-on: ubuntu-latest
+    needs: [ mod ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: ./server/go.mod
+      - run: cd server && go build .
