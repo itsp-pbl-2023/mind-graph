@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useState } from "react"
+import { hello } from "../lib/api/api-MindGraphService_connectquery"
 import viteLogo from '/vite.svg'
-import './App.css'
-import {useQuery} from "@tanstack/react-query";
-import {hello} from "./lib/api/api-MindGraphService_connectquery.ts";
+import { useQuery } from "@tanstack/react-query";
+import reactLogo from '../assets/react.svg'
 
-function App() {
+const Home = () => {
   const [count, setCount] = useState(0)
   const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
 
@@ -41,4 +40,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
