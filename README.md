@@ -9,4 +9,6 @@ Career Code Warriorsの開発リポジトリ。
 
 - Katsuyama Hidetaka
 
+- Eri Nagatomo
+
 (c) 2023 Career Code Warriors All Rights Reserved.
