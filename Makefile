@@ -22,3 +22,7 @@ init: ## Install commands
 .PHONY: protoc
 protoc: ## Generate proto sources
 	protoc $(PROTOC_OPTS) $(PROTOC_SOURCES)
+
+.PHONY: dev
+dev: ## Start client / server dev server at the same time
+	@./dev.sh
