@@ -2,9 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import {useQuery} from "@tanstack/react-query";
+import {hello} from "./lib/api/api-MindGraphService_connectquery.ts";
 
 function App() {
   const [count, setCount] = useState(0)
+  const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
 
   return (
     <>
@@ -23,6 +26,12 @@ function App() {
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+        <p>
+          Hello Response
+          <div>
+            {helloRes?.message}
+          </div>
         </p>
       </div>
       <p className="read-the-docs">
