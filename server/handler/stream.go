@@ -4,30 +4,16 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"sync"
 
 	"github.com/bufbuild/connect-go"
 	"github.com/samber/lo"
 
 	"github.com/itsp-pbl-2023/mind-graph/grpc/pb"
-	"github.com/itsp-pbl-2023/mind-graph/grpc/pb/pbconnect"
 )
 
 type userConnection struct {
 	name string
 	send chan<- *pb.Event
-}
-
-// type guard (method implementation check)
-var _ pbconnect.MindGraphServiceHandler = &mindGraphService{}
-
-type mindGraphService struct {
-	users []*userConnection
-	lock  sync.Mutex
-}
-
-func NewMindGraphService() pbconnect.MindGraphServiceHandler {
-	return &mindGraphService{}
 }
 
 func (m *mindGraphService) currentUsers() []string {
@@ -69,14 +55,6 @@ func (m *mindGraphService) broadcast(event *pb.Event) {
 		default:
 		}
 	}
-}
-
-func (m *mindGraphService) Hello(_ context.Context, c *connect.Request[pb.HelloRequest]) (*connect.Response[pb.HelloResponse], error) {
-	name := c.Msg.Name
-	res := connect.NewResponse(&pb.HelloResponse{
-		Message: fmt.Sprintf("Hello, %v!", name),
-	})
-	return res, nil
 }
 
 func (m *mindGraphService) Join(ctx context.Context, c *connect.Request[pb.JoinRequest], s *connect.ServerStream[pb.Event]) error {
