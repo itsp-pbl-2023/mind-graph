@@ -7,7 +7,11 @@ import (
 	"github.com/bufbuild/connect-go"
 
 	"github.com/itsp-pbl-2023/mind-graph/grpc/pb"
+	"github.com/itsp-pbl-2023/mind-graph/grpc/pb/pbconnect"
 )
+
+// type guard (method implementation check)
+var _ pbconnect.MindGraphServiceHandler = &MindGraphService{}
 
 type MindGraphService struct{}
 
