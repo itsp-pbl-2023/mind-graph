@@ -10,6 +10,28 @@ message HelloResponse {
   string message = 1;
 }
 
+message JoinRequest {
+  string name = 1;
+}
+
+message UserJoinedEvent {
+  string name = 1;
+  repeated string current_users = 2;
+}
+
+message UserLeftEvent {
+  string name = 1;
+  repeated string current_users = 2;
+}
+
+message Event {
+  oneof event {
+    UserJoinedEvent joined = 1;
+    UserLeftEvent left = 2;
+  }
+}
+
 service MindGraphService {
   rpc Hello(HelloRequest) returns (HelloResponse);
+  rpc Join(JoinRequest) returns (stream Event);
 }

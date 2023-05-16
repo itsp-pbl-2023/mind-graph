@@ -14,6 +14,7 @@ import (
 	"golang.org/x/net/http2/h2c"
 
 	"github.com/itsp-pbl-2023/mind-graph/grpc/pb/pbconnect"
+	"github.com/itsp-pbl-2023/mind-graph/handler"
 )
 
 func waitQuit() {
@@ -27,10 +28,10 @@ func waitQuit() {
 }
 
 func main() {
-	handler := &MindGraphService{}
+	service := handler.NewMindGraphService()
 
 	apiMux := http.NewServeMux()
-	apiMux.Handle(pbconnect.NewMindGraphServiceHandler(handler))
+	apiMux.Handle(pbconnect.NewMindGraphServiceHandler(service))
 
 	mux := http.NewServeMux()
 	mux.Handle("/api/", http.StripPrefix("/api", apiMux))
