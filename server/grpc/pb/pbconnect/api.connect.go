@@ -35,11 +35,14 @@ const (
 const (
 	// MindGraphServiceHelloProcedure is the fully-qualified name of the MindGraphService's Hello RPC.
 	MindGraphServiceHelloProcedure = "/mindgraph.MindGraphService/Hello"
+	// MindGraphServiceJoinProcedure is the fully-qualified name of the MindGraphService's Join RPC.
+	MindGraphServiceJoinProcedure = "/mindgraph.MindGraphService/Join"
 )
 
 // MindGraphServiceClient is a client for the mindgraph.MindGraphService service.
 type MindGraphServiceClient interface {
 	Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error)
+	Join(context.Context, *connect_go.Request[pb.JoinRequest]) (*connect_go.ServerStreamForClient[pb.Event], error)
 }
 
 // NewMindGraphServiceClient constructs a client for the mindgraph.MindGraphService service. By
@@ -57,12 +60,18 @@ func NewMindGraphServiceClient(httpClient connect_go.HTTPClient, baseURL string,
 			baseURL+MindGraphServiceHelloProcedure,
 			opts...,
 		),
+		join: connect_go.NewClient[pb.JoinRequest, pb.Event](
+			httpClient,
+			baseURL+MindGraphServiceJoinProcedure,
+			opts...,
+		),
 	}
 }
 
 // mindGraphServiceClient implements MindGraphServiceClient.
 type mindGraphServiceClient struct {
 	hello *connect_go.Client[pb.HelloRequest, pb.HelloResponse]
+	join  *connect_go.Client[pb.JoinRequest, pb.Event]
 }
 
 // Hello calls mindgraph.MindGraphService.Hello.
@@ -70,9 +79,15 @@ func (c *mindGraphServiceClient) Hello(ctx context.Context, req *connect_go.Requ
 	return c.hello.CallUnary(ctx, req)
 }
 
+// Join calls mindgraph.MindGraphService.Join.
+func (c *mindGraphServiceClient) Join(ctx context.Context, req *connect_go.Request[pb.JoinRequest]) (*connect_go.ServerStreamForClient[pb.Event], error) {
+	return c.join.CallServerStream(ctx, req)
+}
+
 // MindGraphServiceHandler is an implementation of the mindgraph.MindGraphService service.
 type MindGraphServiceHandler interface {
 	Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error)
+	Join(context.Context, *connect_go.Request[pb.JoinRequest], *connect_go.ServerStream[pb.Event]) error
 }
 
 // NewMindGraphServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -87,6 +102,11 @@ func NewMindGraphServiceHandler(svc MindGraphServiceHandler, opts ...connect_go.
 		svc.Hello,
 		opts...,
 	))
+	mux.Handle(MindGraphServiceJoinProcedure, connect_go.NewServerStreamHandler(
+		MindGraphServiceJoinProcedure,
+		svc.Join,
+		opts...,
+	))
 	return "/mindgraph.MindGraphService/", mux
 }
 
@@ -95,4 +115,8 @@ type UnimplementedMindGraphServiceHandler struct{}
 
 func (UnimplementedMindGraphServiceHandler) Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.Hello is not implemented"))
+}
+
+func (UnimplementedMindGraphServiceHandler) Join(context.Context, *connect_go.Request[pb.JoinRequest], *connect_go.ServerStream[pb.Event]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.Join is not implemented"))
 }
