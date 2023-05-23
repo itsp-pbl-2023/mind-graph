@@ -23,7 +23,7 @@ const CountCard = styled.div`
 
 const Home = () => {
   const [count, setCount] = useState(0)
-  const { data: helloRes } = useQuery({ ...hello.useQuery({ name: 'Fogrex' }), refetchOnWindowFocus: false })
+  const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
   const [name, setName] = useState<string>()
   useStream(name, useCallback((event) => {
     console.log(`new event ${event.event.case}`)
