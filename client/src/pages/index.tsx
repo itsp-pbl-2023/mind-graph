@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react"
-import { hello } from "../lib/api/api-MindGraphService_connectquery"
+import { useCallback, useEffect, useState } from 'react'
+import { hello } from '../lib/api/api-MindGraphService_connectquery'
 import viteLogo from '/vite.svg'
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query'
 import reactLogo from '../assets/react.svg'
 import { useStream } from "../lib/hooks/stream.ts";
 import styled from "styled-components";
@@ -25,10 +25,10 @@ const Home = () => {
   const [count, setCount] = useState(0)
   const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
   const [name, setName] = useState<string>()
-  useStream(name, (event) => {
+  useStream(name, useCallback((event) => {
     console.log(`new event ${event.event.case}`)
     console.log(event)
-  })
+  }, []))
   // ユーザーの入力を模倣
   useEffect(() => {
     setTimeout(() => setName('Fogrex'), 1000)
@@ -38,11 +38,11 @@ const Home = () => {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+        <a href='https://vitejs.dev' target='_blank'>
+          <img src={viteLogo} className='logo' alt='Vite logo' />
         </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+        <a href='https://react.dev' target='_blank'>
+          <img src={reactLogo} className='logo react' alt='React logo' />
         </a>
       </div>
       <GamingTitle>Vite + React</GamingTitle>
@@ -60,7 +60,7 @@ const Home = () => {
           </div>
         </p>
       </CountCard>
-      <p className="read-the-docs">
+      <p className='read-the-docs'>
         Click on the Vite and React logos to learn more
       </p>
     </>
