@@ -1,8 +1,7 @@
-import {createConnectTransport, createPromiseClient} from "@bufbuild/connect-web";
-import {MindGraphService} from "./api/api_connect.ts";
+import { createConnectTransport, createPromiseClient } from '@bufbuild/connect-web'
+import { MindGraphService } from './api/api_connect.ts'
 
-export const transport = createConnectTransport({
-  baseUrl: "/api",
-})
+const baseUrl = import.meta.env.DEV ? 'http://localhost:8520/api' : '/api'
+export const transport = createConnectTransport({ baseUrl })
 
 export const client = createPromiseClient(MindGraphService, transport)
