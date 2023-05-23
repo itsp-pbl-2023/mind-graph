@@ -6,6 +6,21 @@ import reactLogo from '../assets/react.svg'
 import { useStream } from "../lib/hooks/stream.ts";
 import styled from "styled-components";
 
+const GamingTitle = styled.h1`
+  @keyframes gaming-title-animation {
+    0% {color: red;}
+    20% {color: yellow;}
+    40% {color: blue;}
+    60% {color: green;}
+    80% {color: lime;}
+    100% {color: purple;}
+  }
+  animation: gaming-title-animation 2s linear infinite;
+`
+const CountCard = styled.div`
+  padding: 2em;
+`
+
 const Home = () => {
   const [count, setCount] = useState(0)
   const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
@@ -19,20 +34,6 @@ const Home = () => {
     setTimeout(() => setName('Fogrex'), 1000)
   }, [])
 
-  const GamingTitle = styled.h1`
-    @keyframes gaming-title-animation {
-      0% {color: red;}
-      20% {color: yellow;}
-      40% {color: blue;}
-      60% {color: green;}
-      80% {color: lime;}
-      100% {color: purple;}
-    }
-    animation: gaming-title-animation 2s linear infinite;
-  `
-  const CountCard = styled.div`
-    padding: 2em;
-  `
 
   return (
     <>
