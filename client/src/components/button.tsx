@@ -1,13 +1,12 @@
-import { useState } from "react"
+const Button = ({ text, onClick }: { text: string, onClick: Function }) => {
 
-const Button = ({ text }: { text: string }) => {
-    const [count, setCount] = useState(0)
     const onClickHander = () => {
-        setCount(count + 1)
+        onClick();
     }
+
     return (
       <div onClick={onClickHander} style={{backgroundColor : "gray"}}>
-        <span> { text } {count}</span>
+        <span> { text } </span>
       </div>
     )
   }
