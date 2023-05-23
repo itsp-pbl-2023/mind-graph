@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 
 const Timer = ({expire} : {expire: Date}) => {
     const [remain, setRemain] = useState(0)
