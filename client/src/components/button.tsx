@@ -1,4 +1,6 @@
-const Button = ({ text, onClick }: { text: string, onClick: Function }) => {
+declare type onClickHandler = () => void
+
+const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) => {
 
     const onClickHander = () => {
         onClick();
