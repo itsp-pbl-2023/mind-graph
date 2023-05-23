@@ -247,6 +247,92 @@ export class UserLeftEvent extends Message<UserLeftEvent> {
 }
 
 /**
+ * @generated from message mindgraph.ThemeRequest
+ */
+export class ThemeRequest extends Message<ThemeRequest> {
+  /**
+   * @generated from field: string theme = 1;
+   */
+  theme = "";
+
+  /**
+   * @generated from field: string sender_id = 2;
+   */
+  senderId = "";
+
+  constructor(data?: PartialMessage<ThemeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.ThemeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "theme", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "sender_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ThemeRequest {
+    return new ThemeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ThemeRequest {
+    return new ThemeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ThemeRequest {
+    return new ThemeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ThemeRequest | PlainMessage<ThemeRequest> | undefined, b: ThemeRequest | PlainMessage<ThemeRequest> | undefined): boolean {
+    return proto3.util.equals(ThemeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message mindgraph.ThemeConfirmedEvent
+ */
+export class ThemeConfirmedEvent extends Message<ThemeConfirmedEvent> {
+  /**
+   * @generated from field: string theme = 1;
+   */
+  theme = "";
+
+  /**
+   * @generated from field: string sender_id = 2;
+   */
+  senderId = "";
+
+  constructor(data?: PartialMessage<ThemeConfirmedEvent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.ThemeConfirmedEvent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "theme", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "sender_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ThemeConfirmedEvent {
+    return new ThemeConfirmedEvent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ThemeConfirmedEvent {
+    return new ThemeConfirmedEvent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ThemeConfirmedEvent {
+    return new ThemeConfirmedEvent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ThemeConfirmedEvent | PlainMessage<ThemeConfirmedEvent> | undefined, b: ThemeConfirmedEvent | PlainMessage<ThemeConfirmedEvent> | undefined): boolean {
+    return proto3.util.equals(ThemeConfirmedEvent, a, b);
+  }
+}
+
+/**
  * @generated from message mindgraph.Event
  */
 export class Event extends Message<Event> {
@@ -265,6 +351,12 @@ export class Event extends Message<Event> {
      */
     value: UserLeftEvent;
     case: "left";
+  } | {
+    /**
+     * @generated from field: mindgraph.ThemeConfirmedEvent theme_confirmed = 3;
+     */
+    value: ThemeConfirmedEvent;
+    case: "themeConfirmed";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<Event>) {
@@ -277,6 +369,7 @@ export class Event extends Message<Event> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "joined", kind: "message", T: UserJoinedEvent, oneof: "event" },
     { no: 2, name: "left", kind: "message", T: UserLeftEvent, oneof: "event" },
+    { no: 3, name: "theme_confirmed", kind: "message", T: ThemeConfirmedEvent, oneof: "event" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Event {

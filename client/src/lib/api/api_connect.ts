@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Event, HelloRequest, HelloResponse, JoinRequest } from "./api_pb.js";
+import { Event, HelloRequest, HelloResponse, JoinRequest, ThemeRequest } from "./api_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -27,6 +27,15 @@ export const MindGraphService = {
     join: {
       name: "Join",
       I: JoinRequest,
+      O: Event,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc mindgraph.MindGraphService.theme
+     */
+    theme: {
+      name: "theme",
+      I: ThemeRequest,
       O: Event,
       kind: MethodKind.ServerStreaming,
     },
