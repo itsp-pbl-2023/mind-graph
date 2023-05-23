@@ -1,33 +1,15 @@
-import { useEffect } from "react";
-import { client} from "../client.ts";
-import { Event } from "../api/api_pb.ts";
-import { Code, ConnectError } from "@bufbuild/connect";
+import { useContext, useEffect } from 'react'
+import { eventHandler, StreamContext } from './stream.tsx'
 
-const connect = async (name: string, handler: eventHandler, abort: AbortController) => {
-  const events = await client.join({ name }, { signal: abort.signal })
-  for await (const event of events) {
-    handler(event)
-  }
-}
+export const useOnEvent = (handler: eventHandler) => {
+  const stream = useContext(StreamContext)
 
-export type eventHandler = (event: Event) => void
-export const useStream = (name: string | undefined, onEvent: eventHandler): void => {
   useEffect(() => {
-    if (!name) {
-      return
-    }
+    if (!stream) return
 
-    console.log('joining')
-    const abort = new AbortController()
-    connect(name, onEvent, abort).catch((err) => {
-      const ignore = err instanceof ConnectError && err.code === Code.Canceled
-      if (!ignore) {
-        console.trace(err)
-      }
-    })
+    stream.addHandler(handler)
     return () => {
-      console.log('leaving')
-      abort.abort()
+      stream.removeHandler(handler)
     }
-  }, [name, onEvent])
+  }, [stream, handler])
 }
