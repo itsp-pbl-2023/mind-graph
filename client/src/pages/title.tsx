@@ -1,7 +1,15 @@
+import { useNavigate } from "react-router-dom"
 import logo from "../assets/mindgraphLogo.jpg"
 
 const Title = () => {
   //TODO コンポーネントを置き換える
+
+    const navigate = useNavigate();
+
+    const navigateToWaiting = () => {
+      navigate('/waiting');
+    }
+
     return (
       <div>
         <h1>MIND GRAPH</h1>
@@ -14,7 +22,7 @@ const Title = () => {
             <label htmlFor="name">Name</label>
             <input type="text" id="name" />
           </div>
-          <button type="submit" className="submit-btn">
+          <button type="submit" className="submit-btn" onClick={navigateToWaiting}>
             Submit
           </button>
         </form>
