@@ -1,16 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { FC } from 'react';
 
+export type user{
+  name: string;
+}
 
-const UserList = () => {
+type userProps = {
+  users: user[];
+}
 
-  const user_list = [{name:'Aさん'}, {name:'Bさん'}, {name:'Cさん'}];
+const UserList: FC<userProps> = (userProps) => {
+  const {users} = userProps;
   return (
     <div>
         <ul>
-          <h3>参加者 {user_list.length}人</h3>
-          {user_list.map( user =>
-            <li>{user.name}</li>
+          <h3>参加者 {users.length}人</h3>
+          {users.map( use =>
+            <li>{use.name}</li>
           )}
         </ul>
       </div>
