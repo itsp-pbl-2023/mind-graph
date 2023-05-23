@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const Timer = ({expire} : {expire: Date}) => {
-    const [remain, setRemain] = useState(0)
+    const [remain, setRemain] = useState(100)
 
     const calcRemain = () : number => {
         const now = new Date()
@@ -19,6 +19,12 @@ const Timer = ({expire} : {expire: Date}) => {
             clearInterval(id)
         }
     },[])
+
+    useEffect(() => {
+        if(remain == 50){
+            console.log("Finish!")
+        }
+    },[remain])
 
     return (
         <div>
