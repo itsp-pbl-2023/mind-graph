@@ -13,11 +13,7 @@ const Title = () => {
     const navigate = useNavigate();
 
     const navigateToWaiting = () => {
-      navigate('/waiting', {
-        state: {
-          value: userName
-        }
-      });
+      navigate('/waiting');
     }
 
     return (
