@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { client} from "../client.ts";
-import { Event } from "../api/api_pb.ts";
-import { Code, ConnectError } from "@bufbuild/connect";
+import { useEffect } from 'react'
+import { client } from '../client.ts'
+import { Event } from '../api/api_pb.ts'
+import { Code, ConnectError } from '@bufbuild/connect'
 
 const connect = async (name: string, handler: eventHandler, abort: AbortController) => {
-  const events = await client.join({ name }, { signal: abort.signal })
+  const events = client.join({ name }, { signal: abort.signal })
   for await (const event of events) {
     handler(event)
   }

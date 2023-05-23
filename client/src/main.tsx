@@ -20,7 +20,13 @@ import Game from './pages/game.tsx';
 import Voting from './pages/voting.tsx';
 import Result from './pages/result.tsx';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
+})
 
 const router = createBrowserRouter([
   {
