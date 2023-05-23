@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { client } from '../client.ts'
 import { Event } from '../api/api_pb.ts'
 import { Code, ConnectError } from '@bufbuild/connect'
+import { NameContext } from './name.tsx'
 
 export type eventHandler = (event: Event) => void
 
@@ -73,10 +74,10 @@ type StreamContextType = Stream | undefined
 const StreamContext = createContext<StreamContextType>(undefined)
 
 export interface StreamProviderProps {
-  name: string
   children: ReactNode
 }
-export const StreamProvider = ({ name, children }: StreamProviderProps) => {
+export const StreamProvider = ({ children }: StreamProviderProps) => {
+  const { name } = useContext(NameContext)
   const stream = useStream(name)
   return (
     <StreamContext.Provider value={stream}>{children}</StreamContext.Provider>
