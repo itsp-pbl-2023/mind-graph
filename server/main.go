@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/rs/cors"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
@@ -33,13 +34,15 @@ func main() {
 	apiMux := http.NewServeMux()
 	apiMux.Handle(pbconnect.NewMindGraphServiceHandler(service))
 
-	mux := http.NewServeMux()
-	mux.Handle("/api/", http.StripPrefix("/api", apiMux))
+	baseMux := http.NewServeMux()
+	baseMux.Handle("/api/", http.StripPrefix("/api", apiMux))
 
 	addr := ":8520"
 	server := &http.Server{
-		Addr:    addr,
-		Handler: h2c.NewHandler(mux, &http2.Server{}),
+		Addr: addr,
+		Handler: cors.AllowAll().Handler(
+			h2c.NewHandler(baseMux, &http2.Server{}),
+		),
 	}
 	go func() {
 		err := server.ListenAndServe()
