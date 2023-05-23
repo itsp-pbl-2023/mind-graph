@@ -4,6 +4,22 @@ import viteLogo from '/vite.svg'
 import { useQuery } from "@tanstack/react-query";
 import reactLogo from '../assets/react.svg'
 import { useStream } from "../lib/hooks/stream.ts";
+import styled from "styled-components";
+
+const GamingTitle = styled.h1`
+  @keyframes gaming-title-animation {
+    0% {color: red;}
+    20% {color: yellow;}
+    40% {color: blue;}
+    60% {color: green;}
+    80% {color: lime;}
+    100% {color: purple;}
+  }
+  animation: gaming-title-animation 2s linear infinite;
+`
+const CountCard = styled.div`
+  padding: 2em;
+`
 
 const Home = () => {
   const [count, setCount] = useState(0)
@@ -18,6 +34,7 @@ const Home = () => {
     setTimeout(() => setName('Fogrex'), 1000)
   }, [])
 
+
   return (
     <>
       <div>
@@ -28,8 +45,8 @@ const Home = () => {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
+      <GamingTitle>Vite + React</GamingTitle>
+      <CountCard>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
@@ -42,7 +59,7 @@ const Home = () => {
             {helloRes?.message}
           </div>
         </p>
-      </div>
+      </CountCard>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
