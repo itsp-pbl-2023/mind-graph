@@ -1,10 +1,10 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
+import { createContext, ReactNode, useMemo, useState } from 'react'
 
 type NameContextType = {
   name?: string
   setName: (name: string) => void
 }
-const NameContext = createContext<NameContextType>({
+export const NameContext = createContext<NameContextType>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setName: () => {} // no op
 })
@@ -20,14 +20,4 @@ export const NameProvider = ({ children }: NameProviderProps) => {
   return (
     <NameContext.Provider value={value}>{children}</NameContext.Provider>
   )
-}
-
-export const useName = () => {
-  const { name } = useContext(NameContext)
-  return name
-}
-
-export const useSetName = () => {
-  const { setName } = useContext(NameContext)
-  return setName
 }

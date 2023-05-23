@@ -4,8 +4,8 @@ import viteLogo from '/vite.svg'
 import { useQuery } from '@tanstack/react-query'
 import reactLogo from '../assets/react.svg'
 import styled from "styled-components";
-import { useSetName } from '../lib/hooks/name.tsx'
-import { useOnEvent } from '../lib/hooks/stream.tsx'
+import { useSetName } from '../lib/hooks/name.ts'
+import { useOnEvent } from '../lib/hooks/stream.ts'
 
 const GamingTitle = styled.h1`
   @keyframes gaming-title-animation {

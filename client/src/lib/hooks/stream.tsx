@@ -1,8 +1,8 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 import { client } from '../client.ts'
 import { Event } from '../api/api_pb.ts'
 import { Code, ConnectError } from '@bufbuild/connect'
-import { useName } from './name.tsx'
+import { useName } from './name.ts'
 
 export type eventHandler = (event: Event) => void
 
@@ -36,19 +36,6 @@ export class Stream {
   }
 }
 
-export const useOnEvent = (handler: eventHandler) => {
-  const stream = useContext(StreamContext)
-
-  useEffect(() => {
-    if (!stream) return
-
-    stream.addHandler(handler)
-    return () => {
-      stream.removeHandler(handler)
-    }
-  }, [stream, handler])
-}
-
 const useStream = (name: string | undefined): Stream | undefined => {
   const [stream, setStream] = useState<Stream>()
 
@@ -71,7 +58,7 @@ const useStream = (name: string | undefined): Stream | undefined => {
 }
 
 type StreamContextType = Stream | undefined
-const StreamContext = createContext<StreamContextType>(undefined)
+export const StreamContext = createContext<StreamContextType>(undefined)
 
 export interface StreamProviderProps {
   children: ReactNode
