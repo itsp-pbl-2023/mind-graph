@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import logo from "../assets/mindgraphLogo.jpg"
-import {useState} from "react"
+import {ChangeEvent, useState} from "react"
 
 const Title = () => {
   //TODO コンポーネントを置き換える
