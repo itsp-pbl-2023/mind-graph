@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { HelloRequest, HelloResponse } from "./api_pb.js";
+import { Event, HelloRequest, HelloResponse, JoinRequest } from "./api_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -20,6 +20,15 @@ export const MindGraphService = {
       I: HelloRequest,
       O: HelloResponse,
       kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc mindgraph.MindGraphService.Join
+     */
+    join: {
+      name: "Join",
+      I: JoinRequest,
+      O: Event,
+      kind: MethodKind.ServerStreaming,
     },
   }
 } as const;

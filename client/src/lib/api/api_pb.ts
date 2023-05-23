@@ -80,3 +80,219 @@ export class HelloResponse extends Message<HelloResponse> {
   }
 }
 
+/**
+ * @generated from message mindgraph.JoinRequest
+ */
+export class JoinRequest extends Message<JoinRequest> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  constructor(data?: PartialMessage<JoinRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.JoinRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): JoinRequest {
+    return new JoinRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): JoinRequest {
+    return new JoinRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): JoinRequest {
+    return new JoinRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: JoinRequest | PlainMessage<JoinRequest> | undefined, b: JoinRequest | PlainMessage<JoinRequest> | undefined): boolean {
+    return proto3.util.equals(JoinRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message mindgraph.User
+ */
+export class User extends Message<User> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  constructor(data?: PartialMessage<User>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.User";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): User {
+    return new User().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): User {
+    return new User().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): User {
+    return new User().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: User | PlainMessage<User> | undefined, b: User | PlainMessage<User> | undefined): boolean {
+    return proto3.util.equals(User, a, b);
+  }
+}
+
+/**
+ * @generated from message mindgraph.UserJoinedEvent
+ */
+export class UserJoinedEvent extends Message<UserJoinedEvent> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * @generated from field: repeated mindgraph.User current_users = 2;
+   */
+  currentUsers: User[] = [];
+
+  constructor(data?: PartialMessage<UserJoinedEvent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.UserJoinedEvent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "current_users", kind: "message", T: User, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UserJoinedEvent {
+    return new UserJoinedEvent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UserJoinedEvent {
+    return new UserJoinedEvent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UserJoinedEvent {
+    return new UserJoinedEvent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UserJoinedEvent | PlainMessage<UserJoinedEvent> | undefined, b: UserJoinedEvent | PlainMessage<UserJoinedEvent> | undefined): boolean {
+    return proto3.util.equals(UserJoinedEvent, a, b);
+  }
+}
+
+/**
+ * @generated from message mindgraph.UserLeftEvent
+ */
+export class UserLeftEvent extends Message<UserLeftEvent> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * @generated from field: repeated mindgraph.User current_users = 2;
+   */
+  currentUsers: User[] = [];
+
+  constructor(data?: PartialMessage<UserLeftEvent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.UserLeftEvent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "current_users", kind: "message", T: User, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UserLeftEvent {
+    return new UserLeftEvent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UserLeftEvent {
+    return new UserLeftEvent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UserLeftEvent {
+    return new UserLeftEvent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UserLeftEvent | PlainMessage<UserLeftEvent> | undefined, b: UserLeftEvent | PlainMessage<UserLeftEvent> | undefined): boolean {
+    return proto3.util.equals(UserLeftEvent, a, b);
+  }
+}
+
+/**
+ * @generated from message mindgraph.Event
+ */
+export class Event extends Message<Event> {
+  /**
+   * @generated from oneof mindgraph.Event.event
+   */
+  event: {
+    /**
+     * @generated from field: mindgraph.UserJoinedEvent joined = 1;
+     */
+    value: UserJoinedEvent;
+    case: "joined";
+  } | {
+    /**
+     * @generated from field: mindgraph.UserLeftEvent left = 2;
+     */
+    value: UserLeftEvent;
+    case: "left";
+  } | { case: undefined; value?: undefined } = { case: undefined };
+
+  constructor(data?: PartialMessage<Event>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.Event";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "joined", kind: "message", T: UserJoinedEvent, oneof: "event" },
+    { no: 2, name: "left", kind: "message", T: UserLeftEvent, oneof: "event" },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Event {
+    return new Event().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Event {
+    return new Event().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Event {
+    return new Event().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Event | PlainMessage<Event> | undefined, b: Event | PlainMessage<Event> | undefined): boolean {
+    return proto3.util.equals(Event, a, b);
+  }
+}
+
