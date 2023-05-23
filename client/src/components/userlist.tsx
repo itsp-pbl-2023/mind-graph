@@ -1,8 +1,5 @@
 import React, { FC } from 'react';
-
-export type user{
-  name: string;
-}
+import {user} from './user';
 
 type userProps = {
   users: user[];
