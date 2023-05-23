@@ -1,15 +1,16 @@
-
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 
 
 const UserList = () => {
 
-  const user_list: string[] = ['Aさん', 'Bさん', 'Cさん'];
+  const user_list = [{name:'Aさん'}, {name:'Bさん'}, {name:'Cさん'}];
   return (
     <div>
-      <h1>参加者 {user_list.length}人</h1>
         <ul>
+          <h3>参加者 {user_list.length}人</h3>
           {user_list.map( user =>
-            <li>{user}</li>
+            <li>{user.name}</li>
           )}
         </ul>
       </div>
