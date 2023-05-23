@@ -1,6 +1,5 @@
 
 const Waiting = () => {
-    //const location = useLocation();
 
     return (
       <div>
