@@ -11,7 +11,7 @@ var _ pbconnect.MindGraphServiceHandler = &mindGraphService{}
 
 type mindGraphService struct {
 	users []*userConnection
-	theme *themeConnection
+	theme string
 	lock  sync.Mutex
 }
 

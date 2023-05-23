@@ -39,6 +39,10 @@ message ThemeConfirmedEvent {
   string sender_id = 2;
 }
 
+message Empty {
+
+}
+
 message Event {
   oneof event {
     UserJoinedEvent joined = 1;
@@ -50,5 +54,5 @@ message Event {
 service MindGraphService {
   rpc Hello(HelloRequest) returns (HelloResponse);
   rpc Join(JoinRequest) returns (stream Event);
-  rpc theme(ThemeRequest) returns (stream Event);
+  rpc SetTheme(ThemeRequest) returns (Empty);
 }

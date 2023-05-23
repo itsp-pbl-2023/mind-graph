@@ -37,15 +37,16 @@ const (
 	MindGraphServiceHelloProcedure = "/mindgraph.MindGraphService/Hello"
 	// MindGraphServiceJoinProcedure is the fully-qualified name of the MindGraphService's Join RPC.
 	MindGraphServiceJoinProcedure = "/mindgraph.MindGraphService/Join"
-	// MindGraphServiceThemeProcedure is the fully-qualified name of the MindGraphService's theme RPC.
-	MindGraphServiceThemeProcedure = "/mindgraph.MindGraphService/theme"
+	// MindGraphServiceSetThemeProcedure is the fully-qualified name of the MindGraphService's SetTheme
+	// RPC.
+	MindGraphServiceSetThemeProcedure = "/mindgraph.MindGraphService/SetTheme"
 )
 
 // MindGraphServiceClient is a client for the mindgraph.MindGraphService service.
 type MindGraphServiceClient interface {
 	Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error)
 	Join(context.Context, *connect_go.Request[pb.JoinRequest]) (*connect_go.ServerStreamForClient[pb.Event], error)
-	Theme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.ServerStreamForClient[pb.Event], error)
+	SetTheme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error)
 }
 
 // NewMindGraphServiceClient constructs a client for the mindgraph.MindGraphService service. By
@@ -68,9 +69,9 @@ func NewMindGraphServiceClient(httpClient connect_go.HTTPClient, baseURL string,
 			baseURL+MindGraphServiceJoinProcedure,
 			opts...,
 		),
-		theme: connect_go.NewClient[pb.ThemeRequest, pb.Event](
+		setTheme: connect_go.NewClient[pb.ThemeRequest, pb.Empty](
 			httpClient,
-			baseURL+MindGraphServiceThemeProcedure,
+			baseURL+MindGraphServiceSetThemeProcedure,
 			opts...,
 		),
 	}
@@ -78,9 +79,9 @@ func NewMindGraphServiceClient(httpClient connect_go.HTTPClient, baseURL string,
 
 // mindGraphServiceClient implements MindGraphServiceClient.
 type mindGraphServiceClient struct {
-	hello *connect_go.Client[pb.HelloRequest, pb.HelloResponse]
-	join  *connect_go.Client[pb.JoinRequest, pb.Event]
-	theme *connect_go.Client[pb.ThemeRequest, pb.Event]
+	hello    *connect_go.Client[pb.HelloRequest, pb.HelloResponse]
+	join     *connect_go.Client[pb.JoinRequest, pb.Event]
+	setTheme *connect_go.Client[pb.ThemeRequest, pb.Empty]
 }
 
 // Hello calls mindgraph.MindGraphService.Hello.
@@ -93,16 +94,16 @@ func (c *mindGraphServiceClient) Join(ctx context.Context, req *connect_go.Reque
 	return c.join.CallServerStream(ctx, req)
 }
 
-// Theme calls mindgraph.MindGraphService.theme.
-func (c *mindGraphServiceClient) Theme(ctx context.Context, req *connect_go.Request[pb.ThemeRequest]) (*connect_go.ServerStreamForClient[pb.Event], error) {
-	return c.theme.CallServerStream(ctx, req)
+// SetTheme calls mindgraph.MindGraphService.SetTheme.
+func (c *mindGraphServiceClient) SetTheme(ctx context.Context, req *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error) {
+	return c.setTheme.CallUnary(ctx, req)
 }
 
 // MindGraphServiceHandler is an implementation of the mindgraph.MindGraphService service.
 type MindGraphServiceHandler interface {
 	Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error)
 	Join(context.Context, *connect_go.Request[pb.JoinRequest], *connect_go.ServerStream[pb.Event]) error
-	Theme(context.Context, *connect_go.Request[pb.ThemeRequest], *connect_go.ServerStream[pb.Event]) error
+	SetTheme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error)
 }
 
 // NewMindGraphServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -122,9 +123,9 @@ func NewMindGraphServiceHandler(svc MindGraphServiceHandler, opts ...connect_go.
 		svc.Join,
 		opts...,
 	))
-	mux.Handle(MindGraphServiceThemeProcedure, connect_go.NewServerStreamHandler(
-		MindGraphServiceThemeProcedure,
-		svc.Theme,
+	mux.Handle(MindGraphServiceSetThemeProcedure, connect_go.NewUnaryHandler(
+		MindGraphServiceSetThemeProcedure,
+		svc.SetTheme,
 		opts...,
 	))
 	return "/mindgraph.MindGraphService/", mux
@@ -141,6 +142,6 @@ func (UnimplementedMindGraphServiceHandler) Join(context.Context, *connect_go.Re
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.Join is not implemented"))
 }
 
-func (UnimplementedMindGraphServiceHandler) Theme(context.Context, *connect_go.Request[pb.ThemeRequest], *connect_go.ServerStream[pb.Event]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.theme is not implemented"))
+func (UnimplementedMindGraphServiceHandler) SetTheme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.SetTheme is not implemented"))
 }
