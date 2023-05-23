@@ -19,6 +19,8 @@ import Waiting from './pages/waiting.tsx';
 import Game from './pages/game.tsx';
 import Voting from './pages/voting.tsx';
 import Result from './pages/result.tsx';
+import { NameProvider } from './lib/hooks/name.tsx'
+import { StreamProvider } from './lib/hooks/stream.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,7 +61,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <TransportProvider transport={transport}>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <NameProvider>
+          <StreamProvider>
+            <RouterProvider router={router} />
+          </StreamProvider>
+        </NameProvider>
       </QueryClientProvider>
     </TransportProvider>
   </React.StrictMode>,
