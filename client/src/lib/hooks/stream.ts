@@ -12,7 +12,6 @@ const connect = async (name: string, handler: eventHandler, abort: AbortControll
 
 export type eventHandler = (event: Event) => void
 export const useStream = (name: string | undefined, onEvent: eventHandler): void => {
-  // TODO: 正常にleaveできていない viteのproxyのせい？
   useEffect(() => {
     if (!name) {
       return

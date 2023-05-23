@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/bufbuild/connect-go v1.7.0
+	github.com/rs/cors v1.9.0
 	github.com/samber/lo v1.38.1
 	golang.org/x/net v0.10.0
 	google.golang.org/protobuf v1.30.0
