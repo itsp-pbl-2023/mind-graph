@@ -14,9 +14,11 @@ const Home = () => {
     console.log(event)
   })
   // ユーザーの入力を模倣
+  /*
   useEffect(() => {
     setTimeout(() => setName('Fogrex'), 1000)
   }, [])
+  */
 
   return (
     <>
