@@ -1,6 +1,3 @@
-import { useName } from "../lib/hooks/name"
-
-
 
 
 const Waiting = () => {

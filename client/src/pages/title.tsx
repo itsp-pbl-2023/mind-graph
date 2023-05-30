@@ -10,7 +10,6 @@ const Title = () => {
 
   const setName = useSetName();
 
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   }
