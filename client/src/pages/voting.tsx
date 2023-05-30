@@ -12,6 +12,9 @@ const Voting = () => {
       user: 'B'
     }
   ];
+  /*
+  const users:Users = location.state as {User[]}
+  */
 
     return (
       <div>

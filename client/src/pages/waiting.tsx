@@ -8,14 +8,20 @@ const Waiting = () => {
 
 
   useOnEvent(useCallback((event) => {
-    console.log(`new event ${event.event.case}`)
-    console.log(event)
     if (event.event.case == 'joined'){
       event.event.value.currentUsers.map(item =>
         users.push({user:item.name})
       )
       
     }
+    /*
+    if (event.event.case == 'left'){
+      event.event.value.currentUsers.map(item =>
+        users.push({user:item.name})
+      )
+      
+    }
+    */
   }, []))
     return (
       <div>
