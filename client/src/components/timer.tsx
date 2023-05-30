@@ -1,16 +1,27 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Timer = ({expire} : {expire: Date}) => {
-    const [remain, setRemain] = useState(100)
+    const [remainSecond, setRemainSecond] = useState(100)
 
-    const calcRemain = () : number => {
+    const calcRemain = (() : number => {
         const now = new Date()
         return Math.floor(expire.getTime()/1000) - Math.floor(now.getTime()/1000)
+    })()
+
+    /**TODO 時間切れのときの実装 */
+    const timeupHandler = () => {
+        const navigate = useNavigate()
+        navigate("./voting")
     }
+
+    //読み込み時
     useEffect(() => {
+        // 1秒ごとにいちいち再計算してる
+        setRemainSecond(calcRemain)
         const id = setInterval(() => {
-            setRemain(() => {
-                return calcRemain()
+            setRemainSecond(() => {
+                return calcRemain
             });
         }, 1000)
 
@@ -21,14 +32,15 @@ const Timer = ({expire} : {expire: Date}) => {
     },[])
 
     useEffect(() => {
-        if(remain == 50){
+        if(remainSecond == 0){
             console.log("Finish!")
+            timeupHandler()
         }
-    },[remain])
+    },[remainSecond])
 
     return (
         <div>
-            <span> { remain } </span>
+            <span> { calcRemain } </span>
         </div>
     )
 }
