@@ -24,7 +24,7 @@ const Waiting = () => {
   }, [name]))
     return (
       <div>
-        <h1>Wagotiting</h1>
+        <h1>Waiting</h1>
         <p>This is the waiting page</p>
         <UserList users={users} ></UserList>
       </div>
