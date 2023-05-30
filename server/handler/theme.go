@@ -18,7 +18,7 @@ func (m *mindGraphService) SetTheme(ctx context.Context, c *connect.Request[pb.T
 	m.theme = theme
 	m.lock.Unlock()
 
-	// send joined event
+	// send theme confirmed event
 	m.broadcast(&pb.Event{Event: &pb.Event_ThemeConfirmed{ThemeConfirmed: &pb.ThemeConfirmedEvent{
 		Theme:    theme,
 		SenderId: senderId,
