@@ -1,5 +1,5 @@
 
-import { useCallback } from 'react'
+import { useCallback ,useState} from 'react'
 import UserList from "../components/userlist"
 import { useOnEvent } from '../lib/hooks/stream.ts'
 import {User} from '../components/user'
@@ -7,16 +7,18 @@ import { useNavigate } from "react-router-dom"
 import { useSetTheme } from "../lib/hooks/theme"
 
 const Waiting = () => {
-  const users:User[] = [];
+  const [users,setUser] = useState<User[]>([]);
   const setTheme = useSetTheme()
   const navigate = useNavigate();
 
 
+
   useOnEvent(useCallback((event) => {
     if (event.event.case == 'joined'){
-      event.event.value.currentUsers.map(item =>
-        users.push({user:item.name})
-      )
+      setUser(event.event.value.currentUsers.map(item => ({user: item.name})))
+      // event.event.value.currentUsers.map(item =>
+      //   users.push({user:item.name})
+      // )
       
     }
     /*
@@ -27,7 +29,7 @@ const Waiting = () => {
       
     }
     */
-  }, [users]))
+  }, []))
 
   const testSetTheme = () => {
     setTheme('test theme')
