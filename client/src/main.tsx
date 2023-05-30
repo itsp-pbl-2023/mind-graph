@@ -21,6 +21,7 @@ import Voting from './pages/voting.tsx';
 import Result from './pages/result.tsx';
 import { NameProvider } from './lib/hooks/name.tsx'
 import { StreamProvider } from './lib/hooks/stream.tsx'
+import { ThemeProvider } from './lib/hooks/theme.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,9 +63,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <TransportProvider transport={transport}>
       <QueryClientProvider client={queryClient}>
         <NameProvider>
-          <StreamProvider>
-            <RouterProvider router={router} />
-          </StreamProvider>
+          <ThemeProvider>
+            <StreamProvider>
+              <RouterProvider router={router} />
+            </StreamProvider>
+          </ThemeProvider>
         </NameProvider>
       </QueryClientProvider>
     </TransportProvider>
