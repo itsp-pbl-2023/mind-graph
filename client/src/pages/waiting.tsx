@@ -1,20 +1,29 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useSetTheme } from "../lib/hooks/theme"
 
 const Waiting = () => {
+  const setTheme = useSetTheme()
+  const navigate = useNavigate();
   
-  const [theme, setTheme] = useState("");
+  const [themeText, setThemeText] = useState("");
+  const testSetTheme = () => {
+    setTheme(themeText)
+    navigate("/game")
+  }
 
   return (
     <div>
       <div>
         <h1>Waiting</h1>
-        <p>This is the Waiting page.</p>
+        <button onClick={testSetTheme}></button>
+        <p>This is the waiting page</p>
       </div>
 
       <div>
         <input
-          value={theme}  // 入力を格納する変数
-          onChange={(event) => setTheme(event.target.value)}
+          value={themeText}  // 入力を格納する変数
+          onChange={(event) => setThemeText(event.target.value)}
         />
       </div>
     </div>   
