@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import logo from "../assets/mindgraphLogo.jpg"
-import React, {ChangeEvent, useState} from "react"
+import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 
 const Title = () => {
