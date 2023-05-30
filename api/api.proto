@@ -29,14 +29,30 @@ message UserLeftEvent {
   repeated User current_users = 2;
 }
 
+message ThemeRequest {
+  string theme = 1;
+  string sender_id = 2;
+}
+
+message ThemeConfirmedEvent {
+  string theme = 1;
+  string sender_id = 2;
+}
+
+message Empty {
+
+}
+
 message Event {
   oneof event {
     UserJoinedEvent joined = 1;
     UserLeftEvent left = 2;
+    ThemeConfirmedEvent theme_confirmed = 3;
   }
 }
 
 service MindGraphService {
   rpc Hello(HelloRequest) returns (HelloResponse);
   rpc Join(JoinRequest) returns (stream Event);
+  rpc SetTheme(ThemeRequest) returns (Empty);
 }

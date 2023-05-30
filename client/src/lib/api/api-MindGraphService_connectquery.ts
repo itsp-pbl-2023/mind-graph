@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { HelloRequest, HelloResponse } from "./api_pb.js";
+import { Empty, HelloRequest, HelloResponse, ThemeRequest } from "./api_pb.js";
 
 export const typeName = "mindgraph.MindGraphService";
 
@@ -25,3 +25,20 @@ export const hello = createQueryService({
     typeName: "mindgraph.MindGraphService",
   },
 }).hello;
+
+/**
+ * @generated from rpc mindgraph.MindGraphService.SetTheme
+ */
+export const setTheme = createQueryService({
+  service: {
+    methods: {
+      setTheme: {
+        name: "SetTheme",
+        kind: MethodKind.Unary,
+        I: ThemeRequest,
+        O: Empty,
+      },
+    },
+    typeName: "mindgraph.MindGraphService",
+  },
+}).setTheme;

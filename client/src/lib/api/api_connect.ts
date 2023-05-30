@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Event, HelloRequest, HelloResponse, JoinRequest } from "./api_pb.js";
+import { Empty, Event, HelloRequest, HelloResponse, JoinRequest, ThemeRequest } from "./api_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -29,6 +29,15 @@ export const MindGraphService = {
       I: JoinRequest,
       O: Event,
       kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc mindgraph.MindGraphService.SetTheme
+     */
+    setTheme: {
+      name: "SetTheme",
+      I: ThemeRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
     },
   }
 } as const;
