@@ -25,9 +25,9 @@ const Title = () => {
 
         <p>名前を入力</p>
         <form>
-          <div className="input-group">
+          <div>
             <label htmlFor="name">名前</label>
-            <input type="text" id="name" onChange={handleChange} value = {userName}/>
+            <input type="text" onChange={handleChange} value = {userName}/>
           </div>
           <Button text="送信" onClick={navigateToWaiting}/>
         </form>
