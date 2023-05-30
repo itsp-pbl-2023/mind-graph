@@ -1,7 +1,8 @@
 import { FC } from 'react';
+import {User} from './user'
 
 type userProps = {
-  users: (string|undefined)[];
+  users: User[];
 }
 
 const UserList: FC<userProps> = (userProps) => {
@@ -10,8 +11,8 @@ const UserList: FC<userProps> = (userProps) => {
     <div>
         <ul>
           <h3>参加者 {users.length}人</h3>
-          {users.map( user =>
-            <li>{user}</li>
+          {users.map( item =>
+            <li>{item.user}</li>
           )}
         </ul>
       </div>
