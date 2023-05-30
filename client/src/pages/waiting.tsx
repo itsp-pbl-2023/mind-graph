@@ -1,29 +1,22 @@
-// import React from 'react';
-import React from 'react';
+import { useState } from "react"
 
-const Waiting: FC = () => {
+const Waiting = () => {
+  
+  const [theme, setTheme] = useState("");
+
   return (
     <div>
-      <hgroup>
+      <div>
         <h1>Waiting</h1>
-      </hgroup>
+        <p>This is the Waiting page.</p>
+      </div>
 
-      <form>
-        <div>
-          <p>input theme</p>
-        </div>
-        <div>
-          {/* <textarea></textarea> */}
-          {/* <TextareaComp name="TextareaComp" value={state.comment} /> */}
-        </div>
-        <div>
-          <input type="text" required minlength="1" maxlength="32" size="32"/>
-          {/* <InputComp name="InputComp" value={state.comment} /> */}
-        </div>
-        <div>
-          <button>send</button>
-        </div>
-      </form>
+      <div>
+        <input
+          value={theme}  // 入力を格納する変数
+          onChange={(event) => setTheme(event.target.value)}
+        />
+      </div>
     </div>   
   )
 }
