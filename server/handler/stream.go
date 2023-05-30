@@ -75,9 +75,7 @@ func (m *mindGraphService) Join(ctx context.Context, c *connect.Request[pb.JoinR
 	}}})
 
 	defer func() {
-		m.lock.Lock()
-		m.users = lo.Without(m.users, conn)
-		m.lock.Unlock()
+		m.removeUser(conn)
 
 		// send left event
 		m.broadcast(&pb.Event{Event: &pb.Event_Left{Left: &pb.UserLeftEvent{
