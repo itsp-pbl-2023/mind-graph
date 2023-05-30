@@ -2,9 +2,14 @@ import { useNavigate } from "react-router-dom"
 import logo from "../assets/mindgraphLogo.jpg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
+import { useSetName } from "../lib/hooks/name"
 
 const Title = () => {
+
   const [userName, setUserName] = useState("");
+
+  const setName = useSetName();
+
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
@@ -12,6 +17,7 @@ const Title = () => {
   
   const navigate = useNavigate();
   const navigateToWaiting = () => {
+    setName(userName);
     navigate('/waiting');
   }
 
@@ -33,6 +39,8 @@ const Title = () => {
         </form>
       </div> 
     )
+
+    
   }
   
   export default Title
