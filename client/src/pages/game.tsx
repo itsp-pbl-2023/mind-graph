@@ -1,3 +1,4 @@
+import { ThemeDisplay } from "../components/common/ThemeDisplay"
 import Timer from "../components/timer"
 
 
@@ -7,6 +8,7 @@ const Game = () => {
     const expire_dummy = new Date(new Date().getTime() + 60*1000)
     return (
       <div>
+        <ThemeDisplay />
         <h1>Game</h1>
         <p>This is the game page</p>
         <Timer expire={ expire_dummy }></Timer>

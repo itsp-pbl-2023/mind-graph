@@ -3,8 +3,9 @@ import { hello } from '../lib/api/api-MindGraphService_connectquery'
 import viteLogo from '/vite.svg'
 import { useQuery } from '@tanstack/react-query'
 import reactLogo from '../assets/react.svg'
-import { useStream } from "../lib/hooks/stream.ts";
 import styled from "styled-components";
+import { useSetName } from '../lib/hooks/name.ts'
+import { useOnEvent } from '../lib/hooks/stream.ts'
 
 const GamingTitle = styled.h1`
   @keyframes gaming-title-animation {
@@ -24,16 +25,17 @@ const CountCard = styled.div`
 const Home = () => {
   const [count, setCount] = useState(0)
   const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
-  const [name, setName] = useState<string>()
-  useStream(name, useCallback((event) => {
-    console.log(`new event ${event.event.case}`)
-    console.log(event)
-  }, []))
+
+  const setName = useSetName()
   // ユーザーの入力を模倣
   useEffect(() => {
     setTimeout(() => setName('Fogrex'), 1000)
-  }, [])
+  }, [setName])
 
+  useOnEvent(useCallback((event) => {
+    console.log(`new event ${event.event.case}`)
+    console.log(event)
+  }, []))
 
   return (
     <>
