@@ -5,7 +5,7 @@ const Game = () => {
       <div>
         <h1>Game</h1>
         <p>This is the game page</p>
-        <UserList />
+        <UserList users={['A','B']}/>
       </div>
     )
   }

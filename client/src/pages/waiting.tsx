@@ -9,7 +9,7 @@ const Waiting = () => {
       <div>
         <h1>Wagotiting</h1>
         <p>This is the waiting page</p>
-        <UserList />
+        <UserList users={['A','B']}/>
       </div>
 
     )
