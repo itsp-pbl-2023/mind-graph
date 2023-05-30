@@ -37,10 +37,6 @@ const Home = () => {
     console.log(`new event ${event.event.case}`)
     console.log(event)
   }, []))
-<<<<<<< HEAD
-=======
-
->>>>>>> 3ae259ed03bcc0318cd76516d07a13468132cbee
 
   return (
     <>
