@@ -1,5 +1,5 @@
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import UserList from "../components/userlist"
 import { useOnEvent } from '../lib/hooks/stream.ts'
 import {User} from '../components/user'
@@ -27,7 +27,7 @@ const Waiting = () => {
       
     }
     */
-  }, []))
+  }, [users]))
 
   const testSetTheme = () => {
     setTheme('test theme')

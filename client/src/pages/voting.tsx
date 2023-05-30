@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import UserList from "../components/userlist"
 import { User } from '../components/user.tsx'
-
-
-=======
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
->>>>>>> main
 
 const Voting = () => {
   const users: User[] = [

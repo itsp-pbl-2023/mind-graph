@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 import UserList from "../components/userlist"
 import {User} from '../components/user'
-=======
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
->>>>>>> main
 
 const Game = () => {
   const users: User[] = [
