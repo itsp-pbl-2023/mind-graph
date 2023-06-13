@@ -43,7 +43,7 @@ message ThemeRequest {
 
 message CreateNodeRequest {
   string word = 1;
-  string sender_id = 2;
+  string creator_id = 2;
 }
 
 // --- Events ---

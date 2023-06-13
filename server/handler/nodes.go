@@ -67,7 +67,7 @@ func (g *graph) addEdge(nodeID1, nodeID2 string) *edge {
 }
 
 func (m *mindGraphService) CreateNode(_ context.Context, c *connect.Request[pb.CreateNodeRequest]) (*connect.Response[pb.Empty], error) {
-	newNode := m.graph.addNode(c.Msg.Word, c.Msg.SenderId)
+	newNode := m.graph.addNode(c.Msg.Word, c.Msg.CreatorId)
 	m.broadcast(&pb.Event{Event: &pb.Event_NodeUpdated{NodeUpdated: &pb.NodeUpdateEvent{
 		Node: newNode.toPB(),
 	}}})

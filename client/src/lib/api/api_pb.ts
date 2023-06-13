@@ -336,9 +336,9 @@ export class CreateNodeRequest extends Message<CreateNodeRequest> {
   word = "";
 
   /**
-   * @generated from field: string sender_id = 2;
+   * @generated from field: string creator_id = 2;
    */
-  senderId = "";
+  creatorId = "";
 
   constructor(data?: PartialMessage<CreateNodeRequest>) {
     super();
@@ -349,7 +349,7 @@ export class CreateNodeRequest extends Message<CreateNodeRequest> {
   static readonly typeName = "mindgraph.CreateNodeRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "word", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "sender_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "creator_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateNodeRequest {

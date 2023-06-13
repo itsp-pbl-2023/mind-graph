@@ -12,7 +12,7 @@ const Game = () => {
 
   const send = () => {
     if (text === '') return
-    client.createNode({ word: text, senderId: name })
+    client.createNode({ word: text, creatorId: name })
     setText('')
   }
 
