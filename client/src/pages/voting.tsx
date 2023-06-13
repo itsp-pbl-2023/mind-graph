@@ -1,16 +1,9 @@
 import UserList from "../components/userlist"
-import { User } from '../components/user.tsx'
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
+import { FC } from 'react';
 
-const Voting = () => {
-  const users: User[] = [
-    {
-      user: 'A'
-    },
-    {
-      user: 'B'
-    }
-  ];
+
+const Voting: FC = () => {
   /*
   const users:Users = location.state as {User[]}
   */
@@ -20,7 +13,7 @@ const Voting = () => {
         <h1>Voting</h1>
         <ThemeDisplay />
         <p>This is the voting page</p>
-        <UserList users={users} ></UserList>
+        <UserList />
       </div>
     )
   }

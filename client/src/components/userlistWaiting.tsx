@@ -1,12 +1,11 @@
+import { FC } from 'react';
 
-import { useUsers } from '../lib/hooks/users'; 
+type userProps = {
+  users: string[];
+}
 
-
-
-const UserList = () => {
-  const users = useUsers()
-
-
+const UserListWating: FC<userProps> = (userProps) => {
+  const {users} = userProps;
   return (
     <div>
         <ul>
@@ -19,4 +18,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default UserListWating;

@@ -1,22 +1,16 @@
 import UserList from "../components/userlist"
 import {User} from '../components/user'
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
+import { FC } from 'react';
 
-const Game = () => {
-  const users: User[] = [
-    {
-      user: 'A'
-    },
-    {
-      user: 'B'
-    }
-  ];
+const Game: FC = () => {
+
     return (
       <div>
         <ThemeDisplay />
         <h1>Game</h1>
         <p>This is the game page</p>
-        <UserList users={users}/>
+        <UserList />
       </div>
     )
   }
