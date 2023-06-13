@@ -24,13 +24,11 @@ const Timer = ({expire} : {expire: Date}) => {
     // mount時処理
     useEffect(() => {
         // 最初のレンダリング
-        setRemain(() => calcRemain(expire))
+        setRemain(calcRemain(expire))
         
         const render_remain = () : void => {
             window.requestAnimationFrame(() => {
-                setRemain(() => {
-                    return calcRemain(expire)
-                })
+                setRemain(calcRemain(expire))
                 requestAnimationFrame(render_remain)
             })
         }
