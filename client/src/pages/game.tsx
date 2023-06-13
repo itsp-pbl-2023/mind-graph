@@ -1,5 +1,4 @@
 import UserList from "../components/userlist"
-import {User} from '../components/user'
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
 import { FC } from 'react';
 
