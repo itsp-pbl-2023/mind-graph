@@ -1,7 +1,8 @@
 import { useContext } from "react"
 import { UsersContext } from "./users.tsx"
+import { User } from '../../components/user'
 
-export const useUsers = ():string[] => {
+export const useUsers = ():User[] => {
   const { users } = useContext(UsersContext)
   if (users == undefined){
     return []

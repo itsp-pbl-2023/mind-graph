@@ -1,8 +1,9 @@
 import { ReactNode, createContext, useMemo, useState } from 'react'
+import { User } from '../../components/user'
 
 type UsersContextType = {
-  users?: string[]
-  setUsers: (users: string[]) => void
+  users?: User[]
+  setUsers: (users: User[]) => void
 }
 
 export const UsersContext = createContext<UsersContextType>({
@@ -15,7 +16,7 @@ export interface UsersProviderProps {
 }
 
 export const UsersProvider = ({ children }: UsersProviderProps) => {
-  const [users, setUsers] = useState<string[]>()
+  const [users, setUsers] = useState<User[]>()
   const value = useMemo(() => {
     return { users, setUsers }
   }, [users, setUsers])
