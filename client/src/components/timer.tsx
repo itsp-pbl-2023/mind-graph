@@ -10,17 +10,11 @@ const Timer = ({expire} : {expire: Date}) => {
         navigate("/voting")
     }
 
-    var flag = true
     // 現在時刻との差分を取ることで残り秒数(msec)を計算
     const updateRemain = () : number => {
         const now = new Date()
         const remain = expire.getTime() - now.getTime()
 
-        if(flag && remain <= 0){
-            console.log("Finish!")
-            flag = false
-            onTimeUp()
-        }
         return remain
     }
 
@@ -45,6 +39,13 @@ const Timer = ({expire} : {expire: Date}) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+    useEffect(() => {
+        if(remain <= 0){
+            console.log("Finish!")
+            onTimeUp()
+        }
+    }, [remain])
 
     return (
         <div>
