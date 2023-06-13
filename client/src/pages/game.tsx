@@ -5,7 +5,7 @@ import Timer from "../components/timer"
 const Game = () => {
     // ダミー変数
     // 読み込んでから60秒
-    const expire_dummy = new Date(new Date().getTime() + 60*1000)
+    const expire_dummy = new Date(new Date().getTime() + 10*1000)
     return (
       <div>
         <ThemeDisplay />

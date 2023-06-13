@@ -4,10 +4,20 @@ import { useNavigate } from "react-router-dom"
 const Timer = ({expire} : {expire: Date}) => {
     const [remainSecond, setRemainSecond] = useState(100)
 
-    // 現在時刻との差分を取ることで残り秒数を計算
+    // 現在時刻との差分を取ることで残り秒数(msec)を計算
     const calcRemain = () : number => {
         const now = new Date()
-        return Math.floor(expire.getTime()/1000) - Math.floor(now.getTime()/1000)
+        const remain = expire.getTime() - now.getTime()
+
+        if(remain <= 0){
+            console.log("Finish!")
+            timeupHandler()
+        }
+        return remain
+    }
+
+    const msec2second = (msec: number) :number => {
+        return Math.floor(msec/1000)
     }
 
     const navigate = useNavigate()
@@ -20,31 +30,22 @@ const Timer = ({expire} : {expire: Date}) => {
         // 最初のレンダリング
         setRemainSecond(calcRemain)
         
-        const id = setInterval(() => {
-            setRemainSecond(() => {
-                return calcRemain()
-            });
-        }, 100)
-
-        // 1回分clearしないとダメらしい
-        return () => {
-            clearInterval(id)
+        const render_remain = () => {
+            window.requestAnimationFrame(() => {
+                setRemainSecond(() => {
+                    return calcRemain()
+                });
+                requestAnimationFrame(render_remain)
+            })
         }
+        render_remain()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    // 時間切れ時は自動遷移
-    useEffect(() => {
-        if(remainSecond <= 0){
-            console.log("Finish!")
-            timeupHandler()
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[remainSecond])
-
     return (
         <div>
-            <span> { remainSecond } </span>
+            <span> { msec2second(remainSecond) } </span>
         </div>
     )
 }
