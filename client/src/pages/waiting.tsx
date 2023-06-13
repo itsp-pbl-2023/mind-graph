@@ -25,7 +25,7 @@ const Waiting = () => {
       setUsers(event.event.value.currentUsers.map(item => (item.name)))
     }
     */
-  }, []))
+  }, [setUsers]))
 
   
   const testSetTheme = () => {
