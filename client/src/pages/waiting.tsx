@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSetTheme } from "../lib/hooks/theme"
-import {useState} from "react"
 
 const Waiting = () => {
   const setTheme = useSetTheme()
@@ -17,14 +16,7 @@ const Waiting = () => {
     <div>
       <div>
         <h1>Waiting</h1>
-        <form>
-          <div>
-            <label>Enter theme:</label>
-            <input type="text" value={theme} onChange={(e) => setInputTheme(e.target.value)}/>
-            <button onClick={testSetTheme}></button>
-          </div>
-        </form>
-        
+        <button onClick={testSetTheme}></button>
         <p>This is the waiting page</p>
       </div>
 
