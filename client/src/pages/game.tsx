@@ -6,6 +6,12 @@ const nodes = [
   {id: "b", word: "b"},
   {id: "c", word: "c"},
   {id: "d", word: "d"},
+  {id: "e", word: "e"},
+  {id: "f", word: "f"},
+  {id: "g", word: "g"},
+  {id: "h", word: "h"},
+  {id: "i", word: "i"},
+  {id: "j", word: "j"},
 ] as Node[]
 
 const edges = [
@@ -13,6 +19,13 @@ const edges = [
   {nodeId1: "b", nodeId2: "c"},
   {nodeId1: "c", nodeId2: "d"},
   {nodeId1: "d", nodeId2: "a"},
+  {nodeId1: "e", nodeId2: "f"},
+  {nodeId1: "f", nodeId2: "g"},
+  {nodeId1: "g", nodeId2: "h"},
+  {nodeId1: "h", nodeId2: "a"},
+  {nodeId1: "i", nodeId2: "j"},
+  {nodeId1: "g", nodeId2: "j"},
+
 ] as Edge[]
 
 const Game = () => {
