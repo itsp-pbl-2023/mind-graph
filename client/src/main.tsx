@@ -22,6 +22,7 @@ import Result from './pages/result.tsx';
 import { NameProvider } from './lib/hooks/name.tsx'
 import { StreamProvider } from './lib/hooks/stream.tsx'
 import { ThemeProvider } from './lib/hooks/theme.tsx';
+import { UsersProvider } from './lib/hooks/users.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,7 +66,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <NameProvider>
           <ThemeProvider>
             <StreamProvider>
-              <RouterProvider router={router} />
+              <UsersProvider>
+                <RouterProvider router={router} />
+              </UsersProvider>
             </StreamProvider>
           </ThemeProvider>
         </NameProvider>

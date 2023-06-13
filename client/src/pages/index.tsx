@@ -26,9 +26,8 @@ const Home = () => {
   const [count, setCount] = useState(0)
   const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
 
-  const setName = useSetName()
   // ユーザーの入力を模倣
-  
+  const setName = useSetName()
   useEffect(() => {
     setTimeout(() => setName('Fogrex'), 1000)
   }, [setName])
