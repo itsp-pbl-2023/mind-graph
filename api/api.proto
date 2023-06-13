@@ -2,6 +2,28 @@ syntax = "proto3";
 package mindgraph;
 option go_package = "github.com/itsp-pbl-2023/mind-graph/grpc/pb";
 
+// --- Basic structs ---
+
+message Empty {}
+
+message User {
+  string id = 1;
+  string name = 2;
+}
+
+message Node {
+  string id = 1;
+  string word = 2;
+  string creator_id = 3;
+}
+
+message Edge {
+  string node_id_1 = 1;
+  string node_id_2 = 2;
+}
+
+// --- Request / Response structs ---
+
 message HelloRequest {
   string name = 1;
 }
@@ -14,10 +36,17 @@ message JoinRequest {
   string name = 1;
 }
 
-message User {
-  string id = 1;
-  string name = 2;
+message ThemeRequest {
+  string theme = 1;
+  string sender_id = 2;
 }
+
+message CreateNodeRequest {
+  string word = 1;
+  string sender_id = 2;
+}
+
+// --- Events ---
 
 message UserJoinedEvent {
   string name = 1;
@@ -29,18 +58,19 @@ message UserLeftEvent {
   repeated User current_users = 2;
 }
 
-message ThemeRequest {
-  string theme = 1;
-  string sender_id = 2;
-}
-
 message ThemeConfirmedEvent {
   string theme = 1;
   string sender_id = 2;
 }
 
-message Empty {
+// 新しくノードが作成/更新された
+message NodeUpdateEvent {
+  Node node = 1;
+}
 
+// 新しく辺が作成/更新された
+message EdgeUpdateEvent {
+  Edge edge = 1;
 }
 
 message Event {
@@ -48,6 +78,8 @@ message Event {
     UserJoinedEvent joined = 1;
     UserLeftEvent left = 2;
     ThemeConfirmedEvent theme_confirmed = 3;
+    NodeUpdateEvent node_updated = 4;
+    EdgeUpdateEvent edge_updated = 5;
   }
 }
 
@@ -55,4 +87,6 @@ service MindGraphService {
   rpc Hello(HelloRequest) returns (HelloResponse);
   rpc Join(JoinRequest) returns (stream Event);
   rpc SetTheme(ThemeRequest) returns (Empty);
+  rpc CreateNode(CreateNodeRequest) returns (Empty);
+  rpc CreateEdge(Edge) returns (Empty);
 }
