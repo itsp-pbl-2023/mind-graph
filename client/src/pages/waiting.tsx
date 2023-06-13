@@ -4,13 +4,12 @@ import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useNavigate } from "react-router-dom"
 import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
-import UserListWating from '../components/userlistWaiting.tsx'
+import UserList from '../components/userlist.tsx'
 
 
 const Waiting = () => {
-  const [users,setUser] = useState<string[]>([]);
   const [themeText, setThemeText] = useState("");
-  const setTheme = useSetTheme()
+  const setTheme = useSetTheme();
   const setUsers = useSetUsers();
   const navigate = useNavigate();
   
@@ -18,17 +17,12 @@ const Waiting = () => {
 
   useOnEvent(useCallback((event) => {
     if (event.event.case == 'joined'){
-      setUser(event.event.value.currentUsers.map(item => (item.name)))
-      // event.event.value.currentUsers.map(item =>
-      //   users.push({user:item.name})
-      // )
+      setUsers(event.event.value.currentUsers.map(item => (item.name)))
+
     }
     /*
     if (event.event.case == 'left'){
-      event.event.value.currentUsers.map(item =>
-        users.push({user:item.name})
-      )
-      
+      setUsers(event.event.value.currentUsers.map(item => (item.name)))
     }
     */
   }, []))
@@ -36,12 +30,8 @@ const Waiting = () => {
   
   const testSetTheme = () => {
     setTheme(themeText)
-    setUsers(users)
-    navigate("/game"
-    //,{
-    //  state:{users:{users}},
-    //}
-    );
+    //setUsers(users)
+    navigate("/game");
   }
 
   return (
@@ -50,7 +40,7 @@ const Waiting = () => {
         <h1>Waiting</h1>
         <button onClick={testSetTheme}></button>
         <p>This is the waiting page {}</p>
-        <UserListWating users = {users}></UserListWating>
+        <UserList />
 
         <input
           value={themeText}  // 入力を格納する変数
