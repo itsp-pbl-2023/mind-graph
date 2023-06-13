@@ -1,8 +1,7 @@
 import UserList from "../components/userlist"
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
-import { FC } from 'react';
 
-const Game: FC = () => {
+const Game = () => {
 
     return (
       <div>
