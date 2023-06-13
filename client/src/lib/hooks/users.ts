@@ -1,9 +1,14 @@
 import { useContext } from "react"
 import { UsersContext } from "./users.tsx"
 
-export const useUsers = () => {
+export const useUsers = ():string[] => {
   const { users } = useContext(UsersContext)
-  return users
+  if (users == undefined){
+    return []
+  }
+  else{
+    return users
+  }
 }
 
 export const useSetUsers = () => {
