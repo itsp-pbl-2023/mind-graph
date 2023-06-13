@@ -28,6 +28,7 @@ const Home = () => {
 
   const setName = useSetName()
   // ユーザーの入力を模倣
+  
   useEffect(() => {
     setTimeout(() => setName('Fogrex'), 1000)
   }, [setName])
