@@ -24,7 +24,7 @@ const Timer = ({expire} : {expire: Date}) => {
             setRemainSecond(() => {
                 return calcRemain()
             });
-        }, 1000)
+        }, 100)
 
         // 1回分clearしないとダメらしい
         return () => {
