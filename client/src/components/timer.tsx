@@ -4,24 +4,25 @@ import { useNavigate } from "react-router-dom"
 const Timer = ({expire} : {expire: Date}) => {
     const [remainSecond, setRemainSecond] = useState(100)
 
-    const calcRemain = (() : number => {
+    // 現在時刻との差分を取ることで残り秒数を計算
+    const calcRemain = () : number => {
         const now = new Date()
         return Math.floor(expire.getTime()/1000) - Math.floor(now.getTime()/1000)
-    })()
-
-    /**TODO 時間切れのときの実装 */
-    const timeupHandler = () => {
-        const navigate = useNavigate()
-        navigate("./voting")
     }
 
-    //読み込み時
+    const navigate = useNavigate()
+    const timeupHandler = () => {
+        navigate("/voting")
+    }
+
+    // mount時処理
     useEffect(() => {
-        // 1秒ごとにいちいち再計算してる
+        // 最初のレンダリング
         setRemainSecond(calcRemain)
+        
         const id = setInterval(() => {
             setRemainSecond(() => {
-                return calcRemain
+                return calcRemain()
             });
         }, 1000)
 
@@ -31,8 +32,9 @@ const Timer = ({expire} : {expire: Date}) => {
         }
     },[])
 
+    // 時間切れ時は自動遷移
     useEffect(() => {
-        if(remainSecond == 0){
+        if(remainSecond <= 0){
             console.log("Finish!")
             timeupHandler()
         }
@@ -40,7 +42,7 @@ const Timer = ({expire} : {expire: Date}) => {
 
     return (
         <div>
-            <span> { calcRemain } </span>
+            <span> { remainSecond } </span>
         </div>
     )
 }
