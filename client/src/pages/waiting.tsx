@@ -5,8 +5,8 @@ import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
 import { client } from "../lib/client"
 import { useName } from "../lib/hooks/name"
-import { UserList } from "../components/userlist"
-import { Button } from "../components/button"
+import UserList from "../components/userlist"
+import Button from "../components/button"
 
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
