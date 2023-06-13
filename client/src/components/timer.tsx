@@ -30,6 +30,7 @@ const Timer = ({expire} : {expire: Date}) => {
         return () => {
             clearInterval(id)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     // 時間切れ時は自動遷移
@@ -38,6 +39,7 @@ const Timer = ({expire} : {expire: Date}) => {
             console.log("Finish!")
             timeupHandler()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[remainSecond])
 
     return (
