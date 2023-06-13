@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import d3 from "d3"
+import * as d3 from "d3"
 
 // gRPC互換の型
 // TODO: gRPC実装後に消す
@@ -29,30 +29,36 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
 
   // Add a line for each link, and a circle for each node.
   const edge = svg.append("g")
-      .attr("stroke", "#999")
+      .attr("stroke", "#00f")
       .attr("stroke-opacity", 0.6)
     .selectAll("line")
     .data(mutableEdges)
     .join("line")
-    . attr("stroke-width", 2);
+    . attr("stroke-width",10);
 
   const node = svg.append("g")
-    .attr("stroke", "#fff")
+    .attr("stroke", "#aaa")
     .attr("stroke-width", 1.5)
   .selectAll("circle")
   .data(mutableNodes)
   .join("circle")
-    .attr("r", 5)
-    .attr("fill", "#faa");
+    .attr("r", 10)
+    .attr("fill", "#faa")
 
+  node.append("text")
+    .text(d => d.word)
+    .attr("font-size", 10)
+    .attr("fill", "#000")
+    .attr("dx", 10)
+    .attr("dy", 10);
   node.append("title").text(d => d.word);
     
   const tick = () => {
     edge
       .attr("x1", (d) => (d.source as D3Node).x as number)
       .attr("y1", (d) => (d.source as D3Node).y as number)
-      .attr("x2", (d) => (d.source as D3Node).x as number)
-      .attr("y2", (d) => (d.source as D3Node).y as number);
+      .attr("x2", (d) => (d.target as D3Node).x as number)
+      .attr("y2", (d) => (d.target as D3Node).y as number);
 
     node
       .attr("cx", (d) => d.x as number)
