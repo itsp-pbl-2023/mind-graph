@@ -2,16 +2,24 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 const Timer = ({expire} : {expire: Date}) => {
-    const [remainSecond, setRemainSecond] = useState(100)
+    const [remain, setRemain] = useState(100)
 
+    // 時間切れ
+    const navigate = useNavigate()
+    const onTimeUp = () => {
+        navigate("/voting")
+    }
+
+    var flag = true
     // 現在時刻との差分を取ることで残り秒数(msec)を計算
-    const calcRemain = () : number => {
+    const updateRemain = () : number => {
         const now = new Date()
         const remain = expire.getTime() - now.getTime()
 
-        if(remain <= 0){
+        if(flag && remain <= 0){
             console.log("Finish!")
-            timeupHandler()
+            flag = false
+            onTimeUp()
         }
         return remain
     }
@@ -20,21 +28,16 @@ const Timer = ({expire} : {expire: Date}) => {
         return Math.floor(msec/1000)
     }
 
-    const navigate = useNavigate()
-    const timeupHandler = () => {
-        navigate("/voting")
-    }
-
     // mount時処理
     useEffect(() => {
         // 最初のレンダリング
-        setRemainSecond(calcRemain)
+        setRemain(updateRemain)
         
-        const render_remain = () => {
+        const render_remain = () : void => {
             window.requestAnimationFrame(() => {
-                setRemainSecond(() => {
-                    return calcRemain()
-                });
+                setRemain(() => {
+                    return updateRemain()
+                })
                 requestAnimationFrame(render_remain)
             })
         }
@@ -45,7 +48,7 @@ const Timer = ({expire} : {expire: Date}) => {
 
     return (
         <div>
-            <span> { msec2second(remainSecond) } </span>
+            <span> { msec2second(remain) } </span>
         </div>
     )
 }
