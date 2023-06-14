@@ -14,7 +14,6 @@ const Waiting = () => {
   const setUsers = useSetUsers();
   const name = useName();
   const navigate = useNavigate();
-  
   const SendTheme = () => {
     client.setTheme({
       theme: themeText, 
