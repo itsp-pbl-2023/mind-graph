@@ -15,7 +15,7 @@ const Waiting = () => {
   const name = useName();
   const navigate = useNavigate();
   
-  const testSetTheme = () => {
+  const SendTheme = () => {
     client.setTheme({
       theme: themeText, 
       senderId: name, 
@@ -55,7 +55,7 @@ const Waiting = () => {
         />
       </div>
       <div>
-        <Button text="送信" onClick={testSetTheme}/>
+        <Button text="送信" onClick={SendTheme}/>
       </div>
     </div>
   )
