@@ -47,7 +47,6 @@ const Waiting = () => {
         <p>This is the waiting page</p>
         <UserList />
       </div>
-
       <div>
         <input
           value={themeText}  // 入力を格納する変数
