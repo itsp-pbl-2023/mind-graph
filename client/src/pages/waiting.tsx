@@ -30,13 +30,14 @@ const Waiting = () => {
       setUsers(event.event.value.currentUsers.map(item => (item.name)))
     }
     */
-   // useOnEvent(useCallback((event) => {
-     if(event.event.case === "themeConfirmed"){
+  }, [setUsers]))
+
+  useOnEvent(useCallback((event) => {
+    if(event.event.case === "themeConfirmed"){
       setTheme(event.event.value.theme)
       navigate("/game")
     }
-  }, [setUsers]))
-  // }, []))
+  }, []))
 
   return (
     <div>
