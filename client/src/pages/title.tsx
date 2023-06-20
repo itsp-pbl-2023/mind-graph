@@ -24,8 +24,8 @@ const Title = () => {
   //TODO コンポーネントを置き換える
     return (
       <div>
-        <p className="title">MIND GRAPH</p>
-        <p className="sub-title">MINNA NO NOU WO KASHIKASURU</p>
+        <p className="title">Mind Graph</p>
+        <p className="sub-title">Minna no Nou wo Kashikasuru</p>
 
         <img src={logo} alt="Mind graph logo" />
 
