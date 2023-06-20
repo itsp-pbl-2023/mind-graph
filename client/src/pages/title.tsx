@@ -34,7 +34,7 @@ const Title = () => {
             <label htmlFor="name">名前</label>
             <input type="text" onChange={handleChange} value = {userName}/>
           </div>
-          <Button text="送信" onClick={navigateToWaiting}/>
+          <Button text="送信" onClick={navigateToWaiting} width="400px"></Button>
         </form>
       </div> 
     )

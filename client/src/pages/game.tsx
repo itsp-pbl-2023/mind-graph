@@ -35,7 +35,7 @@ const Game = () => {
       <Timer expire={expireDummy}></Timer>
       <div>
         <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
-        <Button text='Add Word' onClick={() => send()} />
+        <Button text='送信' onClick={() => send()} width="200px"/>
       </div>
     </div>
   )

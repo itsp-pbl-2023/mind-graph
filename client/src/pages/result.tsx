@@ -12,7 +12,7 @@ const Result = () => {
         <h1>Result</h1>
         <ThemeDisplay />
         <p>This is the result page</p>
-        <Button text="タイトルに戻る" onClick={returnToTitle} />
+        <Button text="タイトルに戻る" onClick={returnToTitle} width="200px"/>
       </div>
     )
   }

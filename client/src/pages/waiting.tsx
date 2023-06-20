@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
 import UserList from '../components/userlist.tsx'
+import Button from '../components/button.tsx'
 
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
@@ -31,7 +32,7 @@ const Waiting = () => {
     <div>
       <div>
         <h1>Waiting</h1>
-        <button onClick={testSetTheme}></button>
+        <Button text="ゲームを開始する" onClick={testSetTheme} width="400px"></Button>
         <p>This is the waiting page {}</p>
         <UserList />
 
