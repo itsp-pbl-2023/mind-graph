@@ -8,7 +8,7 @@ const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) =>
     }
 
     return (
-      <button onClick={onClickHander} style={{backgroundColor : "gray"}}>
+      <button onClick={onClickHander}>
         <span> { text } </span>
       </button>
     )
