@@ -3,6 +3,7 @@ import logo from "../assets/mindgraphLogo.jpg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
+import Input from "../components/input"
 
 const Title = () => {
 
@@ -32,9 +33,10 @@ const Title = () => {
         <form>
           <div>
             <label htmlFor="name">名前</label>
+            <Input text="名前の入力" onChange={handleChange} width="400px" value = {userName}></Input>
             <input type="text" onChange={handleChange} value = {userName}/>
           </div>
-          <Button text="送信" onClick={navigateToWaiting} width="400px"></Button>
+          <Button text="送信" onClick={navigateToWaiting} width="300px"></Button>
         </form>
       </div> 
     )
