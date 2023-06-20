@@ -9,17 +9,53 @@ interface Node {
   creatorId: string
 }
 
+// connection
+interface NodeWithConnection {
+  connectionCount: number
+}
+
 interface Edge {
   nodeId1: string
   nodeId2: string
 }
 
-type D3Node = d3.SimulationNodeDatum & Node
+type D3Node = d3.SimulationNodeDatum & Node & NodeWithConnection
 type D3Edge = d3.SimulationLinkDatum<D3Node>
 
+// テキストの幅を計算するためにcanvasを使う
+const canvasForCalcTextWidth = document.createElement("canvas")
+const ctxForCalcTextWidth = canvasForCalcTextWidth.getContext("2d")!
+
+const calculateTextWidth = (text: string, fontSize: number) => {
+  ctxForCalcTextWidth.font = `${fontSize}px sans-serif`
+  return ctxForCalcTextWidth.measureText(text).width
+}
+
+const calculateFontSizeFromConnection = (connectionCount: number) => {
+  const minFontSize = 10
+  const maxFontSize = 30
+  const minConnectionCount = 1
+  const maxConnectionCount = 10
+  const fontSize = (maxFontSize - minFontSize) * (connectionCount - minConnectionCount) / (maxConnectionCount - minConnectionCount) + minFontSize
+  return fontSize
+}
+
+// グラフの描画
 export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height: number) => {
-  const mutableNodes = nodes.map(node => ({...node}) as D3Node)
+  const mutableNodes = nodes.map(node => ({...node, connectionCount: 0}) as D3Node)
+  const nodeTable: Record<string, D3Node> = {}
+  mutableNodes.forEach(node => {
+    nodeTable[node.id] = node
+  })
   const mutableEdges = edges.map(edge => ({source: edge.nodeId1, target: edge.nodeId2}) as D3Edge)
+
+  // ノードの接続数を計算
+  edges.forEach(edge => {
+    nodeTable[edge.nodeId1].connectionCount++
+    nodeTable[edge.nodeId2].connectionCount++
+  });
+
+
 
   const svg = d3.create("svg")
     .attr("width", width)
@@ -36,21 +72,39 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
     .join("line")
     . attr("stroke-width",10);
 
+  // const node = svg.append("g")
+  //   .attr("stroke", "#aaa")
+  //   .attr("stroke-width", 1.5)
+  // .selectAll("circle")
+  // .data(mutableNodes)
+  // .join("circle")
+  //   .attr("r", d => calculateTextWidth(d.word, 10) / 2 + 10)
+  //   .attr("fill", "#faa")
   const node = svg.append("g")
-    .attr("stroke", "#aaa")
-    .attr("stroke-width", 1.5)
+  .attr("stroke", "#00f")
+  .attr("stroke-opacity", 0.6)
   .selectAll("circle")
   .data(mutableNodes)
   .join("circle")
-    .attr("r", 10)
+    .attr("r", d => calculateTextWidth(d.word, calculateFontSizeFromConnection(d.connectionCount)) / 2 + 10)
     .attr("fill", "#faa")
-
-  node.append("text")
+    .attr("stroke", "#000")
+    .attr("stroke-width", 1.5)
+    .attr("style", "cursor: pointer;pointer-events: none;");
+  
+  const nodeText = svg.append("g")
+  .attr("stroke", "#000")
+  .attr("stroke-width", 1)
+  .selectAll("text")
+  .data(mutableNodes)
+  .join("text")
     .text(d => d.word)
-    .attr("font-size", 10)
+    .attr("font-size", d => calculateFontSizeFromConnection(d.connectionCount))
     .attr("fill", "#000")
-    .attr("dx", 10)
-    .attr("dy", 10);
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "middle")
+    .attr("style", "cursor: pointer;user-select: none;");
+
   node.append("title").text(d => d.word);
     
   const tick = () => {
@@ -62,7 +116,10 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
 
     node
       .attr("cx", (d) => d.x as number)
-      .attr("cy", (d) => d.y as number);
+      .attr("cy", (d) => d.y as number)
+    nodeText
+      .attr("x", (d) => d.x as number)
+      .attr("y", (d) => d.y as number);
   }
   
   const simulation = d3.forceSimulation(mutableNodes)
@@ -90,6 +147,7 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
   }
 
   node.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
+  nodeText.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
   // node.call(d3.drag<Element, D3Node>()
   //   .on("start", dragstarted)
   //   .on("drag", dragged)

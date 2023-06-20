@@ -10,16 +10,16 @@ import { useName } from '../lib/hooks/name.ts'
 import styled from 'styled-components'
 
 const nodes = [
-  {id: "a", word: "a"},
-  {id: "b", word: "b"},
-  {id: "c", word: "c"},
-  {id: "d", word: "d"},
-  {id: "e", word: "e"},
-  {id: "f", word: "f"},
-  {id: "g", word: "g"},
-  {id: "h", word: "h"},
-  {id: "i", word: "i"},
-  {id: "j", word: "j"},
+  {id: "a", word: "これは"},
+  {id: "b", word: "テストの"},
+  {id: "c", word: "ノードグラフ"},
+  {id: "d", word: "になっています"},
+  {id: "e", word: "ドラッグアンドドロップして"},
+  {id: "f", word: "グラフを"},
+  {id: "g", word: "変形してみよう"},
+  {id: "h", word: "これはなんかすごく長いノードのテスト。マジで長い文章まで入れられることになっている。"},
+  {id: "i", word: "ﾜｧ..!"},
+  {id: "j", word: "( ﾟДﾟ)"},
 ] as Node[]
 
 const edges = [
