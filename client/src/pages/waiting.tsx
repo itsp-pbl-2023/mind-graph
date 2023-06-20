@@ -36,10 +36,12 @@ const Waiting = () => {
         <p>This is the waiting page {}</p>
         <UserList />
 
-        <input
-          value={themeText}  // 入力を格納する変数
-          onChange={(event) => setThemeText(event.target.value)}
-        />
+        <input type="text" 
+        placeholder="主題の入力" 
+        onChange={(event) => setThemeText(event.target.value)} 
+        value = {themeText} 
+        style={{backgroundColor: "white", borderRadius: "25px", height: "30px", width: "400px", color: "black", textAlign: "center"}}/>
+
       </div>
     </div>   
   )
