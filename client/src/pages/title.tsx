@@ -3,7 +3,6 @@ import logo from "../assets/mindgraphLogo.jpg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
-import "./title.css"
 import styled from "styled-components"
 
 const TitleText = styled.p`
@@ -38,7 +37,7 @@ const Title = () => {
     return (
       <div>
         <TitleText>Mind Graph</TitleText>
-        <SubTitleText>Minna no Nou wo Kashikasuru</SubTitleText>
+        <SubTitleText>Minna no Nou wo Kashikasuru.</SubTitleText>
 
         <img src={logo} alt="Mind graph logo" />
 
