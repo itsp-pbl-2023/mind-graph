@@ -1,4 +1,4 @@
-import { Edge, NodeGraph, Node } from "../components/common/NodeGraph"
+import { NodeGraph } from "../components/common/NodeGraph"
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
 import Timer from "../components/timer"
 import UserList from "../components/userlist"
@@ -7,7 +7,7 @@ import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
 import { useName } from '../lib/hooks/name.ts'
-import styled from 'styled-components'
+import { Node, Edge } from "../lib/api/api_pb.ts"
 
 const dummyNodes = [
   {id: "a", word: "これは"},
@@ -52,17 +52,30 @@ const Game = () => {
   }
 
   useOnEvent(useCallback((event) => {
-    console.log(`new event ${event.event.case}`)
-    console.log(event)
+    switch (event.event.case) {
+      case 'nodeUpdated': {
+        const node = event.event.value.node;
+        if (!node) return;
+
+        setNodes((nodes) => [...nodes, node])
+        break;
+      }
+      case 'edgeUpdated': {
+        const edge = event.event.value.edge;
+        if (!edge) return;
+        
+        setEdges((edges) => [...edges, edge])
+        break;
+      }
+    }
   }, []))
 
-  const explainBox = styled.p`
-    border: 1px solid #000;
-  `
+
 
   // ノード関連
   const [nodes, setNodes] = useState<Node[]>(dummyNodes)
   const [edges, setEdges] = useState<Edge[]>(dummyEdges)
+  const onNodeClick = useCallback((node: string) => console.log(`node ${node} is selected`), [])
 
   return (
     <div>
@@ -75,7 +88,7 @@ const Game = () => {
         <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
         <Button text='Add Word' onClick={() => send()} />
       </div>
-      <NodeGraph nodes={nodes} edges={edges} onClick={(node: string) => console.log(`node ${node} is selected`)} />
+      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
     </div>
   )
 }

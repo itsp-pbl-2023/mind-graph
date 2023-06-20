@@ -86,31 +86,22 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
     node.wrappedText = wrapLongText(node.word)
   })
 
-
+  // SVG Objects
   const svg = d3.create("svg")
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
     .attr("style", "max-width: 100%; height: auto;");
+  const viewport = svg.append("g") 
 
-  // Add a line for each link, and a circle for each node.
-  const edge = svg.append("g")
+  const edge = viewport.append("g")
       .attr("stroke", "#00f")
       .attr("stroke-opacity", 0.6)
     .selectAll("line")
     .data(mutableEdges)
     .join("line")
     .attr("stroke-width",10);
-
-  // const node = svg.append("g")
-  //   .attr("stroke", "#aaa")
-  //   .attr("stroke-width", 1.5)
-  // .selectAll("circle")
-  // .data(mutableNodes)
-  // .join("circle")
-  //   .attr("r", d => calculateTextWidth(d.word, 10) / 2 + 10)
-  //   .attr("fill", "#faa")
-  const nodeWrapper = svg.append("g")
+  const nodeWrapper = viewport.append("g")
     .attr("stroke", "#aaa")
     .attr("stroke-width", 1.5)
   const node = nodeWrapper.selectAll("circle")
@@ -162,6 +153,11 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", tick);
   
+  
+  // イベントの定義
+  const zoom = (e: any) => {
+    viewport.attr("transform", e.transform)
+  }
   const dragstarted = (event: any, d: D3Node) => {
 
     if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -181,7 +177,7 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
   }
 
   let previousSelectedNode: D3Node | null = null;
-  const click = (event: any, d: D3Node) => {
+  const click = (_: any, d: D3Node) => {
     if (onClick) onClick(d.id)
     if (previousSelectedNode) previousSelectedNode.isSelected = false;
     d.isSelected = true;
@@ -190,6 +186,8 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
     // 選択を画面に反映
     node.attr("stroke-width", d => d.isSelected ? 3 : 1)
   }
+
+  svg.call(d3.zoom<any, any>().on("zoom", zoom))
 
   node.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
   node.on("click", click)

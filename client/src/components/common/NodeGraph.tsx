@@ -1,19 +1,6 @@
-// gRPC互換の型
-
 import { useEffect, useRef } from "react"
 import { GraphBuilder } from "../../lib/graph/graphBuilder"
-
-// TODO: gRPC実装後に消す
-export interface Node {
-  id: string
-  word: string
-  creatorId: string
-}
-
-export interface Edge {
-  nodeId1: string
-  nodeId2: string
-}
+import { Node, Edge } from "../../lib/api/api_pb"
 
 interface NodeGraphProps {
   nodes: Node[]
@@ -38,7 +25,6 @@ export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
         d3Wrapper.removeChild(svgNode)
       }
     }
-  
   }, [nodes, edges, onClick])
 
   return <>
