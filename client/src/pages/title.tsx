@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import logo from "../assets/mindgraphLogo.jpg"
+import Logo from "../assets/Logo.svg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
@@ -39,7 +39,7 @@ const Title = () => {
         <TitleText>Mind Graph</TitleText>
         <SubTitleText>Minna no Nou wo Kashikasuru.</SubTitleText>
 
-        <img src={logo} alt="Mind graph logo" />
+        <img src={Logo}  alt="Mind graph logo" width={300}/>
 
         <p>名前を入力</p>
         <form>
