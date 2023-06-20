@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateNodeRequest, Edge, Empty, HelloRequest, HelloResponse, ThemeRequest } from "./api_pb.js";
+import { CreateEdgeRequest, CreateNodeRequest, Empty, HelloRequest, HelloResponse, ThemeRequest, VoteWordRequest } from "./api_pb.js";
 
 export const typeName = "mindgraph.MindGraphService";
 
@@ -69,10 +69,27 @@ export const createEdge = createQueryService({
       createEdge: {
         name: "CreateEdge",
         kind: MethodKind.Unary,
-        I: Edge,
+        I: CreateEdgeRequest,
         O: Empty,
       },
     },
     typeName: "mindgraph.MindGraphService",
   },
 }).createEdge;
+
+/**
+ * @generated from rpc mindgraph.MindGraphService.VoteWord
+ */
+export const voteWord = createQueryService({
+  service: {
+    methods: {
+      voteWord: {
+        name: "VoteWord",
+        kind: MethodKind.Unary,
+        I: VoteWordRequest,
+        O: Empty,
+      },
+    },
+    typeName: "mindgraph.MindGraphService",
+  },
+}).voteWord;

@@ -6,8 +6,8 @@ import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
-import { useName } from '../lib/hooks/name.ts'
 import { Node, Edge } from "../lib/api/api_pb.ts"
+import { getUserID } from '../lib/state/user.ts'
 
 const dummyNodes = [
   {id: "a", word: "これは"},
@@ -42,12 +42,11 @@ const Game = () => {
   // 読み込んでから60秒
   const [expireDummy] = useState(new Date(new Date().getTime() + 1000*1000))
 
-  const name = useName()
   const [text, setText] = useState('')
 
   const send = () => {
     if (text === '') return
-    client.createNode({ word: text, creatorId: name })
+    client.createNode({ word: text, creatorId: getUserID() })
     setText('')
   }
 
