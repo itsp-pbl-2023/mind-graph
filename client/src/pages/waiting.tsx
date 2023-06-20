@@ -32,7 +32,7 @@ const Waiting = () => {
     <div>
       <div>
         <h1>Waiting</h1>
-        <Button text="ゲームを開始する" onClick={testSetTheme} width="400px"></Button>
+        <Button text="ゲームを開始する" onClick={testSetTheme}></Button>
         <p>This is the waiting page {}</p>
         <UserList />
 

@@ -39,7 +39,7 @@ const Game = () => {
             onChange={(e) => setText(e.target.value)}
             value = {text} 
             style={{backgroundColor: "white", borderRadius: "25px", height: "30px", width: "400px", color: "black", textAlign: "center"}}/>
-        <Button text='送信' onClick={() => send()} width="200px"/>
+        <Button text='送信' onClick={() => send()}/>
       </div>
     </div>
   )

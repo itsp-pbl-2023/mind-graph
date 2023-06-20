@@ -36,7 +36,7 @@ const Title = () => {
             value = {userName} 
             style={{backgroundColor: "white", borderRadius: "25px", height: "30px", width: "400px", color: "black", textAlign: "center"}}/>
           </div>
-          <Button text="送信" onClick={navigateToWaiting} width="300px"></Button>
+          <Button text="送信" onClick={navigateToWaiting}></Button>
         </form>
       </div> 
     )

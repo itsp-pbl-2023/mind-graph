@@ -1,14 +1,6 @@
 declare type onClickHandler = () => void
 
-const Button = (
-    { text, 
-      onClick,
-      width}: { 
-        text: string, 
-        onClick: onClickHandler,
-        width: string,
-      },
-    ) => {
+const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) => {
 
     const onClickHander = () => {
         onClick();
@@ -20,7 +12,7 @@ const Button = (
                     border : "none",
                     borderRadius : "25px",
                     height : "30px",
-                    width}}>
+                    }}>
         <span style={{color: "black"}}> { text } </span>
       </div>
     )
