@@ -8,8 +8,9 @@ import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
 import { useName } from '../lib/hooks/name.ts'
 import styled from 'styled-components'
+import { D3Node } from "../lib/graph/graphBuilder.ts"
 
-const nodes = [
+const dummyNodes = [
   {id: "a", word: "これは"},
   {id: "b", word: "テストの"},
   {id: "c", word: "ノードグラフ"},
@@ -22,7 +23,7 @@ const nodes = [
   {id: "j", word: "( ﾟДﾟ)"},
 ] as Node[]
 
-const edges = [
+const dummyEdges = [
   {nodeId1: "a", nodeId2: "b"},
   {nodeId1: "b", nodeId2: "c"},
   {nodeId1: "c", nodeId2: "d"},
@@ -60,6 +61,10 @@ const Game = () => {
     border: 1px solid #000;
   `
 
+  // ノード関連
+  const [nodes, setNodes] = useState<Node[]>(dummyNodes)
+  const [edges, setEdges] = useState<Edge[]>(dummyEdges)
+
   return (
     <div>
       <ThemeDisplay />
@@ -71,7 +76,7 @@ const Game = () => {
         <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
         <Button text='Add Word' onClick={() => send()} />
       </div>
-      <NodeGraph nodes={nodes} edges={edges} />
+      <NodeGraph nodes={nodes} edges={edges} onClick={(node: string) => console.log(`node ${node} is selected`)} />
     </div>
   )
 }

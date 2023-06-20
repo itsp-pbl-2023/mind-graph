@@ -10,7 +10,7 @@ interface Node {
 }
 
 // connection
-interface NodeWithD3Attr {
+export interface NodeWithD3Attr {
   connectionCount: number
   fontSize: number
   radius: number
@@ -30,8 +30,8 @@ interface Edge {
   nodeId2: string
 }
 
-type D3Node = d3.SimulationNodeDatum & Node & NodeWithD3Attr
-type D3Edge = d3.SimulationLinkDatum<D3Node>
+export type D3Node = d3.SimulationNodeDatum & Node & NodeWithD3Attr
+export type D3Edge = d3.SimulationLinkDatum<D3Node>
 
 // テキストの幅を計算するためにcanvasを使う
 const MAX_TEXT_LENGTH = 10

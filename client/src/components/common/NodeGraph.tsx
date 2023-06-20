@@ -1,7 +1,7 @@
 // gRPC互換の型
 
-import { useEffect, useRef, useState } from "react"
-import { GraphBuilder } from "../../lib/graph/graphBuilder"
+import { useEffect, useRef } from "react"
+import { D3Node, GraphBuilder } from "../../lib/graph/graphBuilder"
 
 // TODO: gRPC実装後に消す
 export interface Node {
@@ -18,15 +18,16 @@ export interface Edge {
 interface NodeGraphProps {
   nodes: Node[]
   edges: Edge[]
+  onClick: (id: string) => void
 }
 
-export const NodeGraph = ({nodes, edges}: NodeGraphProps) => {
+export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
   const d3WrapperRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const {
       svg,
       dispose
-    } = GraphBuilder(nodes, edges, 1000, 600)
+    } = GraphBuilder(nodes, edges, 1000, 600, onClick)
 
     const svgNode = svg.node()
     const d3Wrapper = d3WrapperRef.current
