@@ -1,3 +1,4 @@
+import "./button.css"
 declare type onClickHandler = () => void
 
 const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) => {
@@ -7,9 +8,9 @@ const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) =>
     }
 
     return (
-      <div onClick={onClickHander} style={{backgroundColor : "gray"}}>
+      <button onClick={onClickHander} style={{backgroundColor : "gray"}}>
         <span> { text } </span>
-      </div>
+      </button>
     )
   }
   
