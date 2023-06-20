@@ -1,34 +1,10 @@
-import {ChangeEvent} from "react"
+import styled from "styled-components"
 
-declare type onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => void
+const InputForm = styled.input`
+  color: black;
+  background-color: white;
+  border-radius: 25px;
+  text-align: center;
+`
 
-const Input = (
-    { text, 
-      onChange,
-      width,
-      value}: { 
-        text: string, 
-        onChange: onChangeHandler,
-        width: string,
-        value: string
-      },
-    ) => {
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange(e);
-    }
-
-    return (
-      <div  onChange={onChangeHandler} 
-            style={{backgroundColor : "white",
-                    border : "none",
-                    borderRadius : "25px",
-                    height : "30px",
-                    width}}
-            >
-        <div contentEditable="true" style={{color: "grey"}}> { text } </div>
-      </div>
-    )
-  }
-  
-  export default Input
+export default InputForm

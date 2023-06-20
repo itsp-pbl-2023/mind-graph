@@ -3,9 +3,11 @@ import logo from "../assets/mindgraphLogo.jpg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
-import Input from "../components/input"
+import InputForm from "../components/input"
+
 
 const Title = () => {
+
 
   const [userName, setUserName] = useState("");
 
@@ -32,9 +34,7 @@ const Title = () => {
         <p>名前を入力</p>
         <form>
           <div>
-            <label htmlFor="name">名前</label>
-            <Input text="名前の入力" onChange={handleChange} width="400px" value = {userName}></Input>
-            <input type="text" onChange={handleChange} value = {userName}/>
+            <InputForm type="text" onChange={handleChange} value = {userName} placeholder="名前の入力"></InputForm>
           </div>
           <Button text="送信" onClick={navigateToWaiting}></Button>
         </form>
