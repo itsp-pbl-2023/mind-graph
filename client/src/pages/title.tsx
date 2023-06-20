@@ -3,6 +3,7 @@ import logo from "../assets/mindgraphLogo.jpg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
+import "./title.css"
 
 const Title = () => {
 
@@ -23,8 +24,8 @@ const Title = () => {
   //TODO コンポーネントを置き換える
     return (
       <div>
-        <h1>MIND GRAPH</h1>
-        <p>MINNA NO NOU WO KASHIKASURU</p>
+        <p className="title">MIND GRAPH</p>
+        <p className="sub-title">MINNA NO NOU WO KASHIKASURU</p>
 
         <img src={logo} alt="Mind graph logo" />
 
