@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+JP&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
 
 :root {
   font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+  font-weight: 400;
   line-height: 1.5;
 
   color-scheme: light dark;
