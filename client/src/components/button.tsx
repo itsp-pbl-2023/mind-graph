@@ -1,5 +1,21 @@
-import "./button.css"
+import styled from "styled-components"
+
 declare type onClickHandler = () => void
+
+const ButtonStyle = styled.button`
+  border-radius: 99px;
+  border: 4px solid;
+  padding: 0.5em 4em;
+  font-family: inherit;
+  background-color: var(--accent-color);
+  cursor: pointer;
+  transition: background-color 0.25s;
+  margin: 4px;
+
+  &:hover {
+    background-color: var(--accent-color-hover);
+  }
+`
 
 const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) => {
 
@@ -8,9 +24,9 @@ const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) =>
     }
 
     return (
-      <button onClick={onClickHander}>
-        <span> { text } </span>
-      </button>
+      <ButtonStyle onClick={onClickHander}>
+          { text }
+      </ButtonStyle>
     )
   }
   
