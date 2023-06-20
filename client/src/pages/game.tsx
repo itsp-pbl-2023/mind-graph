@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
 import { useName } from '../lib/hooks/name.ts'
+import styled from 'styled-components'
 
 const nodes = [
   {id: "a", word: "a"},
@@ -39,7 +40,7 @@ const Game = () => {
 
   // ダミー変数
   // 読み込んでから60秒
-  const [expireDummy] = useState(new Date(new Date().getTime() + 10*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 1000*1000))
 
   const name = useName()
   const [text, setText] = useState('')
@@ -54,6 +55,10 @@ const Game = () => {
     console.log(`new event ${event.event.case}`)
     console.log(event)
   }, []))
+
+  const explainBox = styled.p`
+    border: 1px solid #000;
+  `
 
   return (
     <div>

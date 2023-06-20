@@ -29,11 +29,12 @@ export const NodeGraph = ({nodes, edges}: NodeGraphProps) => {
     } = GraphBuilder(nodes, edges, 1000, 600)
 
     const svgNode = svg.node()
-    if (svgNode) {
-      d3WrapperRef.current?.appendChild(svgNode)
+    const d3Wrapper = d3WrapperRef.current
+    if (svgNode && d3Wrapper) {
+      d3Wrapper.appendChild(svgNode)
       return () => {
         dispose()
-        d3WrapperRef.current?.removeChild(svgNode)
+        d3Wrapper.removeChild(svgNode)
       }
     }
   
