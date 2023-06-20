@@ -17,7 +17,7 @@ const nodes = [
   {id: "e", word: "ドラッグアンドドロップして"},
   {id: "f", word: "グラフを"},
   {id: "g", word: "変形してみよう"},
-  {id: "h", word: "これはなんかすごく長いノードのテスト。マジで長い文章まで入れられることになっている。"},
+  {id: "h", word: "これはなんかすごく長いノードのテスト"},
   {id: "i", word: "ﾜｧ..!"},
   {id: "j", word: "( ﾟДﾟ)"},
 ] as Node[]
@@ -27,7 +27,7 @@ const edges = [
   {nodeId1: "b", nodeId2: "c"},
   {nodeId1: "c", nodeId2: "d"},
   {nodeId1: "d", nodeId2: "a"},
-  {nodeId1: "e", nodeId2: "f"},
+  {nodeId1: "f", nodeId2: "e"},
   {nodeId1: "f", nodeId2: "g"},
   {nodeId1: "g", nodeId2: "h"},
   {nodeId1: "h", nodeId2: "a"},

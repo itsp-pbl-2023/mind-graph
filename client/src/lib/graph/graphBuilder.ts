@@ -10,8 +10,19 @@ interface Node {
 }
 
 // connection
-interface NodeWithConnection {
+interface NodeWithD3Attr {
   connectionCount: number
+  fontSize: number
+  radius: number
+  wrappedText: string
+  isSelected: boolean
+}
+const NODE_WIDTH_D3ATTR_DEFAULT = {
+  connectionCount: 0,
+  fontSize: 0,
+  radius: 0,
+  wrappedText: '',
+  isSelected: false,
 }
 
 interface Edge {
@@ -19,35 +30,48 @@ interface Edge {
   nodeId2: string
 }
 
-type D3Node = d3.SimulationNodeDatum & Node & NodeWithConnection
+type D3Node = d3.SimulationNodeDatum & Node & NodeWithD3Attr
 type D3Edge = d3.SimulationLinkDatum<D3Node>
 
 // テキストの幅を計算するためにcanvasを使う
+const MAX_TEXT_LENGTH = 10
 const canvasForCalcTextWidth = document.createElement("canvas")
-const ctxForCalcTextWidth = canvasForCalcTextWidth.getContext("2d")!
+const ctxForCalcTextWidth = canvasForCalcTextWidth.getContext("2d")
 
 const calculateTextWidth = (text: string, fontSize: number) => {
+  if (!ctxForCalcTextWidth) return 0;
   ctxForCalcTextWidth.font = `${fontSize}px sans-serif`
-  return ctxForCalcTextWidth.measureText(text).width
+  return ctxForCalcTextWidth.measureText(text.slice(0, MAX_TEXT_LENGTH)).width
 }
 
 const calculateFontSizeFromConnection = (connectionCount: number) => {
   const minFontSize = 10
   const maxFontSize = 30
   const minConnectionCount = 1
-  const maxConnectionCount = 10
+  const maxConnectionCount = 5
   const fontSize = (maxFontSize - minFontSize) * (connectionCount - minConnectionCount) / (maxConnectionCount - minConnectionCount) + minFontSize
   return fontSize
 }
 
+const wrapLongText = (text: string) => {
+  if (text.length < MAX_TEXT_LENGTH) {
+    return text
+  }
+  let resultText = ''
+  for(let i = 0; i < text.length; i += MAX_TEXT_LENGTH) {
+    resultText += text.slice(i, i + MAX_TEXT_LENGTH) + '<tbreak />'
+  }
+  return resultText
+}
+
 // グラフの描画
-export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height: number) => {
-  const mutableNodes = nodes.map(node => ({...node, connectionCount: 0}) as D3Node)
+export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height: number, onClick: (nodeId: string) => void) => {
+  const mutableNodes = nodes.map<D3Node>(node => ({...node, ...NODE_WIDTH_D3ATTR_DEFAULT}))
   const nodeTable: Record<string, D3Node> = {}
   mutableNodes.forEach(node => {
     nodeTable[node.id] = node
   })
-  const mutableEdges = edges.map(edge => ({source: edge.nodeId1, target: edge.nodeId2}) as D3Edge)
+  const mutableEdges = edges.map<D3Edge>(edge => ({source: edge.nodeId1, target: edge.nodeId2}))
 
   // ノードの接続数を計算
   edges.forEach(edge => {
@@ -55,6 +79,12 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
     nodeTable[edge.nodeId2].connectionCount++
   });
 
+  // 接続数から各種D3用の属性を計算
+  mutableNodes.forEach(node => {
+    node.fontSize = calculateFontSizeFromConnection(node.connectionCount)
+    node.radius = calculateTextWidth(node.word, node.fontSize) / 2 + 10
+    node.wrappedText = wrapLongText(node.word)
+  })
 
 
   const svg = d3.create("svg")
@@ -70,7 +100,7 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
     .selectAll("line")
     .data(mutableEdges)
     .join("line")
-    . attr("stroke-width",10);
+    .attr("stroke-width",10);
 
   // const node = svg.append("g")
   //   .attr("stroke", "#aaa")
@@ -80,30 +110,31 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
   // .join("circle")
   //   .attr("r", d => calculateTextWidth(d.word, 10) / 2 + 10)
   //   .attr("fill", "#faa")
-  const node = svg.append("g")
-  .attr("stroke", "#00f")
-  .attr("stroke-opacity", 0.6)
-  .selectAll("circle")
+  const nodeWrapper = svg.append("g")
+    .attr("stroke", "#aaa")
+    .attr("stroke-width", 1.5)
+  const node = nodeWrapper.selectAll("circle")
   .data(mutableNodes)
   .join("circle")
-    .attr("r", d => calculateTextWidth(d.word, calculateFontSizeFromConnection(d.connectionCount)) / 2 + 10)
+    .attr("r", d => d.radius)
     .attr("fill", "#faa")
     .attr("stroke", "#000")
-    .attr("stroke-width", 1.5)
-    .attr("style", "cursor: pointer;pointer-events: none;");
+    .attr("stroke-width", d => d.isSelected ? 3 : 1)
+    .attr("style", "cursor: pointer;");
   
-  const nodeText = svg.append("g")
-  .attr("stroke", "#000")
-  .attr("stroke-width", 1)
-  .selectAll("text")
-  .data(mutableNodes)
-  .join("text")
-    .text(d => d.word)
-    .attr("font-size", d => calculateFontSizeFromConnection(d.connectionCount))
-    .attr("fill", "#000")
+  const nodeText = nodeWrapper
+    .selectAll("text")
+    .data(mutableNodes)
+    .join("text")
+    // directly input svg text
+    .html(d => d.wrappedText)
+    .attr("width", 30)
+    .attr("font-size", d => d.fontSize)
+    .attr("stroke-width", 1.5)
+    .attr("stroke", "#000")
     .attr("text-anchor", "middle")
     .attr("dominant-baseline", "middle")
-    .attr("style", "cursor: pointer;user-select: none;");
+    .attr("style", "width: 100px;cursor: pointer;user-select: none;pointer-events: none;");
 
   node.append("title").text(d => d.word);
     
@@ -121,10 +152,13 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
       .attr("x", (d) => d.x as number)
       .attr("y", (d) => d.y as number);
   }
+
+  const forceManyConfig = d3.forceManyBody<D3Node>()
+    .strength(d => -0.3 * d.radius * d.radius)
   
   const simulation = d3.forceSimulation(mutableNodes)
     .force("link", d3.forceLink<D3Node, D3Edge>(mutableEdges).id(d => d.id))
-    .force("charge", d3.forceManyBody())
+    .force("charge", forceManyConfig)
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", tick);
   
@@ -146,8 +180,20 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
     d.fy = null;
   }
 
+  let previousSelectedNode: D3Node | null = null;
+  const click = (event: any, d: D3Node) => {
+    if (onClick) onClick(d.id)
+    if (previousSelectedNode) previousSelectedNode.isSelected = false;
+    d.isSelected = true;
+    previousSelectedNode = d;
+    
+    // 選択を画面に反映
+    node.attr("stroke-width", d => d.isSelected ? 3 : 1)
+  }
+
   node.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
-  nodeText.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
+  node.on("click", click)
+  // nodeText.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
   // node.call(d3.drag<Element, D3Node>()
   //   .on("start", dragstarted)
   //   .on("drag", dragged)
