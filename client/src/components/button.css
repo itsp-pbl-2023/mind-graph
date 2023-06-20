@@ -5,12 +5,12 @@ button {
     font-family: inherit;
     background-color: var(--accent-color);
     cursor: pointer;
-    transition: border-color 0.25s;
+    transition: background-color 0.25s;
     margin: 4px;
     
   }
   button:hover {
-    border-color: var(--secondary-color);
+    background-color: var(--accent-color-hover);
   }
   button:focus,
   button:focus-visible {
