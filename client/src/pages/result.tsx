@@ -6,7 +6,7 @@ import { getResult } from '../lib/state/result.ts'
 const Result = () => {
   const navigate = useNavigate()
   const returnToTitle = () => {
-    navigate('/Title')
+    navigate('/title')
   }
 
   return (
