@@ -8,7 +8,6 @@ import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
 import { useName } from '../lib/hooks/name.ts'
 import styled from 'styled-components'
-import { D3Node } from "../lib/graph/graphBuilder.ts"
 
 const dummyNodes = [
   {id: "a", word: "これは"},
