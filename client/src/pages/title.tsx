@@ -8,7 +8,6 @@ import {styled, createGlobalStyle} from "styled-components"
 const Page = styled.div `
   padding: 20px 0px;
   min-width: 100vw;
-  min-height: 100v;
 `
 
 const TitleText = styled.p`
