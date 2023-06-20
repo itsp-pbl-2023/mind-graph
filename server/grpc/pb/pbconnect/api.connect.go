@@ -46,6 +46,9 @@ const (
 	// MindGraphServiceCreateEdgeProcedure is the fully-qualified name of the MindGraphService's
 	// CreateEdge RPC.
 	MindGraphServiceCreateEdgeProcedure = "/mindgraph.MindGraphService/CreateEdge"
+	// MindGraphServiceVoteWordProcedure is the fully-qualified name of the MindGraphService's VoteWord
+	// RPC.
+	MindGraphServiceVoteWordProcedure = "/mindgraph.MindGraphService/VoteWord"
 )
 
 // MindGraphServiceClient is a client for the mindgraph.MindGraphService service.
@@ -55,6 +58,7 @@ type MindGraphServiceClient interface {
 	SetTheme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error)
 	CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.Empty], error)
 	CreateEdge(context.Context, *connect_go.Request[pb.Edge]) (*connect_go.Response[pb.Empty], error)
+	VoteWord(context.Context, *connect_go.Request[pb.VoteWordRequest]) (*connect_go.Response[pb.Empty], error)
 }
 
 // NewMindGraphServiceClient constructs a client for the mindgraph.MindGraphService service. By
@@ -92,6 +96,11 @@ func NewMindGraphServiceClient(httpClient connect_go.HTTPClient, baseURL string,
 			baseURL+MindGraphServiceCreateEdgeProcedure,
 			opts...,
 		),
+		voteWord: connect_go.NewClient[pb.VoteWordRequest, pb.Empty](
+			httpClient,
+			baseURL+MindGraphServiceVoteWordProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -102,6 +111,7 @@ type mindGraphServiceClient struct {
 	setTheme   *connect_go.Client[pb.ThemeRequest, pb.Empty]
 	createNode *connect_go.Client[pb.CreateNodeRequest, pb.Empty]
 	createEdge *connect_go.Client[pb.Edge, pb.Empty]
+	voteWord   *connect_go.Client[pb.VoteWordRequest, pb.Empty]
 }
 
 // Hello calls mindgraph.MindGraphService.Hello.
@@ -129,6 +139,11 @@ func (c *mindGraphServiceClient) CreateEdge(ctx context.Context, req *connect_go
 	return c.createEdge.CallUnary(ctx, req)
 }
 
+// VoteWord calls mindgraph.MindGraphService.VoteWord.
+func (c *mindGraphServiceClient) VoteWord(ctx context.Context, req *connect_go.Request[pb.VoteWordRequest]) (*connect_go.Response[pb.Empty], error) {
+	return c.voteWord.CallUnary(ctx, req)
+}
+
 // MindGraphServiceHandler is an implementation of the mindgraph.MindGraphService service.
 type MindGraphServiceHandler interface {
 	Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error)
@@ -136,6 +151,7 @@ type MindGraphServiceHandler interface {
 	SetTheme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error)
 	CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.Empty], error)
 	CreateEdge(context.Context, *connect_go.Request[pb.Edge]) (*connect_go.Response[pb.Empty], error)
+	VoteWord(context.Context, *connect_go.Request[pb.VoteWordRequest]) (*connect_go.Response[pb.Empty], error)
 }
 
 // NewMindGraphServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -170,6 +186,11 @@ func NewMindGraphServiceHandler(svc MindGraphServiceHandler, opts ...connect_go.
 		svc.CreateEdge,
 		opts...,
 	))
+	mux.Handle(MindGraphServiceVoteWordProcedure, connect_go.NewUnaryHandler(
+		MindGraphServiceVoteWordProcedure,
+		svc.VoteWord,
+		opts...,
+	))
 	return "/mindgraph.MindGraphService/", mux
 }
 
@@ -194,4 +215,8 @@ func (UnimplementedMindGraphServiceHandler) CreateNode(context.Context, *connect
 
 func (UnimplementedMindGraphServiceHandler) CreateEdge(context.Context, *connect_go.Request[pb.Edge]) (*connect_go.Response[pb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.CreateEdge is not implemented"))
+}
+
+func (UnimplementedMindGraphServiceHandler) VoteWord(context.Context, *connect_go.Request[pb.VoteWordRequest]) (*connect_go.Response[pb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.VoteWord is not implemented"))
 }

@@ -370,6 +370,49 @@ export class CreateNodeRequest extends Message<CreateNodeRequest> {
 }
 
 /**
+ * @generated from message mindgraph.VoteWordRequest
+ */
+export class VoteWordRequest extends Message<VoteWordRequest> {
+  /**
+   * @generated from field: string node_id = 1;
+   */
+  nodeId = "";
+
+  /**
+   * @generated from field: string sender_id = 2;
+   */
+  senderId = "";
+
+  constructor(data?: PartialMessage<VoteWordRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.VoteWordRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "node_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "sender_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): VoteWordRequest {
+    return new VoteWordRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): VoteWordRequest {
+    return new VoteWordRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): VoteWordRequest {
+    return new VoteWordRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: VoteWordRequest | PlainMessage<VoteWordRequest> | undefined, b: VoteWordRequest | PlainMessage<VoteWordRequest> | undefined): boolean {
+    return proto3.util.equals(VoteWordRequest, a, b);
+  }
+}
+
+/**
  * @generated from message mindgraph.UserJoinedEvent
  */
 export class UserJoinedEvent extends Message<UserJoinedEvent> {
@@ -577,6 +620,96 @@ export class EdgeUpdateEvent extends Message<EdgeUpdateEvent> {
 }
 
 /**
+ * 誰かが投票を済ませた
+ *
+ * @generated from message mindgraph.VoteProgressEvent
+ */
+export class VoteProgressEvent extends Message<VoteProgressEvent> {
+  /**
+   * @generated from field: repeated string finished_user_ids = 1;
+   */
+  finishedUserIds: string[] = [];
+
+  constructor(data?: PartialMessage<VoteProgressEvent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.VoteProgressEvent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "finished_user_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): VoteProgressEvent {
+    return new VoteProgressEvent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): VoteProgressEvent {
+    return new VoteProgressEvent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): VoteProgressEvent {
+    return new VoteProgressEvent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: VoteProgressEvent | PlainMessage<VoteProgressEvent> | undefined, b: VoteProgressEvent | PlainMessage<VoteProgressEvent> | undefined): boolean {
+    return proto3.util.equals(VoteProgressEvent, a, b);
+  }
+}
+
+/**
+ * 全員の投票が終わり結果が定まった
+ *
+ * @generated from message mindgraph.ResultEvent
+ */
+export class ResultEvent extends Message<ResultEvent> {
+  /**
+   * @generated from field: string chosen_node_id = 1;
+   */
+  chosenNodeId = "";
+
+  /**
+   * @generated from field: string mvp_user_id = 2;
+   */
+  mvpUserId = "";
+
+  /**
+   * @generated from field: int32 my_score = 3;
+   */
+  myScore = 0;
+
+  constructor(data?: PartialMessage<ResultEvent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.ResultEvent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "chosen_node_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "mvp_user_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "my_score", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ResultEvent {
+    return new ResultEvent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ResultEvent {
+    return new ResultEvent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ResultEvent {
+    return new ResultEvent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ResultEvent | PlainMessage<ResultEvent> | undefined, b: ResultEvent | PlainMessage<ResultEvent> | undefined): boolean {
+    return proto3.util.equals(ResultEvent, a, b);
+  }
+}
+
+/**
  * @generated from message mindgraph.Event
  */
 export class Event extends Message<Event> {
@@ -613,6 +746,18 @@ export class Event extends Message<Event> {
      */
     value: EdgeUpdateEvent;
     case: "edgeUpdated";
+  } | {
+    /**
+     * @generated from field: mindgraph.VoteProgressEvent vote_progress = 6;
+     */
+    value: VoteProgressEvent;
+    case: "voteProgress";
+  } | {
+    /**
+     * @generated from field: mindgraph.ResultEvent result = 7;
+     */
+    value: ResultEvent;
+    case: "result";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<Event>) {
@@ -628,6 +773,8 @@ export class Event extends Message<Event> {
     { no: 3, name: "theme_confirmed", kind: "message", T: ThemeConfirmedEvent, oneof: "event" },
     { no: 4, name: "node_updated", kind: "message", T: NodeUpdateEvent, oneof: "event" },
     { no: 5, name: "edge_updated", kind: "message", T: EdgeUpdateEvent, oneof: "event" },
+    { no: 6, name: "vote_progress", kind: "message", T: VoteProgressEvent, oneof: "event" },
+    { no: 7, name: "result", kind: "message", T: ResultEvent, oneof: "event" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Event {

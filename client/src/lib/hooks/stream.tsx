@@ -23,6 +23,7 @@ export class Stream {
 
   private async loop(stream: AsyncIterable<Event>): Promise<void> {
     for await (const event of stream) {
+      console.log(`new event received ${event.event.case}: ${JSON.stringify(event.event.value)}`)
       this.handlers.forEach(handler => handler(event))
     }
   }

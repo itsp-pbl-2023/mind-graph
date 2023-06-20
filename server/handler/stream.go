@@ -43,6 +43,19 @@ func (m *mindGraphService) removeUser(conn *userConnection) {
 	m.users = lo.Without(m.users, conn)
 }
 
+func (m *mindGraphService) broadcastVary(gen func(user *userConnection) *pb.Event) {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+
+	for _, user := range m.users {
+		// non-blocking send
+		select {
+		case user.send <- gen(user):
+		default:
+		}
+	}
+}
+
 func (m *mindGraphService) broadcast(event *pb.Event) {
 	m.lock.Lock()
 	defer m.lock.Unlock()
