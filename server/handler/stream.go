@@ -81,6 +81,12 @@ func (m *mindGraphService) Join(ctx context.Context, c *connect.Request[pb.JoinR
 
 	m.addUser(conn)
 
+	// notify user id
+	err := s.Send(&pb.Event{Event: &pb.Event_MyId{MyId: &pb.MyIDEvent{UserId: conn.id}}})
+	if err != nil {
+		return err
+	}
+
 	// send joined event
 	m.broadcast(&pb.Event{Event: &pb.Event_Joined{Joined: &pb.UserJoinedEvent{
 		Name:         conn.name,

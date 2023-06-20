@@ -462,6 +462,45 @@ export class VoteWordRequest extends Message<VoteWordRequest> {
 }
 
 /**
+ * 自分のuser idを知らせる
+ *
+ * @generated from message mindgraph.MyIDEvent
+ */
+export class MyIDEvent extends Message<MyIDEvent> {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId = "";
+
+  constructor(data?: PartialMessage<MyIDEvent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.MyIDEvent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "user_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MyIDEvent {
+    return new MyIDEvent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MyIDEvent {
+    return new MyIDEvent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MyIDEvent {
+    return new MyIDEvent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: MyIDEvent | PlainMessage<MyIDEvent> | undefined, b: MyIDEvent | PlainMessage<MyIDEvent> | undefined): boolean {
+    return proto3.util.equals(MyIDEvent, a, b);
+  }
+}
+
+/**
  * @generated from message mindgraph.UserJoinedEvent
  */
 export class UserJoinedEvent extends Message<UserJoinedEvent> {
@@ -767,43 +806,49 @@ export class Event extends Message<Event> {
    */
   event: {
     /**
-     * @generated from field: mindgraph.UserJoinedEvent joined = 1;
+     * @generated from field: mindgraph.MyIDEvent my_id = 1;
+     */
+    value: MyIDEvent;
+    case: "myId";
+  } | {
+    /**
+     * @generated from field: mindgraph.UserJoinedEvent joined = 2;
      */
     value: UserJoinedEvent;
     case: "joined";
   } | {
     /**
-     * @generated from field: mindgraph.UserLeftEvent left = 2;
+     * @generated from field: mindgraph.UserLeftEvent left = 3;
      */
     value: UserLeftEvent;
     case: "left";
   } | {
     /**
-     * @generated from field: mindgraph.ThemeConfirmedEvent theme_confirmed = 3;
+     * @generated from field: mindgraph.ThemeConfirmedEvent theme_confirmed = 4;
      */
     value: ThemeConfirmedEvent;
     case: "themeConfirmed";
   } | {
     /**
-     * @generated from field: mindgraph.NodeUpdateEvent node_updated = 4;
+     * @generated from field: mindgraph.NodeUpdateEvent node_updated = 5;
      */
     value: NodeUpdateEvent;
     case: "nodeUpdated";
   } | {
     /**
-     * @generated from field: mindgraph.EdgeUpdateEvent edge_updated = 5;
+     * @generated from field: mindgraph.EdgeUpdateEvent edge_updated = 6;
      */
     value: EdgeUpdateEvent;
     case: "edgeUpdated";
   } | {
     /**
-     * @generated from field: mindgraph.VoteProgressEvent vote_progress = 6;
+     * @generated from field: mindgraph.VoteProgressEvent vote_progress = 7;
      */
     value: VoteProgressEvent;
     case: "voteProgress";
   } | {
     /**
-     * @generated from field: mindgraph.ResultEvent result = 7;
+     * @generated from field: mindgraph.ResultEvent result = 8;
      */
     value: ResultEvent;
     case: "result";
@@ -817,13 +862,14 @@ export class Event extends Message<Event> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "mindgraph.Event";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "joined", kind: "message", T: UserJoinedEvent, oneof: "event" },
-    { no: 2, name: "left", kind: "message", T: UserLeftEvent, oneof: "event" },
-    { no: 3, name: "theme_confirmed", kind: "message", T: ThemeConfirmedEvent, oneof: "event" },
-    { no: 4, name: "node_updated", kind: "message", T: NodeUpdateEvent, oneof: "event" },
-    { no: 5, name: "edge_updated", kind: "message", T: EdgeUpdateEvent, oneof: "event" },
-    { no: 6, name: "vote_progress", kind: "message", T: VoteProgressEvent, oneof: "event" },
-    { no: 7, name: "result", kind: "message", T: ResultEvent, oneof: "event" },
+    { no: 1, name: "my_id", kind: "message", T: MyIDEvent, oneof: "event" },
+    { no: 2, name: "joined", kind: "message", T: UserJoinedEvent, oneof: "event" },
+    { no: 3, name: "left", kind: "message", T: UserLeftEvent, oneof: "event" },
+    { no: 4, name: "theme_confirmed", kind: "message", T: ThemeConfirmedEvent, oneof: "event" },
+    { no: 5, name: "node_updated", kind: "message", T: NodeUpdateEvent, oneof: "event" },
+    { no: 6, name: "edge_updated", kind: "message", T: EdgeUpdateEvent, oneof: "event" },
+    { no: 7, name: "vote_progress", kind: "message", T: VoteProgressEvent, oneof: "event" },
+    { no: 8, name: "result", kind: "message", T: ResultEvent, oneof: "event" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Event {

@@ -3,6 +3,7 @@ import { client } from '../client.ts'
 import { Event } from '../api/api_pb.ts'
 import { Code, ConnectError } from '@bufbuild/connect'
 import { useName } from './name.ts'
+import { setUserID } from '../state/user.ts'
 
 export type eventHandler = (event: Event) => void
 
@@ -11,6 +12,9 @@ export class Stream {
 
   constructor(name: string, signal: AbortSignal) {
     this.handlers = []
+    this.handlers.push((e) => {
+      if (e.event.case === 'myId') setUserID(e.event.value.userId)
+    })
 
     const stream = client.join({ name }, { signal })
     this.loop(stream).catch((err) => {
