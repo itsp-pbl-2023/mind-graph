@@ -43,6 +43,19 @@ func (m *mindGraphService) removeUser(conn *userConnection) {
 	m.users = lo.Without(m.users, conn)
 }
 
+func (m *mindGraphService) broadcastVary(gen func(user *userConnection) *pb.Event) {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+
+	for _, user := range m.users {
+		// non-blocking send
+		select {
+		case user.send <- gen(user):
+		default:
+		}
+	}
+}
+
 func (m *mindGraphService) broadcast(event *pb.Event) {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -67,6 +80,12 @@ func (m *mindGraphService) Join(ctx context.Context, c *connect.Request[pb.JoinR
 	defer log.Printf("close user connection id: %v, name: %v\n", conn.id, conn.name)
 
 	m.addUser(conn)
+
+	// notify user id
+	err := s.Send(&pb.Event{Event: &pb.Event_MyId{MyId: &pb.MyIDEvent{UserId: conn.id}}})
+	if err != nil {
+		return err
+	}
 
 	// send joined event
 	m.broadcast(&pb.Event{Event: &pb.Event_Joined{Joined: &pb.UserJoinedEvent{
