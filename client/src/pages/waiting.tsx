@@ -22,13 +22,6 @@ const Waiting = () => {
   }
 
   useOnEvent(useCallback((event) => {
-    if(event.event.case === "themeConfirmed"){
-      setTheme(event.event.value.theme)
-      navigate("/game")
-    }
-  }, []))
-
-  useOnEvent(useCallback((event) => {
     if (event.event.case == 'joined'){
       setUsers(event.event.value.currentUsers.map(item => ({id:item.id,name:item.name})))
     }
