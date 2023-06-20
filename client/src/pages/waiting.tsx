@@ -37,7 +37,7 @@ const Waiting = () => {
       setTheme(event.event.value.theme)
       navigate("/game")
     }
-  }, []))
+  }, [setTheme]))
 
   return (
     <div>
