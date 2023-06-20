@@ -34,11 +34,7 @@ const Game = () => {
       <UserList />
       <Timer expire={expireDummy}></Timer>
       <div>
-        <input type="text" 
-            placeholder="単語の入力" 
-            onChange={(e) => setText(e.target.value)}
-            value = {text} 
-            style={{backgroundColor: "white", borderRadius: "25px", height: "30px", width: "400px", color: "black", textAlign: "center"}}/>
+        <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
         <Button text='送信' onClick={() => send()}/>
       </div>
     </div>

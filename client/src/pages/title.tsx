@@ -3,6 +3,7 @@ import logo from "../assets/mindgraphLogo.jpg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
+import Input from "../components/input"
 
 const Title = () => {
 
@@ -28,13 +29,12 @@ const Title = () => {
 
         <img src={logo} alt="Mind graph logo" />
 
+        <p>名前を入力</p>
         <form>
           <div>
-            <input type="text" 
-            placeholder="名前の入力" 
-            onChange={handleChange} 
-            value = {userName} 
-            style={{backgroundColor: "white", borderRadius: "25px", height: "30px", width: "400px", color: "black", textAlign: "center"}}/>
+            <label htmlFor="name">名前</label>
+            <Input text="名前の入力" onChange={handleChange} width="400px" value = {userName}></Input>
+            <input type="text" onChange={handleChange} value = {userName}/>
           </div>
           <Button text="送信" onClick={navigateToWaiting}></Button>
         </form>
