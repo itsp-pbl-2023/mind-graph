@@ -1,10 +1,9 @@
-const explainText = ({ outline, elements }: { outline: string, elements: string[] }) => {
+const explainText = ({ elements }: { elements: string[] }) => {
 
   const elementsList = elements.map(element => <li>{element}</li>)
 
   return (
     <div>
-      <p> { outline } </p>
       <ul>
         { elementsList }
       </ul>

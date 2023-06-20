@@ -34,7 +34,6 @@ const Game = () => {
       <p>This is the game page</p>
       <UserList />
       <ExplainText
-        outline='何かしら今やってほしいことの説明' 
         elements={[
           '単語を入力して送信ボタンを押す', 
           '右クリックして2つのノードを選び、接続する', 

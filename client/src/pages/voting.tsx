@@ -14,7 +14,6 @@ const Voting = () => {
         <p>This is the voting page</p>
         <UserList />
         <ExplainText
-          outline='何かしら今やってほしいことの説明' 
           elements={[
             'イイネ！と思ったノードを選び、投票ボタンを押す', 
           ]}
