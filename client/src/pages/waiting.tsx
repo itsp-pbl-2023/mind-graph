@@ -5,7 +5,7 @@ import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
 import { client } from "../lib/client"
 import { useName } from "../lib/hooks/name"
-import UserList from "../components/userlist"
+import UserList from '../components/userlist.tsx'
 import Button from "../components/button"
 
 const Waiting = () => {
@@ -20,6 +20,13 @@ const Waiting = () => {
       senderId: name, 
     })
   }
+
+  useOnEvent(useCallback((event) => {
+    if(event.event.case === "themeConfirmed"){
+      setTheme(event.event.value.theme)
+      navigate("/game")
+    }
+  }, []))
 
   useOnEvent(useCallback((event) => {
     if (event.event.case == 'joined'){
@@ -43,14 +50,14 @@ const Waiting = () => {
     <div>
       <div>
         <h1>Waiting</h1>
-        <p>This is the waiting page</p>
+        <p>This is the waiting page {}</p>
         <UserList />
       </div>
       <div>
         <input
           value={themeText}  // 入力を格納する変数
           onChange={(event) => setThemeText(event.target.value)}
-        />
+          />
       </div>
       <div>
         <Button text="送信" onClick={SendTheme}/>
