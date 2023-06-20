@@ -33,7 +33,13 @@ const Game = () => {
       <h1>Game</h1>
       <p>This is the game page</p>
       <UserList />
-      <ExplainText text='Hello, World!' />
+      <ExplainText
+        outline='何かしら今やってほしいことの説明' 
+        elements={[
+          '単語を入力して送信ボタンを押す', 
+          '右クリックして2つのノードを選び、接続する', 
+        ]}
+      />
       <Timer expire={expireDummy}></Timer>
       <div>
         <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
