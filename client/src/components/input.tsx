@@ -7,6 +7,8 @@ const InputForm = styled.input`
   text-align: center;
   width: 400px;
   height: 30px;
+  margin: 4px;
+  border: 4px;
 
 `
 
