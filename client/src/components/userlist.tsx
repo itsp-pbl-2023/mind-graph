@@ -4,25 +4,33 @@ import styled from "styled-components"
 
 
 
-const UserListStyle  = styled.section`
+const UserListStyle  = styled.div`
   width: {};
   padding:3em;
   background-color: #FFFFFF;
-  border: 5px solid;
+  border: 6px solid;
   border-color: #30A6FF;
   border-radius: 25px;
 `
-
+const UserListTitleStyle = styled.h1`
+  font-size: 48px;
+  font-family: 'Noto Sans JP';
+`
+const ListStyle = styled.li`
+  font-size: 32px;
+  font-family: 'Noto Sans JP';
+  list-style-position:inside;
+`
 const UserList = () => {
   const users = useUsers()
 
 
   return (
     <UserListStyle>
+      <UserListTitleStyle>参加者一覧 {users.length}人</UserListTitleStyle>
         <ul>
-          <h3>参加者 {users.length}人</h3>
           {users.map( item =>
-            <li key={item.id}>{item.name}</li>
+            <ListStyle key={item.id}>{item.name}</ListStyle>
           )}
         </ul>
       </UserListStyle>

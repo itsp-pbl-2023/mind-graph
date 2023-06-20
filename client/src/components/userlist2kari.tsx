@@ -5,23 +5,30 @@ import styled from "styled-components"
 
 
 
-const ListStyle  = styled.li`
-  ${props => getTagColor(props)}
+
+const ListStyle = styled.li`
+  ${(props) => getTagColor(props)}
+  list-style:none;
+  font-size: 32px;
+  margin: 15px;
+  padding: 2px 96px 2px; 
+  font-family: 'Noto Sans JP';
+  
 `
 
-const getTagColor = props => {
+const getTagColor = (props) => {
   if(props.me){
     return `
       background-color: #B2D8F5;
+      border: 5px solid;
       border-color: #B2D8F5;
-      
     `
   }
   if(props.notme){
     return `
       background-color: #FFFFFF;
+      border: 5px solid;
       border-color: #B2D8F5;
-      
     `
   }
 }
@@ -35,7 +42,6 @@ const UserList2 = () => {
   return (
     <div>
         <ul>
-          <h3>参加者 {users.length}人</h3>
           {users.map( item =>
             item.name == name ?
               <ListStyle me key={item.id}>{item.name}</ListStyle>:
