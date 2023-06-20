@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateNodeRequest, Edge, Empty, Event, HelloRequest, HelloResponse, JoinRequest, ThemeRequest, VoteWordRequest } from "./api_pb.js";
+import { CreateEdgeRequest, CreateNodeRequest, Empty, Event, HelloRequest, HelloResponse, JoinRequest, ThemeRequest, VoteWordRequest } from "./api_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -53,7 +53,7 @@ export const MindGraphService = {
      */
     createEdge: {
       name: "CreateEdge",
-      I: Edge,
+      I: CreateEdgeRequest,
       O: Empty,
       kind: MethodKind.Unary,
     },

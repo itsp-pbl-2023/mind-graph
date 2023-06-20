@@ -370,6 +370,55 @@ export class CreateNodeRequest extends Message<CreateNodeRequest> {
 }
 
 /**
+ * @generated from message mindgraph.CreateEdgeRequest
+ */
+export class CreateEdgeRequest extends Message<CreateEdgeRequest> {
+  /**
+   * @generated from field: string node_id1 = 1;
+   */
+  nodeId1 = "";
+
+  /**
+   * @generated from field: string node_id2 = 2;
+   */
+  nodeId2 = "";
+
+  /**
+   * @generated from field: string creator_id = 3;
+   */
+  creatorId = "";
+
+  constructor(data?: PartialMessage<CreateEdgeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mindgraph.CreateEdgeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "node_id1", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "node_id2", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "creator_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateEdgeRequest {
+    return new CreateEdgeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateEdgeRequest {
+    return new CreateEdgeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateEdgeRequest {
+    return new CreateEdgeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateEdgeRequest | PlainMessage<CreateEdgeRequest> | undefined, b: CreateEdgeRequest | PlainMessage<CreateEdgeRequest> | undefined): boolean {
+    return proto3.util.equals(CreateEdgeRequest, a, b);
+  }
+}
+
+/**
  * @generated from message mindgraph.VoteWordRequest
  */
 export class VoteWordRequest extends Message<VoteWordRequest> {
