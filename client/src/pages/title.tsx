@@ -5,16 +5,22 @@ import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
 import styled from "styled-components"
 
+const Page = styled.div `
+  padding: 20px 0px;
+  min-width: 100vw;
+  min-height: 100v;
+`
+document.body.style.background = "linear-gradient(180deg, #BAE0FD 0%, #F0F9FF 100%)"
+
 const TitleText = styled.p`
     font-family: "Patrick Hand SC";
     font-size: 64px;
-    line-height: 1px;
     text-shadow: 1px 4px 4px #00000040;
+    margin: 0;
   `
 const SubTitleText = styled.p`
     font-size: 32px;
     font-family: "Patrick Hand SC";
-    line-height: 1px;
 `
 
 const Title = () => {
@@ -35,7 +41,7 @@ const Title = () => {
 
   //TODO コンポーネントを置き換える
     return (
-      <div>
+      <Page>
         <TitleText>Mind Graph</TitleText>
         <SubTitleText>Minna no Nou wo Kashikasuru.</SubTitleText>
 
@@ -49,7 +55,7 @@ const Title = () => {
           </div>
           <Button text="送信" onClick={navigateToWaiting}/>
         </form>
-      </div> 
+      </Page> 
     )
 
     
