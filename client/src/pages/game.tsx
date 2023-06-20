@@ -1,5 +1,5 @@
 import Timer from "../components/timer"
-import UserList from "../components/userlist"
+import UserList2 from "../components/userlist2kari.tsx"
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
 import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useCallback, useState } from 'react'
@@ -31,7 +31,7 @@ const Game = () => {
       <ThemeDisplay />
       <h1>Game</h1>
       <p>This is the game page</p>
-      <UserList />
+      <UserList2 />
       <Timer expire={expireDummy}></Timer>
       <div>
         <input type='text' value={text} onChange={(e) => setText(e.target.value)} />

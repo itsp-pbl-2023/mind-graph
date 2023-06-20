@@ -1,4 +1,4 @@
-import UserList from "../components/userlist"
+import UserList2 from "../components/userlist2kari"
 import { ThemeDisplay } from "../components/common/ThemeDisplay"
 
 
@@ -11,7 +11,7 @@ const Voting = () => {
         <h1>Voting</h1>
         <ThemeDisplay />
         <p>This is the voting page</p>
-        <UserList />
+        <UserList2 />
       </div>
     )
   }
