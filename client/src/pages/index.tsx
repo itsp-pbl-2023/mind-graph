@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { hello } from '../lib/api/api-MindGraphService_connectquery'
 import viteLogo from '/vite.svg'
 import { useQuery } from '@tanstack/react-query'
 import reactLogo from '../assets/react.svg'
 import styled from "styled-components";
 import { useSetName } from '../lib/hooks/name.ts'
-import { useOnEvent } from '../lib/hooks/stream.ts'
 
 const GamingTitle = styled.h1`
   @keyframes gaming-title-animation {
@@ -31,11 +30,6 @@ const Home = () => {
   useEffect(() => {
     setTimeout(() => setName('Fogrex'), 1000)
   }, [setName])
-
-  useOnEvent(useCallback((event) => {
-    console.log(`new event ${event.event.case}`)
-    console.log(event)
-  }, []))
 
   return (
     <>

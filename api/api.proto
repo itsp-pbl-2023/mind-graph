@@ -46,7 +46,23 @@ message CreateNodeRequest {
   string creator_id = 2;
 }
 
+message CreateEdgeRequest {
+  string node_id1 = 1;
+  string node_id2 = 2;
+  string creator_id = 3;
+}
+
+message VoteWordRequest {
+  string node_id = 1;
+  string sender_id = 2;
+}
+
 // --- Events ---
+
+// 自分のuser idを知らせる
+message MyIDEvent {
+  string user_id = 1;
+}
 
 message UserJoinedEvent {
   string name = 1;
@@ -73,13 +89,28 @@ message EdgeUpdateEvent {
   Edge edge = 1;
 }
 
+// 誰かが投票を済ませた
+message VoteProgressEvent {
+  repeated string finished_user_ids = 1;
+}
+
+// 全員の投票が終わり結果が定まった
+message ResultEvent {
+  string chosen_node_id = 1;
+  string mvp_user_id = 2;
+  int32 my_score = 3;
+}
+
 message Event {
   oneof event {
-    UserJoinedEvent joined = 1;
-    UserLeftEvent left = 2;
-    ThemeConfirmedEvent theme_confirmed = 3;
-    NodeUpdateEvent node_updated = 4;
-    EdgeUpdateEvent edge_updated = 5;
+    MyIDEvent my_id = 1;
+    UserJoinedEvent joined = 2;
+    UserLeftEvent left = 3;
+    ThemeConfirmedEvent theme_confirmed = 4;
+    NodeUpdateEvent node_updated = 5;
+    EdgeUpdateEvent edge_updated = 6;
+    VoteProgressEvent vote_progress = 7;
+    ResultEvent result = 8;
   }
 }
 
@@ -88,5 +119,6 @@ service MindGraphService {
   rpc Join(JoinRequest) returns (stream Event);
   rpc SetTheme(ThemeRequest) returns (Empty);
   rpc CreateNode(CreateNodeRequest) returns (Empty);
-  rpc CreateEdge(Edge) returns (Empty);
+  rpc CreateEdge(CreateEdgeRequest) returns (Empty);
+  rpc VoteWord(VoteWordRequest) returns (Empty);
 }
