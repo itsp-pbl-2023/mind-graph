@@ -3,14 +3,13 @@ import Logo from "../assets/Logo.svg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
-import styled from "styled-components"
+import {styled, createGlobalStyle} from "styled-components"
 
 const Page = styled.div `
   padding: 20px 0px;
   min-width: 100vw;
   min-height: 100v;
 `
-document.body.style.background = "linear-gradient(180deg, #BAE0FD 0%, #F0F9FF 100%)"
 
 const TitleText = styled.p`
     font-family: "Patrick Hand SC";
@@ -21,6 +20,11 @@ const TitleText = styled.p`
 const SubTitleText = styled.p`
     font-size: 32px;
     font-family: "Patrick Hand SC";
+`
+const Gradiation = createGlobalStyle`
+  body {
+    background : linear-gradient(180deg, #BAE0FD 0%, #F0F9FF 100%);
+  }
 `
 
 const Title = () => {
@@ -41,6 +45,8 @@ const Title = () => {
 
   //TODO コンポーネントを置き換える
     return (
+      <>
+      <Gradiation></Gradiation>
       <Page>
         <TitleText>Mind Graph</TitleText>
         <SubTitleText>Minna no Nou wo Kashikasuru.</SubTitleText>
@@ -56,6 +62,7 @@ const Title = () => {
           <Button text="送信" onClick={navigateToWaiting}/>
         </form>
       </Page> 
+      </>
     )
 
     
