@@ -1,21 +1,25 @@
-import { useCallback, useState } from 'react'
-import { useOnEvent } from '../lib/hooks/stream.ts'
+import { useCallback, useState } from "react"
+import { useOnEvent } from "../lib/hooks/stream"
 import { useNavigate } from "react-router-dom"
 import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
+import { client } from "../lib/client"
 import UserList from '../components/userlist.tsx'
-import Button from '../components/button.tsx'
+import Button from "../components/button"
 import InputForm from '../components/input.tsx'
+import { getUserID } from '../lib/state/user.ts'
+
 
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
   const setTheme = useSetTheme();
   const setUsers = useSetUsers();
   const navigate = useNavigate();
-  
-  const testSetTheme = () => {
-    setTheme(themeText)
-    navigate("/game")
+  const SendTheme = () => {
+    client.setTheme({
+      theme: themeText,
+      senderId: getUserID(),
+    })
   }
 
   useOnEvent(useCallback((event) => {
@@ -29,11 +33,18 @@ const Waiting = () => {
     */
   }, [setUsers]))
 
+  useOnEvent(useCallback((event) => {
+    if(event.event.case === "themeConfirmed"){
+      setTheme(event.event.value.theme)
+      navigate("/game")
+    }
+  }, [setTheme, navigate]))
+
   return (
     <div>
       <div>
         <h1>Waiting</h1>
-        <Button text="ゲームを開始する" onClick={testSetTheme}></Button>
+        <Button text="ゲームを開始する" onClick={SendTheme}></Button>
         <p>This is the waiting page {}</p>
         <UserList />
 
@@ -43,7 +54,10 @@ const Waiting = () => {
           placeholder='主題の入力'
         />
       </div>
-    </div>   
+      <div>
+        <Button text="送信" onClick={SendTheme}/>
+      </div>
+    </div>
   )
 }
 
