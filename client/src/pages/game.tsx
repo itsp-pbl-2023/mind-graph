@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
 import { useName } from '../lib/hooks/name.ts'
+import InputForm from "../components/input.tsx"
 
 const Game = () => {
   // ダミー変数
@@ -34,7 +35,7 @@ const Game = () => {
       <UserList />
       <Timer expire={expireDummy}></Timer>
       <div>
-        <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
+        <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} placeholder="単語の入力"/>
         <Button text='送信' onClick={() => send()}/>
       </div>
     </div>

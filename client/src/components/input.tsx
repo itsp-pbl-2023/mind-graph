@@ -5,6 +5,9 @@ const InputForm = styled.input`
   background-color: white;
   border-radius: 25px;
   text-align: center;
+  width: 400px;
+  height: 30px;
+
 `
 
 export default InputForm

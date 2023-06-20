@@ -5,6 +5,7 @@ import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
 import UserList from '../components/userlist.tsx'
 import Button from '../components/button.tsx'
+import InputForm from '../components/input.tsx'
 
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
@@ -36,9 +37,10 @@ const Waiting = () => {
         <p>This is the waiting page {}</p>
         <UserList />
 
-        <input
+        <InputForm
           value={themeText}  // 入力を格納する変数
           onChange={(event) => setThemeText(event.target.value)}
+          placeholder='主題の入力'
         />
       </div>
     </div>   
