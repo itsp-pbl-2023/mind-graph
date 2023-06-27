@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { getUserID } from '../lib/state/user.ts'
 import { NodeGraph } from '../components/common/NodeGraph.tsx'
 import { useGraph } from '../lib/hooks/graph.ts'
+import { useSetVoted } from '../lib/hooks/voted.ts'
 
 const Voting = () => {
   const { nodes, edges } = useGraph()
@@ -18,6 +19,7 @@ const Voting = () => {
 
   const navigate = useNavigate()
   const userId = getUserID()
+  const setVoted = useSetVoted()
   const vote = async () => {
     if (!selectedNodeId) {
       alert('投票するノードをクリックして選択してください')
@@ -27,6 +29,9 @@ const Voting = () => {
   }
 
   useOnEvent(useCallback((e) => {
+    if (e.event.case == 'voteProgress'){
+      setVoted(e.event.value.finishedUserIds.map(item => (item)))
+    }
     if (e.event.case !== 'result') return
 
     const evt = e.event.value
