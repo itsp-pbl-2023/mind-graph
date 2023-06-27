@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { getUserID } from '../lib/state/user.ts'
 import { NodeGraph } from '../components/common/NodeGraph.tsx'
 import { useGraph } from '../lib/hooks/graph.ts'
+import Button from '../components/button.tsx'
 
 const Voting = () => {
   const { nodes, edges } = useGraph()
@@ -48,7 +49,7 @@ const Voting = () => {
         ]}
       />
       <NodeGraph nodes={nodes} edges={edges} onClick={setSelectedNodeId} />
-      <button onClick={vote}>Vote</button>
+      <Button text="投票" onClick={vote}></Button>
     </div>
   )
 }

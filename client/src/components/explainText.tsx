@@ -1,7 +1,6 @@
 import styled from "styled-components"
 
 const ExplainTextStyle = styled.ul`
-  display: inline-block;
   color: black;
   background-color: white;
   border: 4px solid #B2D8F5;
@@ -9,6 +8,7 @@ const ExplainTextStyle = styled.ul`
   width: 240px;
   margin: 4px;
   padding: 60px;
+  margin-left:auto;
 
 `
 
@@ -19,6 +19,7 @@ const ExplainText = ({ elements }: { elements: string[] }) => {
   return (
     <div>
       <ExplainTextStyle>
+        <h3>投票しよう！</h3>
         { elementsList }
       </ExplainTextStyle>
     </div>
