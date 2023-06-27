@@ -18,8 +18,21 @@ export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
 
     const svgNode = svg.node()
     const d3Wrapper = d3WrapperRef.current
+
+    
     if (svgNode && d3Wrapper) {
       d3Wrapper.appendChild(svgNode)
+      svgNode.style.width = '100vw';
+      svgNode.style.height = '100vh';
+
+      // こうしないとdivが毎回更新走ってエラーになる
+      d3Wrapper.style.width = '100vw';
+      d3Wrapper.style.height = '100vh';
+      d3Wrapper.style.position = 'fixed';
+      d3Wrapper.style.top = '0';
+      d3Wrapper.style.left = '0';
+      d3Wrapper.style.zIndex = '-1';
+
       return () => {
         dispose()
         d3Wrapper.removeChild(svgNode)

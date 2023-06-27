@@ -17,9 +17,11 @@ const Game = () => {
 
   const [text, setText] = useState('')
 
-  const send = () => {
+  const send = async () => {
     if (text === '') return
-    client.createNode({ word: text, creatorId: getUserID() })
+    const res = await client.createNode({ word: text, creatorId: getUserID() })
+    // 既存のノードが選択されている場合は接続
+    if (selectedNode) client.createEdge({ nodeId1: selectedNode, nodeId2: res.id })
     setText('')
   }
 
@@ -44,10 +46,13 @@ const Game = () => {
     }
   }, [setEdges, setNodes]))
 
-  const onNodeClick = useCallback((node: string) => console.log(`node ${node} is selected`), [])
+  // ノード関連
+  const [selectedNode, setSelectedNode] = useState<string | null>(null)
+  const onNodeClick = useCallback((node: string) => setSelectedNode(node), [])
 
   return (
     <div>
+      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
       <ThemeDisplay />
       <h1>Game</h1>
       <p>This is the game page</p>
@@ -63,7 +68,6 @@ const Game = () => {
         <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} placeholder="単語の入力"/>
         <Button text='送信' onClick={() => send()}/>
       </div>
-      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
     </div>
   )
 }
