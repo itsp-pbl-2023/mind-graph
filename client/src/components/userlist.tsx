@@ -6,26 +6,23 @@ import { FC } from 'react';
 
 
 const UserListStyle  = styled.div`
-  //width: {};
   padding:3em;
   background-color: var(--background-color);
   border: 6px solid;
   border-color: #30A6FF;
   border-radius: 45px;
+  margin: 2em 10em 2em;
 `
 const UserListTitleStyle = styled.h1`
   font-size: 32px;
   font-family: 'Noto Sans JP';
 `
 const ListStyle = styled.li`
-  //font-size: 32px;
   font-family: 'Noto Sans JP';
-  //list-style-position:inside;
 `
 
 const ListStyleMe = styled.li`
   list-style:none;
-  //font-size: 16px;
   margin: 15px;
   padding: 2px 32px 2px; 
   font-family: 'Noto Sans JP';
@@ -38,7 +35,6 @@ const ListStyleMe = styled.li`
 
 const ListStylenotMe = styled.li`
   list-style:none;
-  //font-size: 16px;
   margin: 15px;
   padding: 2px 32px 2px; 
   font-family: 'Noto Sans JP';
