@@ -1,6 +1,5 @@
 import { NodeGraph } from "../components/common/NodeGraph"
 import Timer from "../components/timer"
-import UserList2 from "../components/userlist2kari.tsx"
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
 import UserList from "../components/userlist"
 import { useOnEvent } from '../lib/hooks/stream.ts'
@@ -41,7 +40,7 @@ const Game = () => {
 
   // ダミー変数
   // 読み込んでから60秒
-  const [expireDummy] = useState(new Date(new Date().getTime() + 1000*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 10*1000))
 
   const [text, setText] = useState('')
 
@@ -82,7 +81,7 @@ const Game = () => {
       <ThemeDisplay />
       <h1>Game</h1>
       <p>This is the game page</p>
-      <UserList2 />
+      <UserList isWaiting={false} />
       <Timer expire={expireDummy}></Timer>
       <div>
         <input type='text' value={text} onChange={(e) => setText(e.target.value)} />

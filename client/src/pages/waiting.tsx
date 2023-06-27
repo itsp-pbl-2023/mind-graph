@@ -43,7 +43,7 @@ const Waiting = () => {
       <div>
         <h1>Waiting</h1>
         <p>This is the waiting page {}</p>
-        <UserList />
+        <UserList isWaiting={true} />
       </div>
       <div>
         <input

@@ -8,7 +8,6 @@ import { useCallback } from 'react'
 import { setResult } from '../lib/state/result.ts'
 import { useNavigate } from 'react-router-dom'
 import { getUserID } from '../lib/state/user.ts'
-import UserList2 from "../components/userlist2kari"
 
 
 
@@ -35,7 +34,7 @@ const Voting = () => {
       <h1>Voting</h1>
       <ThemeDisplay />
       <p>This is the voting page</p>
-      <UserList2 />
+      <UserList isWaiting={false} />
       {/* TODO: ノードを選択して投票できるようにする */}
       <button onClick={() => vote(getUserID())}>Vote</button>
     </div>
