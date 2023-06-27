@@ -8,7 +8,7 @@ import { FC } from 'react';
 const UserListStyle  = styled.div`
   //width: {};
   padding:3em;
-  background-color: #FFFFFF;
+  background-color: var(--background-color);
   border: 6px solid;
   border-color: #30A6FF;
   border-radius: 45px;
@@ -32,8 +32,8 @@ const ListStyleMe = styled.li`
   width: 100px;
   align-items: center;
   border: 5px solid;
-  border-color: #B2D8F5;
-  background-color: #B2D8F5;
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
 `;
 
 const ListStylenotMe = styled.li`
@@ -44,12 +44,10 @@ const ListStylenotMe = styled.li`
   font-family: 'Noto Sans JP';
   width: 100px;
   align-items: center;
-  background-color: #B2D8F5;
   border: 5px solid;
-  border-color: #B2D8F5;
-  background-color: #FFFFFF;
   border: 5px solid;
-  border-color: #B2D8F5;
+  border-color: var(--primary-color);
+  background-color: var(--background-color);
 `
 
 type PageProps ={
