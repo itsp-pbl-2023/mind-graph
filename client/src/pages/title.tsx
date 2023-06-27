@@ -25,7 +25,6 @@ const SubTitleText = styled.p`
 const Gradiation = createGlobalStyle`
   body {
     background : linear-gradient(180deg, #BAE0FD 0%, #F0F9FF 100%);
-    display: flex;
   }
 `
 
