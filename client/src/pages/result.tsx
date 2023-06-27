@@ -22,7 +22,6 @@ const Result = () => {
       <ThemeDisplay />
       <p>This is the result page</p>
 
-      <div>{JSON.stringify(getResult()?.chosenNodeID)}</div>
       <ShowWord word={getResult()?.chosenNodeID} />
       <ShowMVP userID={getResult()?.mvpUserID} />
       <ShowYourScore score={getResult()?.myScore} />
