@@ -1,3 +1,4 @@
+import { PlainMessage } from "@bufbuild/protobuf"
 import { Node } from "../api/api_pb"
 
 // connection
@@ -16,5 +17,5 @@ export const NODE_WIDTH_D3ATTR_DEFAULT = {
   isSelected: false,
 }
 
-export type D3Node = d3.SimulationNodeDatum & Node & NodeWithD3Attr
+export type D3Node = d3.SimulationNodeDatum & PlainMessage<Node> & NodeWithD3Attr
 export type D3Edge = d3.SimulationLinkDatum<D3Node>
