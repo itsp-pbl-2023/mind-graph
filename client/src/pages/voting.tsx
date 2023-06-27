@@ -21,6 +21,7 @@ const Voting = () => {
       alert('投票するノードをクリックして選択してください')
       return
     }
+    console.log('vote', selectedNodeId)
     await client.voteWord({ nodeId: selectedNodeId, senderId: userId })
   }
 

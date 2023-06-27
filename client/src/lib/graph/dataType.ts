@@ -8,6 +8,7 @@ export interface NodeWithD3Attr {
   radius: number
   wrappedText: string
   isSelected: boolean
+  focused: boolean
 }
 export const NODE_WIDTH_D3ATTR_DEFAULT = {
   connectionCount: 0,
@@ -15,6 +16,7 @@ export const NODE_WIDTH_D3ATTR_DEFAULT = {
   radius: 0,
   wrappedText: '',
   isSelected: false,
+  focused: false,
 }
 
 export type D3Node = d3.SimulationNodeDatum & PlainMessage<Node> & NodeWithD3Attr

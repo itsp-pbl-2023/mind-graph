@@ -22,7 +22,7 @@ const Result = () => {
 
   return (
     <div>
-      <NodeGraph nodes={relatedNodes} edges={relatedEdges} />
+      <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />
       <h1>Result</h1>
       <ThemeDisplay />
       <p>This is the result page</p>
