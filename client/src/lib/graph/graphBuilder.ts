@@ -5,7 +5,13 @@ import { Node as GraphNode, Edge } from "../api/api_pb"
 import { updateNodeAttr } from "./calcNodeAttr"
 
 // グラフの描画
-export const GraphBuilder = (nodes: GraphNode[], edges: Edge[], width: number, height: number, onClick: (nodeId: string) => void) => {
+export const GraphBuilder = (
+  nodes: GraphNode[],
+  edges: Edge[],
+  width: number,
+  height: number,
+  onClick: (nodeId: string) => void = (() => null)
+) => {
   const mutableNodes = nodes.map<D3Node>(node => ({...node, ...NODE_WIDTH_D3ATTR_DEFAULT}))
   const nodeTable: Record<string, D3Node> = {}
   mutableNodes.forEach(node => {

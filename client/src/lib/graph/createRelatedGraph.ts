@@ -1,6 +1,17 @@
 import { Node, Edge } from "../api/api_pb";
 
-const createRelatedGraph = (nodes: Node[], edges: Edge[], selectedWordId: string, depth: number) => {
+const createRelatedGraph = (
+  nodes: Node[],
+  edges: Edge[],
+  selectedWordId: string | null,
+  depth: number
+): {
+  nodes: Node[],
+  edges: Edge[],
+} => {
+  // 選択されたノードが不正な場合には空のグラフを返す
+  if (selectedWordId === null) return {nodes: [], edges: []}
+  
   const resultNodeIds = new Set<string>()
   const resultEdges = new Set<Edge>()
   
@@ -13,6 +24,7 @@ const createRelatedGraph = (nodes: Node[], edges: Edge[], selectedWordId: string
     nodeRelation[edge.nodeId2].push([edge, edge.nodeId1])
   })
 
+  // depth数だけ幅優先探索
   let nodeQueue: string[] = [selectedWordId]
   for(let i=0;i<depth;i++) {
     const nextNodeQueue: string[] = []

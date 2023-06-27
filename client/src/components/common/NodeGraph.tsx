@@ -5,7 +5,7 @@ import { Node, Edge } from "../../lib/api/api_pb"
 interface NodeGraphProps {
   nodes: Node[]
   edges: Edge[]
-  onClick: (id: string) => void
+  onClick?: (id: string) => void
 }
 
 export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
