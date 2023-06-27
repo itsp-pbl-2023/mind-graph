@@ -1,5 +1,17 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styled from "styled-components"
+
+const StyledTimer = styled.div`
+  border-radius: 20px;
+  border: 3px solid;
+  background-color: var(--primary-color);
+
+  min-width: 360px;
+  font-size: 36px;
+  font-family: 'Montserrat';
+  font-weight: 700;
+`
 
 const msec2second = (msec: number): number => {
   return Math.floor(msec / 1000)
@@ -42,9 +54,9 @@ const Timer = ({ expire }: { expire: Date }) => {
   }, [remain])
 
   return (
-    <div>
-      <span>{msec2second(remain)}</span>
-    </div>
+    <StyledTimer>
+      <p> Timer : {msec2second(remain)} </p>
+    </StyledTimer>
   )
 }
 

@@ -5,10 +5,14 @@ import { getResult } from '../lib/state/result.ts'
 import ShowYourScore from '../components/showYourScore.tsx'
 import ShowMVP from '../components/showMVP.tsx'
 import ShowWord from '../components/showWord.tsx'
+import { useSetName } from '../lib/hooks/name.ts'
 
 const Result = () => {
   const navigate = useNavigate()
+  const setName = useSetName()
+
   const returnToTitle = () => {
+    setName(undefined) // disconnect
     navigate('/title')
   }
 
