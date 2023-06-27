@@ -34,12 +34,10 @@ a:hover {
 }
 
 body {
+  position: relative;
   margin: 0;
   display: flex;
   justify-content: center;
-  place-items: center;
-  min-width: 100wh;
-  min-height: 100vh;
 }
 
 h1 {

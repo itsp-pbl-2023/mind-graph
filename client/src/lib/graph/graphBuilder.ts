@@ -1,71 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as d3 from "d3"
-
-// gRPC互換の型
-// TODO: gRPC実装後に消す
-interface Node {
-  id: string
-  word: string
-  creatorId: string
-}
-
-// connection
-export interface NodeWithD3Attr {
-  connectionCount: number
-  fontSize: number
-  radius: number
-  wrappedText: string
-  isSelected: boolean
-}
-const NODE_WIDTH_D3ATTR_DEFAULT = {
-  connectionCount: 0,
-  fontSize: 0,
-  radius: 0,
-  wrappedText: '',
-  isSelected: false,
-}
-
-interface Edge {
-  nodeId1: string
-  nodeId2: string
-}
-
-export type D3Node = d3.SimulationNodeDatum & Node & NodeWithD3Attr
-export type D3Edge = d3.SimulationLinkDatum<D3Node>
-
-// テキストの幅を計算するためにcanvasを使う
-const MAX_TEXT_LENGTH = 10
-const canvasForCalcTextWidth = document.createElement("canvas")
-const ctxForCalcTextWidth = canvasForCalcTextWidth.getContext("2d")
-
-const calculateTextWidth = (text: string, fontSize: number) => {
-  if (!ctxForCalcTextWidth) return 0;
-  ctxForCalcTextWidth.font = `${fontSize}px sans-serif`
-  return ctxForCalcTextWidth.measureText(text.slice(0, MAX_TEXT_LENGTH)).width
-}
-
-const calculateFontSizeFromConnection = (connectionCount: number) => {
-  const minFontSize = 10
-  const maxFontSize = 30
-  const minConnectionCount = 1
-  const maxConnectionCount = 5
-  const fontSize = (maxFontSize - minFontSize) * (connectionCount - minConnectionCount) / (maxConnectionCount - minConnectionCount) + minFontSize
-  return fontSize
-}
-
-const wrapLongText = (text: string) => {
-  if (text.length < MAX_TEXT_LENGTH) {
-    return text
-  }
-  let resultText = ''
-  for(let i = 0; i < text.length; i += MAX_TEXT_LENGTH) {
-    resultText += text.slice(i, i + MAX_TEXT_LENGTH) + '<tbreak />'
-  }
-  return resultText
-}
+import { D3Edge, D3Node, NODE_WIDTH_D3ATTR_DEFAULT } from "./dataType"
+import { Node as GraphNode, Edge } from "../api/api_pb"
+import { updateNodeAttr } from "./calcNodeAttr"
 
 // グラフの描画
-export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height: number, onClick: (nodeId: string) => void) => {
+export const GraphBuilder = (nodes: GraphNode[], edges: Edge[], width: number, height: number, onClick: (nodeId: string) => void) => {
   const mutableNodes = nodes.map<D3Node>(node => ({...node, ...NODE_WIDTH_D3ATTR_DEFAULT}))
   const nodeTable: Record<string, D3Node> = {}
   mutableNodes.forEach(node => {
@@ -80,11 +20,7 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
   });
 
   // 接続数から各種D3用の属性を計算
-  mutableNodes.forEach(node => {
-    node.fontSize = calculateFontSizeFromConnection(node.connectionCount)
-    node.radius = calculateTextWidth(node.word, node.fontSize) / 2 + 10
-    node.wrappedText = wrapLongText(node.word)
-  })
+  mutableNodes.forEach(updateNodeAttr)
 
   // SVG Objects
   const svg = d3.create("svg")
@@ -145,7 +81,7 @@ export const GraphBuilder = (nodes: Node[], edges: Edge[], width: number, height
   }
 
   const forceManyConfig = d3.forceManyBody<D3Node>()
-    .strength(d => -0.3 * d.radius * d.radius)
+    .strength(d => -0.7 * d.radius * d.radius)
   
   const simulation = d3.forceSimulation(mutableNodes)
     .force("link", d3.forceLink<D3Node, D3Edge>(mutableEdges).id(d => d.id))

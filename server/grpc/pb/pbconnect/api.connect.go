@@ -56,7 +56,7 @@ type MindGraphServiceClient interface {
 	Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error)
 	Join(context.Context, *connect_go.Request[pb.JoinRequest]) (*connect_go.ServerStreamForClient[pb.Event], error)
 	SetTheme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error)
-	CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.Empty], error)
+	CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.CreateNodeResponse], error)
 	CreateEdge(context.Context, *connect_go.Request[pb.CreateEdgeRequest]) (*connect_go.Response[pb.Empty], error)
 	VoteWord(context.Context, *connect_go.Request[pb.VoteWordRequest]) (*connect_go.Response[pb.Empty], error)
 }
@@ -86,7 +86,7 @@ func NewMindGraphServiceClient(httpClient connect_go.HTTPClient, baseURL string,
 			baseURL+MindGraphServiceSetThemeProcedure,
 			opts...,
 		),
-		createNode: connect_go.NewClient[pb.CreateNodeRequest, pb.Empty](
+		createNode: connect_go.NewClient[pb.CreateNodeRequest, pb.CreateNodeResponse](
 			httpClient,
 			baseURL+MindGraphServiceCreateNodeProcedure,
 			opts...,
@@ -109,7 +109,7 @@ type mindGraphServiceClient struct {
 	hello      *connect_go.Client[pb.HelloRequest, pb.HelloResponse]
 	join       *connect_go.Client[pb.JoinRequest, pb.Event]
 	setTheme   *connect_go.Client[pb.ThemeRequest, pb.Empty]
-	createNode *connect_go.Client[pb.CreateNodeRequest, pb.Empty]
+	createNode *connect_go.Client[pb.CreateNodeRequest, pb.CreateNodeResponse]
 	createEdge *connect_go.Client[pb.CreateEdgeRequest, pb.Empty]
 	voteWord   *connect_go.Client[pb.VoteWordRequest, pb.Empty]
 }
@@ -130,7 +130,7 @@ func (c *mindGraphServiceClient) SetTheme(ctx context.Context, req *connect_go.R
 }
 
 // CreateNode calls mindgraph.MindGraphService.CreateNode.
-func (c *mindGraphServiceClient) CreateNode(ctx context.Context, req *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.Empty], error) {
+func (c *mindGraphServiceClient) CreateNode(ctx context.Context, req *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.CreateNodeResponse], error) {
 	return c.createNode.CallUnary(ctx, req)
 }
 
@@ -149,7 +149,7 @@ type MindGraphServiceHandler interface {
 	Hello(context.Context, *connect_go.Request[pb.HelloRequest]) (*connect_go.Response[pb.HelloResponse], error)
 	Join(context.Context, *connect_go.Request[pb.JoinRequest], *connect_go.ServerStream[pb.Event]) error
 	SetTheme(context.Context, *connect_go.Request[pb.ThemeRequest]) (*connect_go.Response[pb.Empty], error)
-	CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.Empty], error)
+	CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.CreateNodeResponse], error)
 	CreateEdge(context.Context, *connect_go.Request[pb.CreateEdgeRequest]) (*connect_go.Response[pb.Empty], error)
 	VoteWord(context.Context, *connect_go.Request[pb.VoteWordRequest]) (*connect_go.Response[pb.Empty], error)
 }
@@ -209,7 +209,7 @@ func (UnimplementedMindGraphServiceHandler) SetTheme(context.Context, *connect_g
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.SetTheme is not implemented"))
 }
 
-func (UnimplementedMindGraphServiceHandler) CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.Empty], error) {
+func (UnimplementedMindGraphServiceHandler) CreateNode(context.Context, *connect_go.Request[pb.CreateNodeRequest]) (*connect_go.Response[pb.CreateNodeResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("mindgraph.MindGraphService.CreateNode is not implemented"))
 }
 

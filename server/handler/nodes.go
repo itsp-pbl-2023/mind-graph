@@ -66,7 +66,7 @@ func (g *graph) addEdge(nodeID1, nodeID2 string) *edge {
 	return newEdge
 }
 
-func (m *mindGraphService) CreateNode(_ context.Context, c *connect.Request[pb.CreateNodeRequest]) (*connect.Response[pb.Empty], error) {
+func (m *mindGraphService) CreateNode(_ context.Context, c *connect.Request[pb.CreateNodeRequest]) (*connect.Response[pb.CreateNodeResponse], error) {
 	// TODO: スコア計算をちゃんとする
 	m.addScore(c.Msg.CreatorId, 5)
 
@@ -74,7 +74,9 @@ func (m *mindGraphService) CreateNode(_ context.Context, c *connect.Request[pb.C
 	m.broadcast(&pb.Event{Event: &pb.Event_NodeUpdated{NodeUpdated: &pb.NodeUpdateEvent{
 		Node: newNode.toPB(),
 	}}})
-	res := connect.NewResponse(&pb.Empty{})
+	res := connect.NewResponse(&pb.CreateNodeResponse{
+		Id: newNode.id,
+	})
 	return res, nil
 }
 
