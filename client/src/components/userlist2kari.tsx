@@ -5,14 +5,14 @@ import styled from "styled-components"
 
 
 
-
 const ListStyle = styled.li`
   ${(props) => getTagColor(props)}
   list-style:none;
   font-size: 32px;
   margin: 15px;
-  padding: 2px 96px 2px; 
+  padding: 2px 48px 2px; 
   font-family: 'Noto Sans JP';
+  width: 100px;
   
 `
 

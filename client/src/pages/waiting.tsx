@@ -4,20 +4,19 @@ import { useNavigate } from "react-router-dom"
 import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
 import { client } from "../lib/client"
-import { useName } from "../lib/hooks/name"
 import UserList from '../components/userlist.tsx'
 import Button from "../components/button"
+import { getUserID } from '../lib/state/user.ts'
 
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
   const setTheme = useSetTheme();
   const setUsers = useSetUsers();
-  const name = useName();
   const navigate = useNavigate();
   const SendTheme = () => {
     client.setTheme({
-      theme: themeText, 
-      senderId: name, 
+      theme: themeText,
+      senderId: getUserID(),
     })
   }
 
