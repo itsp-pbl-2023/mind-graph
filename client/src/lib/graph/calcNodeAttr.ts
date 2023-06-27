@@ -1,4 +1,4 @@
-import { D3Node } from "./dataType";
+import { D3Node } from "./dataType"
 
 // テキストの幅を計算するためにcanvasを使う
 const MAX_TEXT_LENGTH = 10
@@ -6,7 +6,7 @@ const canvasForCalcTextWidth = document.createElement("canvas")
 const ctxForCalcTextWidth = canvasForCalcTextWidth.getContext("2d")
 
 const calculateTextWidth = (text: string, fontSize: number) => {
-  if (!ctxForCalcTextWidth) return 0;
+  if (!ctxForCalcTextWidth) return 0
   ctxForCalcTextWidth.font = `${fontSize}px sans-serif`
   return ctxForCalcTextWidth.measureText(text.slice(0, MAX_TEXT_LENGTH)).width
 }
