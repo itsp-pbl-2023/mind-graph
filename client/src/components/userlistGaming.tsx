@@ -1,6 +1,6 @@
 
 import { useUsers } from '../lib/hooks/users';
-import { useName } from '../lib/hooks/name';
+import { getUserID } from '../lib/state/user';
 import styled from "styled-components"
 
 const ListStyleMe = styled.li`
@@ -30,13 +30,13 @@ const ListStylenotMe = styled.li`
 
 const UserList = () => {
   const users = useUsers()
-  const name = useName()
+  const userID = getUserID()
 
   return (
     <div>
         <ul>
           {users.map( item =>
-            item.name == name ?
+            item.id == userID ?
               <ListStyleMe key={item.id}>{item.name}</ListStyleMe>:
               <ListStylenotMe key={item.id}>{item.name}</ListStylenotMe>
           )}
