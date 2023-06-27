@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
 import InputForm from "../components/input.tsx"
+import ExplainText from "../components/explainText.tsx"
 import { Node, Edge } from "../lib/api/api_pb.ts"
 import { getUserID } from '../lib/state/user.ts'
 
@@ -83,6 +84,12 @@ const Game = () => {
       <h1>Game</h1>
       <p>This is the game page</p>
       <UserList />
+      <ExplainText
+        elements={[
+          '単語を入力して送信ボタンを押す', 
+          '右クリックして2つのノードを選び、接続する', 
+        ]}
+      />
       <Timer expire={expireDummy}></Timer>
       <div>
         <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} placeholder="単語の入力"/>
