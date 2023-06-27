@@ -46,6 +46,10 @@ message CreateNodeRequest {
   string creator_id = 2;
 }
 
+message CreateNodeResponse {
+  string id = 1;
+}
+
 message CreateEdgeRequest {
   string node_id1 = 1;
   string node_id2 = 2;
@@ -118,7 +122,7 @@ service MindGraphService {
   rpc Hello(HelloRequest) returns (HelloResponse);
   rpc Join(JoinRequest) returns (stream Event);
   rpc SetTheme(ThemeRequest) returns (Empty);
-  rpc CreateNode(CreateNodeRequest) returns (Empty);
+  rpc CreateNode(CreateNodeRequest) returns (CreateNodeResponse);
   rpc CreateEdge(CreateEdgeRequest) returns (Empty);
   rpc VoteWord(VoteWordRequest) returns (Empty);
 }
