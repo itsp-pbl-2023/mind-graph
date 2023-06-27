@@ -13,6 +13,20 @@ import { styled } from "styled-components"
 
 const StyledGame = styled.div`
   display: flex;
+  position: relative;
+  z-index: 15;
+`
+
+const NonePointer = styled.div`
+  position: relative;
+  z-index: 150;
+`
+
+const SyledColum = styled.div`
+  z-index: 100;
+`
+
+const StyledAll = styled.div`
 `
 
 import { useGraph } from '../lib/hooks/graph.ts'
@@ -58,19 +72,22 @@ const Game = () => {
   const onNodeClick = useCallback((node: string) => setSelectedNode(node), [])
 
   return (
+    <StyledAll>
+    <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
     <StyledGame>
       <div>
         <UserList />
       </div>
-      <div>
-        <h1>Game</h1>
+      <SyledColum>
+        <NonePointer>
+          <h1>Game</h1>
+        </NonePointer>
         <ThemeDisplay />
-        <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
         <div>
           <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
           <Button text='Add Word' onClick={() => send()} />
         </div>
-      </div>
+      </SyledColum>
       <div>
         <Timer expire={expireDummy}></Timer>
         <ExplainText
@@ -81,6 +98,7 @@ const Game = () => {
       />
       </div>
     </StyledGame>
+    </StyledAll>
   )
 }
 
