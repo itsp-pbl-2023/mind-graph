@@ -1,7 +1,7 @@
 import { NodeGraph } from "../components/common/NodeGraph"
-import { ThemeDisplay } from "../components/common/ThemeDisplay"
 import Timer from "../components/timer"
-import UserList from "../components/userlist"
+import { ThemeDisplay } from '../components/common/ThemeDisplay'
+import UserList from "../components/userlistGaming.tsx"
 import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
@@ -20,6 +20,7 @@ import { useGraph } from '../lib/hooks/graph.ts'
 const Game = () => {
   // ダミー変数
   const [expireDummy] = useState(new Date(new Date().getTime() + 5*1000*1000))
+
 
   const [text, setText] = useState('')
 

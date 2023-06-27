@@ -1,4 +1,6 @@
-import UserList from '../components/userlist'
+
+
+import UserList from '../components/userlistGaming.tsx'
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
 import ExplainText from '../components/explainText'
 import { client } from '../lib/client.ts'
@@ -42,6 +44,7 @@ const Voting = () => {
       <ThemeDisplay />
       <p>This is the voting page</p>
       <UserList />
+
       <ExplainText
         elements={[
           'イイネ！と思ったノードを選び、投票ボタンを押す', 
