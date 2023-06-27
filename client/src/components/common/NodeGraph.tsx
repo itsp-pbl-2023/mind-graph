@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { GraphBuilder } from "../../lib/graph/graphBuilder"
 import { Node, Edge } from "../../lib/api/api_pb"
 
