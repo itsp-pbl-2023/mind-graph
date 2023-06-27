@@ -9,7 +9,6 @@ import Button from "../components/button"
 import InputForm from '../components/input.tsx'
 import { getUserID } from '../lib/state/user.ts'
 
-
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
   const setTheme = useSetTheme();

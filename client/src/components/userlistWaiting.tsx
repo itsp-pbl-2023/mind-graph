@@ -30,7 +30,6 @@ const UserList= () => {
         </ul>
     </UserListStyle>
   )
-
 };
 
 export default UserList;

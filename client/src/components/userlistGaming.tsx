@@ -42,8 +42,6 @@ const UserList = () => {
         </ul>
       </div>
   );
-
-
 };
 
 export default UserList;

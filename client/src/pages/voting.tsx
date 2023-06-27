@@ -12,8 +12,6 @@ import { getUserID } from '../lib/state/user.ts'
 import { NodeGraph } from '../components/common/NodeGraph.tsx'
 import { useGraph } from '../lib/hooks/graph.ts'
 
-
-
 const Voting = () => {
   const { nodes, edges } = useGraph()
   const [selectedNodeId, setSelectedNodeId] = useState<string>()
