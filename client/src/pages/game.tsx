@@ -15,9 +15,6 @@ const StyledGame = styled.div`
   display: flex;
 `
 
-const StyledColumn = styled.div`
-  display: block;
-`
 import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
@@ -57,10 +54,10 @@ const Game = () => {
 
   return (
     <StyledGame>
-      <StyledColumn>
+      <div>
         <UserList />
-      </StyledColumn>
-      <StyledColumn>
+      </div>
+      <div>
         <h1>Game</h1>
         <ThemeDisplay />
         <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
@@ -68,8 +65,8 @@ const Game = () => {
           <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
           <Button text='Add Word' onClick={() => send()} />
         </div>
-      </StyledColumn>
-      <StyledColumn>
+      </div>
+      <div>
         <Timer expire={expireDummy}></Timer>
         <ExplainText
         elements={[
@@ -77,7 +74,7 @@ const Game = () => {
           '右クリックして2つのノードを選び、接続する', 
         ]}
       />
-      </StyledColumn>
+      </div>
     </StyledGame>
   )
 }
