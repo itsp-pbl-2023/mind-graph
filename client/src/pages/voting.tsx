@@ -1,6 +1,6 @@
 
 
-import UserList from '../components/userlist'
+import UserList from '../components/userlistGaming.tsx'
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
 import ExplainText from '../components/explainText'
 import { client } from '../lib/client.ts'
@@ -45,7 +45,7 @@ const Voting = () => {
       <h1>Voting</h1>
       <ThemeDisplay />
       <p>This is the voting page</p>
-      <UserList isWaiting={false} />
+      <UserList />
 
       <ExplainText
         elements={[

@@ -1,7 +1,7 @@
 import { NodeGraph } from "../components/common/NodeGraph"
 import Timer from "../components/timer"
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
-import UserList from "../components/userlist"
+import UserList from "../components/userlistGaming.tsx"
 import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
@@ -53,7 +53,7 @@ const Game = () => {
       <ThemeDisplay />
       <h1>Game</h1>
       <p>This is the game page</p>
-      <UserList isWaiting={false} />
+      <UserList />
       <ExplainText
         elements={[
           '単語を入力して送信ボタンを押す', 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useSetTheme } from "../lib/hooks/theme"
 import { useSetUsers } from "../lib/hooks/users"
 import { client } from "../lib/client"
-import UserList from '../components/userlist.tsx'
+import UserList from '../components/userlistWaiting.tsx'
 import Button from "../components/button"
 import InputForm from '../components/input.tsx'
 import { getUserID } from '../lib/state/user.ts'
@@ -47,7 +47,7 @@ const Waiting = () => {
         <Button text="ゲームを開始する" onClick={SendTheme}></Button>
         <p>This is the waiting page {}</p>
 
-        <UserList isWaiting={true} />
+        <UserList />
 
         <InputForm
           value={themeText}  // 入力を格納する変数
