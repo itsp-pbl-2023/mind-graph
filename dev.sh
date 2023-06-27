@@ -2,7 +2,7 @@
 
 client() {
   cd client
-  sudo npm run dev
+  npm run dev
 }
 
 server() {
