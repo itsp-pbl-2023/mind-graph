@@ -10,6 +10,17 @@ import { client } from '../lib/client.ts'
 import ExplainText from "../components/explainText.tsx"
 import { Node, Edge } from "../lib/api/api_pb.ts"
 import { getUserID } from '../lib/state/user.ts'
+import { styled } from "styled-components"
+
+const StyledGame = styled.div`
+  display: flex;
+  grid-template-columns: repeat(3, 1fr);
+`
+
+const StyledColumn = styled.div`
+  display: block;
+`
+
 
 const dummyNodes = [
   {id: "a", word: "これは"},
@@ -79,24 +90,29 @@ const Game = () => {
   const onNodeClick = useCallback((node: string) => console.log(`node ${node} is selected`), [])
 
   return (
-    <div>
-      <ThemeDisplay />
-      <h1>Game</h1>
-      <p>This is the game page</p>
-      <UserList />
-      <ExplainText
+    <StyledGame>
+      <StyledColumn>
+        <UserList />
+      </StyledColumn>
+      <StyledColumn>
+        <h1>Game</h1>
+        <ThemeDisplay />
+        <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
+        <div>
+          <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
+          <Button text='Add Word' onClick={() => send()} />
+        </div>
+      </StyledColumn>
+      <StyledColumn>
+        <Timer expire={expireDummy}></Timer>
+        <ExplainText
         elements={[
           '単語を入力して送信ボタンを押す', 
           '右クリックして2つのノードを選び、接続する', 
         ]}
       />
-      <Timer expire={expireDummy}></Timer>
-      <div>
-        <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
-        <Button text='Add Word' onClick={() => send()} />
-      </div>
-      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
-    </div>
+      </StyledColumn>
+    </StyledGame>
   )
 }
 
