@@ -8,6 +8,7 @@ import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
 import { useName } from '../lib/hooks/name.ts'
 import { Node, Edge } from "../lib/api/api_pb.ts"
+import { styled } from "styled-components"
 
 const dummyNodes = [
   {id: "a", word: "これは"},
@@ -77,19 +78,25 @@ const Game = () => {
   const [edges, setEdges] = useState<Edge[]>(dummyEdges)
   const onNodeClick = useCallback((node: string) => console.log(`node ${node} is selected`), [])
 
+  const UIWrapper = styled.div`
+    z-index: 1;
+  `
+
   return (
-    <div>
-      <ThemeDisplay />
-      <h1>Game</h1>
-      <p>This is the game page</p>
-      <UserList />
-      <Timer expire={expireDummy}></Timer>
-      <div>
-        <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
-        <Button text='Add Word' onClick={() => send()} />
-      </div>
+    <>
       <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
-    </div>
+      <UIWrapper>
+        <ThemeDisplay />
+        <h1>Game</h1>
+        <p>This is the game page</p>
+        <UserList />
+        <Timer expire={expireDummy}></Timer>
+        <div>
+          <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
+          <Button text='Add Word' onClick={() => send()} />
+        </div>
+      </UIWrapper>
+    </>
   )
 }
 
