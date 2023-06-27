@@ -6,7 +6,9 @@ import { useSetUsers } from "../lib/hooks/users"
 import { client } from "../lib/client"
 import UserList from '../components/userlist.tsx'
 import Button from "../components/button"
+import InputForm from '../components/input.tsx'
 import { getUserID } from '../lib/state/user.ts'
+
 
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
@@ -42,17 +44,15 @@ const Waiting = () => {
     <div>
       <div>
         <h1>Waiting</h1>
+        <Button text="ゲームを開始する" onClick={SendTheme}></Button>
         <p>This is the waiting page {}</p>
         <UserList />
-      </div>
-      <div>
-        <input
+
+        <InputForm
           value={themeText}  // 入力を格納する変数
           onChange={(event) => setThemeText(event.target.value)}
-          />
-      </div>
-      <div>
-        <Button text="送信" onClick={SendTheme}/>
+          placeholder='主題の入力'
+        />
       </div>
     </div>
   )

@@ -6,9 +6,8 @@ import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
-// import { useName } from '../lib/hooks/name.ts'
+import InputForm from "../components/input.tsx"
 import ExplainText from "../components/explainText.tsx"
-import { Node, Edge } from "../lib/api/api_pb.ts"
 import { getUserID } from '../lib/state/user.ts'
 import { styled } from "styled-components"
 
@@ -20,40 +19,11 @@ const StyledGame = styled.div`
 const StyledColumn = styled.div`
   display: block;
 `
-
-
-const dummyNodes = [
-  {id: "a", word: "これは"},
-  {id: "b", word: "テストの"},
-  {id: "c", word: "ノードグラフ"},
-  {id: "d", word: "になっています"},
-  {id: "e", word: "ドラッグアンドドロップして"},
-  {id: "f", word: "グラフを"},
-  {id: "g", word: "変形してみよう"},
-  {id: "h", word: "これはなんかすごく長いノードのテスト"},
-  {id: "i", word: "ﾜｧ..!"},
-  {id: "j", word: "( ﾟДﾟ)"},
-] as Node[]
-
-const dummyEdges = [
-  {nodeId1: "a", nodeId2: "b"},
-  {nodeId1: "b", nodeId2: "c"},
-  {nodeId1: "c", nodeId2: "d"},
-  {nodeId1: "d", nodeId2: "a"},
-  {nodeId1: "f", nodeId2: "e"},
-  {nodeId1: "f", nodeId2: "g"},
-  {nodeId1: "g", nodeId2: "h"},
-  {nodeId1: "h", nodeId2: "a"},
-  {nodeId1: "i", nodeId2: "j"},
-  {nodeId1: "g", nodeId2: "j"},
-
-] as Edge[]
+import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
-
   // ダミー変数
-  // 読み込んでから60秒
-  const [expireDummy] = useState(new Date(new Date().getTime() + 1000*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 5*1000000))
 
   const [text, setText] = useState('')
 
@@ -62,6 +32,8 @@ const Game = () => {
     client.createNode({ word: text, creatorId: getUserID() })
     setText('')
   }
+
+  const { nodes, setNodes, edges, setEdges } = useGraph()
 
   useOnEvent(useCallback((event) => {
     switch (event.event.case) {
@@ -80,13 +52,8 @@ const Game = () => {
         break;
       }
     }
-  }, []))
+  }, [setEdges, setNodes]))
 
-
-
-  // ノード関連
-  const [nodes, setNodes] = useState<Node[]>(dummyNodes)
-  const [edges, setEdges] = useState<Edge[]>(dummyEdges)
   const onNodeClick = useCallback((node: string) => console.log(`node ${node} is selected`), [])
 
   return (
@@ -99,7 +66,7 @@ const Game = () => {
         <ThemeDisplay />
         <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
         <div>
-          <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
+          <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
           <Button text='Add Word' onClick={() => send()} />
         </div>
       </StyledColumn>
