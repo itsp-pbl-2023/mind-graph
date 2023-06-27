@@ -54,9 +54,6 @@ const Waiting = () => {
           placeholder='主題の入力'
         />
       </div>
-      <div>
-        <Button text="送信" onClick={SendTheme}/>
-      </div>
     </div>
   )
 }
