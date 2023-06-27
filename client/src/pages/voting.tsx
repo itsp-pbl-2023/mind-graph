@@ -8,7 +8,6 @@ import { setResult } from '../lib/state/result.ts'
 import { useNavigate } from 'react-router-dom'
 import { getUserID } from '../lib/state/user.ts'
 
-
 const Voting = () => {
   /*
   const users:Users = location.state as {User[]}
@@ -18,7 +17,7 @@ const Voting = () => {
   const vote = async (nodeID: string) => {
     await client.voteWord({ nodeId: nodeID })
   }
-  
+
   useOnEvent(useCallback((e) => {
     if (e.event.case !== 'result') return
 
@@ -30,7 +29,7 @@ const Voting = () => {
     })
     navigate('/result')
   }, [navigate]))
-  
+
   return (
     <div>
       <h1>Voting</h1>
