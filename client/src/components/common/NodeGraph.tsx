@@ -39,7 +39,7 @@ export const NodeGraph = ({nodes, edges, onClick, focusedNodeId}: NodeGraphProps
         d3Wrapper.removeChild(svgNode)
       }
     }
-  }, [nodes, edges, onClick])
+  }, [nodes, edges, onClick, focusedNodeId])
 
   return <>
     <div ref={d3WrapperRef}>
