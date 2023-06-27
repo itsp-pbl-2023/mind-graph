@@ -14,7 +14,6 @@ import { styled } from "styled-components"
 
 const StyledGame = styled.div`
   display: flex;
-  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
 `
 

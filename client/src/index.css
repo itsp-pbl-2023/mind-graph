@@ -8,7 +8,7 @@
   text-align: center;
   line-height: 1.5;
   color: #112244;
-
+  
   color-scheme: light dark;
 
   font-synthesis: none;
@@ -35,6 +35,8 @@ a:hover {
 
 body {
   margin: 0;
+  display: flex;
+  justify-content: center;
   place-items: center;
   min-width: 100wh;
   min-height: 100vh;
