@@ -6,7 +6,7 @@ import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
-// import { useName } from '../lib/hooks/name.ts'
+import InputForm from "../components/input.tsx"
 import ExplainText from "../components/explainText.tsx"
 import { Node, Edge } from "../lib/api/api_pb.ts"
 import { getUserID } from '../lib/state/user.ts'
@@ -92,8 +92,8 @@ const Game = () => {
       />
       <Timer expire={expireDummy}></Timer>
       <div>
-        <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
-        <Button text='Add Word' onClick={() => send()} />
+        <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} placeholder="単語の入力"/>
+        <Button text='送信' onClick={() => send()}/>
       </div>
       <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
     </div>

@@ -3,6 +3,8 @@ import Logo from "../assets/Logo.svg"
 import {ChangeEvent, useState} from "react"
 import Button from "../components/button"
 import { useSetName } from "../lib/hooks/name"
+import InputForm from "../components/input"
+
 import {styled, createGlobalStyle} from "styled-components"
 
 const Page = styled.div `
@@ -28,6 +30,7 @@ const Gradiation = createGlobalStyle`
 `
 
 const Title = () => {
+
 
   const [userName, setUserName] = useState("");
 
@@ -56,10 +59,9 @@ const Title = () => {
         <p>名前を入力</p>
         <form>
           <div>
-            <label htmlFor="name">名前</label>
-            <input type="text" onChange={handleChange} value = {userName}/>
+            <InputForm type="text" onChange={handleChange} value = {userName} placeholder="名前の入力"></InputForm>
           </div>
-          <Button text="送信" onClick={navigateToWaiting}/>
+          <Button text="送信" onClick={navigateToWaiting}></Button>
         </form>
       </Page> 
       </>
