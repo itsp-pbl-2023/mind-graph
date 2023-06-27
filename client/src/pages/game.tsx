@@ -6,9 +6,11 @@ import { useOnEvent } from '../lib/hooks/stream.ts'
 import { useCallback, useState } from 'react'
 import Button from '../components/button.tsx'
 import { client } from '../lib/client.ts'
-import { useName } from '../lib/hooks/name.ts'
+// import { useName } from '../lib/hooks/name.ts'
+import ExplainText from "../components/explainText.tsx"
 import { Node, Edge } from "../lib/api/api_pb.ts"
 import { styled } from "styled-components"
+import { getUserID } from '../lib/state/user.ts'
 
 const dummyNodes = [
   {id: "a", word: "これは"},
@@ -43,12 +45,11 @@ const Game = () => {
   // 読み込んでから60秒
   const [expireDummy] = useState(new Date(new Date().getTime() + 1000*1000))
 
-  const name = useName()
   const [text, setText] = useState('')
 
   const send = () => {
     if (text === '') return
-    client.createNode({ word: text, creatorId: name })
+    client.createNode({ word: text, creatorId: getUserID() })
     setText('')
   }
 
@@ -90,6 +91,12 @@ const Game = () => {
         <h1>Game</h1>
         <p>This is the game page</p>
         <UserList />
+        <ExplainText
+          elements={[
+            '単語を入力して送信ボタンを押す', 
+            '右クリックして2つのノードを選び、接続する', 
+          ]}
+        />
         <Timer expire={expireDummy}></Timer>
         <div>
           <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
