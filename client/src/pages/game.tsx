@@ -13,7 +13,6 @@ import { styled } from "styled-components"
 
 const StyledGame = styled.div`
   display: flex;
-  grid-template-columns: repeat(3, 1fr);
 `
 
 const StyledColumn = styled.div`
