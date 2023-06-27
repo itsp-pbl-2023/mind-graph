@@ -34,10 +34,8 @@ a:hover {
 }
 
 body {
+  position: relative;
   margin: 0;
-  place-items: center;
-  min-width: 100wh;
-  min-height: 100vh;
 }
 
 h1 {

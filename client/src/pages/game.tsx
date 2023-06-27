@@ -9,7 +9,6 @@ import { client } from '../lib/client.ts'
 // import { useName } from '../lib/hooks/name.ts'
 import ExplainText from "../components/explainText.tsx"
 import { Node, Edge } from "../lib/api/api_pb.ts"
-import { styled } from "styled-components"
 import { getUserID } from '../lib/state/user.ts'
 
 const dummyNodes = [
@@ -47,9 +46,11 @@ const Game = () => {
 
   const [text, setText] = useState('')
 
-  const send = () => {
+  const send = async () => {
     if (text === '') return
-    client.createNode({ word: text, creatorId: getUserID() })
+    const res = await client.createNode({ word: text, creatorId: getUserID() })
+    // 既存のノードが選択されている場合は接続
+    if (selectedNode) client.createEdge({ nodeId1: selectedNode, nodeId2: res.id })
     setText('')
   }
 
@@ -72,38 +73,31 @@ const Game = () => {
     }
   }, []))
 
-
-
   // ノード関連
   const [nodes, setNodes] = useState<Node[]>(dummyNodes)
   const [edges, setEdges] = useState<Edge[]>(dummyEdges)
-  const onNodeClick = useCallback((node: string) => console.log(`node ${node} is selected`), [])
-
-  const UIWrapper = styled.div`
-    z-index: 1;
-  `
+  const [selectedNode, setSelectedNode] = useState<string | null>(null)
+  const onNodeClick = useCallback((node: string) => setSelectedNode(node), [])
 
   return (
-    <>
+    <div>
       <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
-      <UIWrapper>
-        <ThemeDisplay />
-        <h1>Game</h1>
-        <p>This is the game page</p>
-        <UserList />
-        <ExplainText
-          elements={[
-            '単語を入力して送信ボタンを押す', 
-            '右クリックして2つのノードを選び、接続する', 
-          ]}
-        />
-        <Timer expire={expireDummy}></Timer>
-        <div>
-          <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
-          <Button text='Add Word' onClick={() => send()} />
-        </div>
-      </UIWrapper>
-    </>
+      <ThemeDisplay />
+      <h1>Game</h1>
+      <p>This is the game page</p>
+      <UserList />
+      <ExplainText
+        elements={[
+          '単語を入力して送信ボタンを押す', 
+          '右クリックして2つのノードを選び、接続する', 
+        ]}
+      />
+      <Timer expire={expireDummy}></Timer>
+      <div>
+        <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
+        <Button text='Add Word' onClick={() => send()} />
+      </div>
+    </div>
   )
 }
 

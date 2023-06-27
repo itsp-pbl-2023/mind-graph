@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { GraphBuilder } from "../../lib/graph/graphBuilder"
 import { Node, Edge } from "../../lib/api/api_pb"
-import styled from "styled-components"
 
 interface NodeGraphProps {
   nodes: Node[]
@@ -26,6 +25,14 @@ export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
       svgNode.style.width = '100vw';
       svgNode.style.height = '100vh';
 
+      // こうしないとdivが毎回更新走ってエラーになる
+      d3Wrapper.style.width = '100vw';
+      d3Wrapper.style.height = '100vh';
+      d3Wrapper.style.position = 'fixed';
+      d3Wrapper.style.top = '0';
+      d3Wrapper.style.left = '0';
+      d3Wrapper.style.zIndex = '-1';
+
       return () => {
         dispose()
         d3Wrapper.removeChild(svgNode)
@@ -33,17 +40,8 @@ export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
     }
   }, [nodes, edges, onClick])
 
-  const D3Wrapper = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  `
-
   return <>
-    <D3Wrapper ref={d3WrapperRef}>
-    </D3Wrapper>
+    <div ref={d3WrapperRef}>
+    </div>
   </>
 }
