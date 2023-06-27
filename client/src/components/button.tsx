@@ -12,6 +12,8 @@ const ButtonStyle = styled.button`
   transition: background-color 0.25s;
   margin: 4px;
 
+  pointer-events: all;
+
   &:hover {
     background-color: var(--accent-color-hover);
   }

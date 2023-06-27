@@ -13,20 +13,12 @@ import { styled } from "styled-components"
 
 const StyledGame = styled.div`
   display: flex;
+`
+
+const StyledColumn = styled.div`
   position: relative;
-  z-index: 15;
-`
-
-const NonePointer = styled.div`
-  position: relative;
-  z-index: 150;
-`
-
-const SyledColum = styled.div`
-  z-index: 100;
-`
-
-const StyledAll = styled.div`
+  z-index: 10;
+  pointer-events: none;
 `
 
 import { useGraph } from '../lib/hooks/graph.ts'
@@ -72,23 +64,22 @@ const Game = () => {
   const onNodeClick = useCallback((node: string) => setSelectedNode(node), [])
 
   return (
-    <StyledAll>
-    <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
     <StyledGame>
-      <div>
+      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
+      <StyledColumn>
         <UserList />
-      </div>
-      <SyledColum>
-        <NonePointer>
+      </StyledColumn>
+      <StyledColumn>
+        <div>
           <h1>Game</h1>
-        </NonePointer>
+        </div>
         <ThemeDisplay />
         <div>
           <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
           <Button text='Add Word' onClick={() => send()} />
         </div>
-      </SyledColum>
-      <div>
+      </StyledColumn>
+      <StyledColumn>
         <Timer expire={expireDummy}></Timer>
         <ExplainText
         elements={[
@@ -96,9 +87,8 @@ const Game = () => {
           '右クリックして2つのノードを選び、接続する', 
         ]}
       />
-      </div>
+      </StyledColumn>
     </StyledGame>
-    </StyledAll>
   )
 }
 

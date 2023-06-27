@@ -10,6 +10,7 @@ const InputForm = styled.input`
   height: 30px;
   margin: 4px;
 
+  pointer-events: all;
 `
 
 export default InputForm
