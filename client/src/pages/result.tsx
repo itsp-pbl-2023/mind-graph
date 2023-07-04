@@ -39,9 +39,7 @@ const Result = () => {
 
   return (
     <div>
-      <h1>Result</h1>
       <ThemeDisplay />
-      <p>This is the result page</p>
 
       <ShowWord word={chosenNode?.word} />
 

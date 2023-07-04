@@ -63,7 +63,6 @@ const Game = () => {
         <UserList />
       </div>
       <div>
-        <h1>Game</h1>
         <ThemeDisplay />
         <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
         <div>
