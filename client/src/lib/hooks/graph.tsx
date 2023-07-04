@@ -22,8 +22,8 @@ export interface GraphProviderProps {
 }
 
 export const GraphProvider = ({ children }: GraphProviderProps) => {
-  const [nodes, setNodes] = useState<Node[]>(dummyNodes)
-  const [edges, setEdges] = useState<Edge[]>(dummyEdges)
+  const [nodes, setNodes] = useState<Node[]>([])
+  const [edges, setEdges] = useState<Edge[]>([])
   const value = useMemo(() => {
     return { nodes, setNodes, edges, setEdges }
   }, [nodes, setNodes, edges, setEdges])
@@ -31,31 +31,3 @@ export const GraphProvider = ({ children }: GraphProviderProps) => {
     <GraphContext.Provider value={value}>{children}</GraphContext.Provider>
   )
 }
-
-// TODO: remove test data
-
-const dummyNodes = [
-  {id: "a", word: "これは"},
-  {id: "b", word: "テストの"},
-  {id: "c", word: "ノードグラフ"},
-  {id: "d", word: "になっています"},
-  {id: "e", word: "ドラッグアンドドロップして"},
-  {id: "f", word: "グラフを"},
-  {id: "g", word: "変形してみよう"},
-  {id: "h", word: "これはなんかすごく長いノードのテスト"},
-  {id: "i", word: "ﾜｧ..!"},
-  {id: "j", word: "( ﾟДﾟ)"},
-] as Node[]
-
-const dummyEdges = [
-  {nodeId1: "a", nodeId2: "b"},
-  {nodeId1: "b", nodeId2: "c"},
-  {nodeId1: "c", nodeId2: "d"},
-  {nodeId1: "d", nodeId2: "a"},
-  {nodeId1: "f", nodeId2: "e"},
-  {nodeId1: "f", nodeId2: "g"},
-  {nodeId1: "g", nodeId2: "h"},
-  {nodeId1: "h", nodeId2: "a"},
-  {nodeId1: "i", nodeId2: "j"},
-  {nodeId1: "g", nodeId2: "j"},
-] as Edge[]
