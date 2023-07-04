@@ -6,16 +6,17 @@ interface NodeGraphProps {
   nodes: Node[]
   edges: Edge[]
   onClick?: (id: string) => void
+  onShiftClick?: (id: string) => void
   focusedNodeId?: string
 }
 
-export const NodeGraph = ({nodes, edges, onClick, focusedNodeId}: NodeGraphProps) => {
+export const NodeGraph = ({nodes, edges, onClick, onShiftClick, focusedNodeId}: NodeGraphProps) => {
   const d3WrapperRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const {
       svg,
       dispose
-    } = GraphBuilder(nodes, edges, 1000, 600, onClick, focusedNodeId)
+    } = GraphBuilder(nodes, edges, 1000, 600, onClick, onShiftClick, focusedNodeId)
 
     const svgNode = svg.node()
     const d3Wrapper = d3WrapperRef.current
@@ -39,7 +40,7 @@ export const NodeGraph = ({nodes, edges, onClick, focusedNodeId}: NodeGraphProps
         d3Wrapper.removeChild(svgNode)
       }
     }
-  }, [nodes, edges, onClick, focusedNodeId])
+  }, [nodes, edges, onClick, onShiftClick, focusedNodeId])
 
   return <>
     <div ref={d3WrapperRef}>

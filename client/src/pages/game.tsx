@@ -19,7 +19,7 @@ import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
   // ダミー変数
-  const [expireDummy] = useState(new Date(new Date().getTime() + 5*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 20*1000))
 
 
   const [text, setText] = useState('')
@@ -56,6 +56,10 @@ const Game = () => {
   // ノード関連
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
   const onNodeClick = useCallback((node: string) => setSelectedNode(node), [])
+  const onNodeShiftClick = useCallback((nodeId: string) => {
+    if (!selectedNode) return
+    client.createEdge({ nodeId1: selectedNode, nodeId2: nodeId, creatorId: getUserID() })
+  }, [selectedNode])
 
   return (
     <StyledGame>
@@ -65,7 +69,7 @@ const Game = () => {
       <div>
         <h1>Game</h1>
         <ThemeDisplay />
-        <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
+        <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} onShiftClick={onNodeShiftClick} />
         <div>
           <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
           <Button text='Add Word' onClick={() => send()} />
