@@ -17,6 +17,7 @@ import { useUsers } from '../lib/hooks/users.ts'
 import MVPBox from '../components/MVPBox.tsx'
 import ScoreBox from '../components/ScoreBox.tsx'
 
+
 const Result = () => {
   const { nodes, edges } = useGraph()
   const chosenNodeId = getResult()?.chosenNodeID
@@ -52,13 +53,15 @@ const Result = () => {
   return (
     <div  style={{minWidth:'1200px'}}>
       <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />
-      <h1>Result</h1>
-      <ThemeDisplay />
-      <p>This is the result page</p>
+      <div style={{marginLeft:'670px', position: 'absolute'}}>
+        <ThemeDisplay />
+        <ShowWord word={chosenNode?.word} />
+        <div style={{marginTop:'200px'}}>
+          <Button text='タイトルに戻る' onClick={returnToTitle} />
+        </div> 
+      </div>
       <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
-      <ShowWord word={chosenNode?.word} />
       <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
-      <Button text='タイトルに戻る' onClick={returnToTitle} />
     </div>
   )
 }
