@@ -25,3 +25,17 @@ func NewMindGraphService() pbconnect.MindGraphServiceHandler {
 		votes:  make(map[string]string),
 	}
 }
+
+func (m *mindGraphService) reset() {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+
+	for _, u := range m.users {
+		u.close()
+	}
+	m.users = nil
+	m.theme = ""
+	m.graph = graph{}
+	m.scores = make(map[string]int)
+	m.votes = make(map[string]string)
+}

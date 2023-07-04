@@ -63,6 +63,7 @@ func (m *mindGraphService) VoteWord(_ context.Context, c *connect.Request[pb.Vot
 			}
 			return &pb.Event{Event: &pb.Event_Result{Result: res}}
 		})
+		m.reset()
 	}
 
 	res := connect.NewResponse(&pb.Empty{})

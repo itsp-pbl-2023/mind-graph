@@ -1,6 +1,6 @@
 const explainText = ({ elements }: { elements: string[] }) => {
 
-  const elementsList = elements.map(element => <li>{element}</li>)
+  const elementsList = elements.map((element: string, id: number) => <li key={id}>{element}</li>)
 
   return (
     <div>

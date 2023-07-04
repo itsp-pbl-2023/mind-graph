@@ -2,7 +2,7 @@ import { createContext, ReactNode, useMemo, useState } from 'react'
 
 type NameContextType = {
   name?: string
-  setName: (name: string) => void
+  setName: (name: string | undefined) => void
 }
 export const NameContext = createContext<NameContextType>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function

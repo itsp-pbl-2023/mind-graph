@@ -7,6 +7,6 @@ export interface Result {
 let result: Result | undefined
 
 export const getResult = () => result
-export const setResult = (res: Result) => {
+export const setResult = (res: Result | undefined) => {
   result = res
 }
