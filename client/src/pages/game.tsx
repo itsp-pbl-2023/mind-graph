@@ -28,7 +28,7 @@ const Game = () => {
     if (text === '') return
     const res = await client.createNode({ word: text, creatorId: getUserID() })
     // 既存のノードが選択されている場合は接続
-    if (selectedNode) client.createEdge({ nodeId1: selectedNode, nodeId2: res.id })
+    if (selectedNode) client.createEdge({ nodeId1: selectedNode, nodeId2: res.id, creatorId: getUserID() })
     setText('')
   }
 
