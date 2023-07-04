@@ -1,6 +1,9 @@
 import Button from '../components/button'
 import { useNavigate } from 'react-router-dom'
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
+import { NodeGraph } from '../components/common/NodeGraph.tsx'
+import { useMemo } from 'react'
+import createRelatedGraph from '../lib/graph/createRelatedGraph.ts'
 import { getResult, setResult } from '../lib/state/result.ts'
 import ShowWord from '../components/showWord.tsx'
 import { useSetName } from '../lib/hooks/name.ts'
@@ -15,8 +18,11 @@ import MVPBox from '../components/MVPBox.tsx'
 import ScoreBox from '../components/ScoreBox.tsx'
 
 const Result = () => {
-  const { nodes } = useGraph()
-  const chosenNodeId = getResult()?.chosenNodeID
+  const result = getResult()
+  const chosenNodeId = result ? result.chosenNodeID : null
+  const { nodes, edges } = useGraph()
+  const { nodes: relatedNodes, edges: relatedEdges } = useMemo(() => createRelatedGraph(nodes, edges, chosenNodeId, 3), [nodes, edges, chosenNodeId])
+
   const chosenNode = nodes.find((node) => node.id == chosenNodeId)
   if ( typeof(chosenNode) == undefined ){
     console.log("chosenNode Undefined");
@@ -46,7 +52,8 @@ const Result = () => {
   const mvpName = mvp?.name;
 
   return (
-    <div style={{minWidth:'1200px'}}>
+    <div  style={{minWidth:'1200px'}}>
+      <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />
       <h1>Result</h1>
       <ThemeDisplay />
       <p>This is the result page</p>
