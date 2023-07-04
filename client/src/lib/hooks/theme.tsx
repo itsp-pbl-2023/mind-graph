@@ -2,7 +2,7 @@ import { ReactNode, createContext, useMemo, useState } from 'react'
 
 type ThemeContextType = {
   theme?: string
-  setTheme: (theme: string) => void
+  setTheme: (theme: string | undefined) => void
 }
 
 export const ThemeContext = createContext<ThemeContextType>({

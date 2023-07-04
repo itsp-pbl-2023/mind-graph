@@ -17,6 +17,10 @@ type userConnection struct {
 	send chan<- *pb.Event
 }
 
+func (u *userConnection) close() {
+	close(u.send)
+}
+
 func (m *mindGraphService) currentUsers() []*pb.User {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -105,7 +109,10 @@ func (m *mindGraphService) Join(ctx context.Context, c *connect.Request[pb.JoinR
 
 	for {
 		select {
-		case event := <-ch:
+		case event, ok := <-ch:
+			if !ok {
+				return nil
+			}
 			err := s.Send(event)
 			if err != nil {
 				log.Printf("failed to send event: %v\n", err)
