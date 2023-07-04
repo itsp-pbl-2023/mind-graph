@@ -37,25 +37,17 @@ func (m *mindGraphService) votedUsers() []string {
 func (m *mindGraphService) calcNodeScore(ChosenNodeId string) (nodePoints map[string]int) {
 	nodeStates := make(map[string]*nodeState)
 
+	for _, node := range m.graph.nodes {
+		nodeStates[node.id] = &nodeState{connectedNodes: []string{}, depth: INF}
+	}
+
 	// ノードの接続情報を計算
 	for _, edge := range m.graph.edges {
 		node1 := edge.nodeID1
 		node2 := edge.nodeID2
 
-		_, ok1 := nodeStates[node1]
-		_, ok2 := nodeStates[node2]
-
-		if !ok1 {
-			nodeStates[node1] = &nodeState{connectedNodes: []string{node2}, depth: INF}
-		} else {
-			nodeStates[node1].connectedNodes = append(nodeStates[node1].connectedNodes, node2)
-		}
-
-		if !ok2 {
-			nodeStates[node2] = &nodeState{connectedNodes: []string{node1}, depth: INF}
-		} else {
-			nodeStates[node2].connectedNodes = append(nodeStates[node2].connectedNodes, node1)
-		}
+		nodeStates[node1].connectedNodes = append(nodeStates[node1].connectedNodes, node2)
+		nodeStates[node2].connectedNodes = append(nodeStates[node2].connectedNodes, node1)
 	}
 
 	// chosenNodeIdで選択されたnodeからMAX_DEPTHまでのノードを探索してdepthを計算
