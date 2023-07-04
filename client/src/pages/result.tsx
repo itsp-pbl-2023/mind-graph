@@ -47,6 +47,7 @@ const Result = () => {
   const users = useUsers();
   const mvp = users.find(item => item.id === getResult()?.mvpUserID);
   const mvpName = mvp?.name;
+
   const { nodes: relatedNodes, edges: relatedEdges } = useMemo(() => createRelatedGraph(nodes, edges, chosenNodeId, 3), [nodes, edges, chosenNodeId])
 
   return (
