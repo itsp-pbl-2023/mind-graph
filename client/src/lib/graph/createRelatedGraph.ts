@@ -3,14 +3,14 @@ import { Node, Edge } from "../api/api_pb";
 const createRelatedGraph = (
   nodes: Node[],
   edges: Edge[],
-  selectedWordId: string | null,
+  selectedWordId: string | undefined,
   depth: number
 ): {
   nodes: Node[],
   edges: Edge[],
 } => {
   // 選択されたノードが不正な場合には空のグラフを返す
-  if (selectedWordId === null) return {nodes: [], edges: []}
+  if (!selectedWordId) return {nodes: [], edges: []}
   
   const resultNodeIds = new Set<string>()
   const resultEdges = new Set<Edge>()

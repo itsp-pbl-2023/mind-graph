@@ -14,7 +14,7 @@ import { useSetUsers } from '../lib/hooks/users.ts'
 import { useSetVoted } from '../lib/hooks/voted.ts'
 
 const Result = () => {
-  const { nodes } = useGraph()
+  const { nodes, edges } = useGraph()
   const chosenNodeId = getResult()?.chosenNodeID
   const chosenNode = nodes.find((node) => node.id == chosenNodeId)
   if ( typeof(chosenNode) == undefined ){
@@ -40,11 +40,6 @@ const Result = () => {
     navigate('/title')
   }
 
-  const result = getResult()
-
-  const chosenNodeId = result ? result.chosenNodeID : null
-
-  const { nodes, edges } = useGraph()
   const { nodes: relatedNodes, edges: relatedEdges } = useMemo(() => createRelatedGraph(nodes, edges, chosenNodeId, 3), [nodes, edges, chosenNodeId])
 
   return (
