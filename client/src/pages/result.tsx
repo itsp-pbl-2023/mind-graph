@@ -1,7 +1,12 @@
 import Button from '../components/button'
 import { useNavigate } from 'react-router-dom'
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
-import { getResult } from '../lib/state/result.ts'
+import { getResult, setResult } from '../lib/state/result.ts'
+import { useSetName } from '../lib/hooks/name.ts'
+import { setUserID } from '../lib/state/user.ts'
+import { useGraph } from '../lib/hooks/graph.ts'
+import { useSetTheme } from '../lib/hooks/theme.ts'
+import { useSetUsers } from '../lib/hooks/users.ts'
 import { styled } from 'styled-components'
 import { useUsers } from '../lib/hooks/users.ts'
 
@@ -28,7 +33,19 @@ const ScoreBox = styled.p`
 
 const Result = () => {
   const navigate = useNavigate()
+  const setName = useSetName()
+  const setTheme = useSetTheme()
+  const setUsers = useSetUsers()
+  const { setEdges, setNodes } = useGraph()
+
   const returnToTitle = () => {
+    setName(undefined) // disconnect
+    setEdges([])
+    setNodes([])
+    setTheme(undefined)
+    setUsers([])
+    setResult(undefined)
+    setUserID(undefined)
     navigate('/title')
   }
 

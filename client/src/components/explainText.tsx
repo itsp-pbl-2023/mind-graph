@@ -14,7 +14,7 @@ const ExplainTextStyle = styled.ul`
 
 const ExplainText = ({ elements }: { elements: string[] }) => {
 
-  const elementsList = elements.map(element => <li>{element}</li>)
+  const elementsList = elements.map((element: string, id: number) => <li key={id}>{element}</li>)
 
   return (
     <div>
