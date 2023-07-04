@@ -56,12 +56,11 @@ const Result = () => {
       <div style={{marginLeft:'670px', position: 'absolute'}}>
         <ThemeDisplay />
         <ShowWord word={chosenNode?.word} />
-        <div style={{marginTop:'200px'}}>
-          <Button text='タイトルに戻る' onClick={returnToTitle} />
-        </div> 
       </div>
       <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
       <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
+      <div style={{textAlign:'left', marginLeft:'48px'}}><Button text='タイトルに戻る' onClick={returnToTitle} /></div>
+      
     </div>
   )
 }
