@@ -45,8 +45,7 @@ const UserList = () => {
               <ListStyleNotMe key={item.id}>
                 {item.name} 
                 <input type="checkbox" id={item.id} checked={voted.includes(item.id)} readOnly/>
-              </ListStyleNotMe>
-              
+              </ListStyleNotMe>  
           )}
         </ul>
       </div>
