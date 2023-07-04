@@ -15,10 +15,7 @@ const createRelatedGraph = (
   const resultNodeIds = new Set<string>()
   const resultEdges = new Set<Edge>()
   
-  const nodeRelation = nodes.reduce<Record<string, [Edge, string][]>>((acc, node) => {
-    acc[node.id] = []
-    return acc
-  }, {})
+  const nodeRelation = Object.fromEntries(nodes.map(node => [node.id, [] as [Edge, string][]]))
   edges.forEach(edge => {
     nodeRelation[edge.nodeId1].push([edge, edge.nodeId2])
     nodeRelation[edge.nodeId2].push([edge, edge.nodeId1])
