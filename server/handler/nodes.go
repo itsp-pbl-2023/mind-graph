@@ -67,9 +67,6 @@ func (g *graph) addEdge(nodeID1, nodeID2 string) *edge {
 }
 
 func (m *mindGraphService) CreateNode(_ context.Context, c *connect.Request[pb.CreateNodeRequest]) (*connect.Response[pb.CreateNodeResponse], error) {
-	// TODO: スコア計算をちゃんとする
-	m.addScore(c.Msg.CreatorId, 5)
-
 	newNode := m.graph.addNode(c.Msg.Word, c.Msg.CreatorId)
 	m.broadcast(&pb.Event{Event: &pb.Event_NodeUpdated{NodeUpdated: &pb.NodeUpdateEvent{
 		Node: newNode.toPB(),
@@ -81,9 +78,6 @@ func (m *mindGraphService) CreateNode(_ context.Context, c *connect.Request[pb.C
 }
 
 func (m *mindGraphService) CreateEdge(_ context.Context, c *connect.Request[pb.CreateEdgeRequest]) (*connect.Response[pb.Empty], error) {
-	// TODO: スコア計算をちゃんとする
-	m.addScore(c.Msg.CreatorId, 3)
-
 	newEdge := m.graph.addEdge(c.Msg.NodeId1, c.Msg.NodeId2)
 	m.broadcast(&pb.Event{Event: &pb.Event_EdgeUpdated{EdgeUpdated: &pb.EdgeUpdateEvent{
 		Edge: newEdge.toPB(),
