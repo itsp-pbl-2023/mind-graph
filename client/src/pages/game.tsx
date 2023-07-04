@@ -19,7 +19,7 @@ import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
   // ダミー変数
-  const [expireDummy] = useState(new Date(new Date().getTime() + 20*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 5*1000))
 
 
   const [text, setText] = useState('')
