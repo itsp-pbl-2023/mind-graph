@@ -8,6 +8,32 @@ import UserList from '../components/userlistWaiting.tsx'
 import Button from "../components/button"
 import InputForm from '../components/input.tsx'
 import { getUserID } from '../lib/state/user.ts'
+import styled, { createGlobalStyle } from 'styled-components'
+
+const Background = createGlobalStyle`
+  body {
+    width: 100vw;
+    height: 100vh;
+    background: var(--background-color);
+  }
+`
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+
+  min-height: 600px;
+  width: 500px;
+`
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+`
 
 const Waiting = () => {
   const [themeText, setThemeText] = useState("");
@@ -40,21 +66,18 @@ const Waiting = () => {
   }, [setTheme, navigate]))
 
   return (
-    <div>
-      <div>
-        <h1>Waiting</h1>
-        <Button text="ゲームを開始する" onClick={SendTheme}></Button>
-        <p>This is the waiting page {}</p>
-
-        <UserList />
-
+    <Container>
+      <Background />
+      <UserList />
+      <ButtonsContainer>
         <InputForm
           value={themeText}  // 入力を格納する変数
           onChange={(event) => setThemeText(event.target.value)}
           placeholder='主題の入力'
         />
-      </div>
-    </div>
+        <Button text="ゲームを開始する" onClick={SendTheme}></Button>
+      </ButtonsContainer>
+    </Container>
   )
 }
 
