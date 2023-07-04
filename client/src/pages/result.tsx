@@ -8,6 +8,7 @@ import { setUserID } from '../lib/state/user.ts'
 import { useGraph } from '../lib/hooks/graph.ts'
 import { useSetTheme } from '../lib/hooks/theme.ts'
 import { useSetUsers } from '../lib/hooks/users.ts'
+import { useSetVoted } from '../lib/hooks/voted.ts'
 
 const Result = () => {
   const { nodes } = useGraph()
@@ -21,6 +22,7 @@ const Result = () => {
   const setName = useSetName()
   const setTheme = useSetTheme()
   const setUsers = useSetUsers()
+  const setVoted = useSetVoted()
   const { setEdges, setNodes } = useGraph()
 
   const returnToTitle = () => {
@@ -29,6 +31,7 @@ const Result = () => {
     setNodes([])
     setTheme(undefined)
     setUsers([])
+    setVoted([])
     setResult(undefined)
     setUserID(undefined)
     navigate('/title')

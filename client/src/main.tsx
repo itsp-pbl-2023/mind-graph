@@ -23,6 +23,7 @@ import { NameProvider } from './lib/hooks/name.tsx'
 import { StreamProvider } from './lib/hooks/stream.tsx'
 import { ThemeProvider } from './lib/hooks/theme.tsx';
 import { UsersProvider } from './lib/hooks/users.tsx';
+import { VotedProvider } from './lib/hooks/voted.tsx';
 import { GraphProvider } from './lib/hooks/graph.tsx'
 
 const queryClient = new QueryClient({
@@ -68,9 +69,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <ThemeProvider>
             <StreamProvider>
               <UsersProvider>
-                <GraphProvider>
-                  <RouterProvider router={router} />
-                </GraphProvider>
+                <VotedProvider>
+                  <GraphProvider>
+                    <RouterProvider router={router} />
+                  </GraphProvider>
+                </VotedProvider>
               </UsersProvider>
             </StreamProvider>
           </ThemeProvider>
