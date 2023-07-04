@@ -18,11 +18,8 @@ import MVPBox from '../components/MVPBox.tsx'
 import ScoreBox from '../components/ScoreBox.tsx'
 
 const Result = () => {
-  const result = getResult()
-  const chosenNodeId = result ? result.chosenNodeID : null
   const { nodes, edges } = useGraph()
-  const { nodes: relatedNodes, edges: relatedEdges } = useMemo(() => createRelatedGraph(nodes, edges, chosenNodeId, 3), [nodes, edges, chosenNodeId])
-
+  const chosenNodeId = getResult()?.chosenNodeID
   const chosenNode = nodes.find((node) => node.id == chosenNodeId)
   if ( typeof(chosenNode) == undefined ){
     console.log("chosenNode Undefined");
@@ -50,6 +47,7 @@ const Result = () => {
   const users = useUsers();
   const mvp = users.find(item => item.id === getResult()?.mvpUserID);
   const mvpName = mvp?.name;
+  const { nodes: relatedNodes, edges: relatedEdges } = useMemo(() => createRelatedGraph(nodes, edges, chosenNodeId, 3), [nodes, edges, chosenNodeId])
 
   return (
     <div  style={{minWidth:'1200px'}}>
