@@ -7,29 +7,9 @@ import { setUserID } from '../lib/state/user.ts'
 import { useGraph } from '../lib/hooks/graph.ts'
 import { useSetTheme } from '../lib/hooks/theme.ts'
 import { useSetUsers } from '../lib/hooks/users.ts'
-import { styled } from 'styled-components'
 import { useUsers } from '../lib/hooks/users.ts'
-
-const MVPBox = styled.p`
-  color: black;
-  background-color: #B2D8F5;
-  border: 4px solid #B2D8F5;
-  text-align: center;
-  width: 300px;
-  height: 250px;
-  margin-left: 70px;
-
-`
-
-const ScoreBox = styled.p`
-  color: black;
-  background-color: white;
-  border: 4px solid #B2D8F5;
-  text-align: center;
-  width: 300px;
-  height: 250px;
-  margin-left: 70px;
-`
+import MVPBox from '../components/MVPBox.tsx'
+import ScoreBox from '../components/ScoreBox.tsx'
 
 const Result = () => {
   const navigate = useNavigate()
@@ -54,14 +34,12 @@ const Result = () => {
   const mvpName = mvp?.name;
 
   return (
-    <div>
+    <div style={{minWidth:'1200px'}}>
       <h1>Result</h1>
       <ThemeDisplay />
       <p>This is the result page</p>
-      <MVPBox>本日のMVPは...<br></br><br></br><br></br><h3 style={{fontSize:35}}>{mvpName}</h3></MVPBox>
-      <div>{JSON.stringify(getResult())}</div>
-      <div>{JSON.stringify(users)}</div>
-      <ScoreBox>あなたのスコア<br></br><h3 style={{fontSize:60}}>{getResult()?.myScore}</h3></ScoreBox>
+      <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
+      <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
       <Button text='タイトルに戻る' onClick={returnToTitle} />
     </div>
   )
