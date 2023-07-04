@@ -1,6 +1,6 @@
 
 
-import UserList from '../components/userlistGaming.tsx'
+import UserList from '../components/userlistVoting.tsx'
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
 import ExplainText from '../components/explainText'
 import { client } from '../lib/client.ts'

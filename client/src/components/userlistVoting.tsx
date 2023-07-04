@@ -37,9 +37,13 @@ const UserList = () => {
     <div>
         <ul>
           {users.map( item =>
-            item.id == userID ?
-              <ListStyleMe key={item.id}>{item.name}</ListStyleMe>:
-              <ListStylenotMe key={item.id}>{item.name}</ListStylenotMe>
+            item.id == userID?
+              <ListStyleMe key={item.id}>{item.name} 
+                <input type="checkbox" id={item.id} checked={voted.indexOf(item.id)==0}/>
+              </ListStyleMe>:
+              <ListStylenotMe key={item.id}>{item.name}
+                <input type="checkbox" id={item.id} checked={voted.indexOf(item.id)==0}/>
+              </ListStylenotMe>
           )}
         </ul>
       </div>
