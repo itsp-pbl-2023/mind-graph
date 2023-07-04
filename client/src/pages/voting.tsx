@@ -41,7 +41,7 @@ const Voting = () => {
       myScore: evt.myScore,
     })
     navigate('/result')
-  }, [navigate]))
+  }, [setVoted,navigate]))
 
   return (
     <div>
