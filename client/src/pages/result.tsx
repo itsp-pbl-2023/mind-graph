@@ -19,10 +19,28 @@ import styled from "styled-components"
 
 const ReturnButton = styled.div`
   text-align: left;
-  left:190px; 
+  left:200px; 
   top:630px; 
   position:absolute;
 
+`
+
+const ShowResult = styled.div`
+  text-align:center;
+  top:0px;
+  left:650px;
+  position:absolute;
+  width: 50%;
+`
+
+const WordBox = styled.div`
+  display: inline-block;
+  text-align:center;
+  top:100px;
+  left:1030px;
+  transform: translate(-50%, 0%);
+  position:absolute;
+  
 `
 
 
@@ -62,10 +80,10 @@ const Result = () => {
   return (
     <div  style={{minWidth:'1200px'}}>
       <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />   
-      <div style={{top:'100px' , left:'900px', position: 'absolute'}}>
+      <ShowResult>
         <ThemeDisplay />
-        <ShowWord word={chosenNode?.word} />
-      </div>
+      </ShowResult>
+      <WordBox><ShowWord word={chosenNode?.word} /></WordBox>
       <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
       <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
       <ReturnButton><Button text='タイトルに戻る' onClick={returnToTitle} /></ReturnButton>
