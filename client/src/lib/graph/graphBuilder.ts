@@ -140,7 +140,6 @@ export class GraphBuilder {
     this.simulation.nodes(this.nodes)
     ;(this.simulation.force("link") as d3.ForceLink<D3Node, D3Edge>).links(this.edges)
     this.simulation.restart()
-    // this.simulation.force("link")?.links(this.edges)
   }
 
   public addEdge(newEdge: Edge) {
@@ -160,6 +159,17 @@ export class GraphBuilder {
       .attr("stroke-width",10)
     .merge(this.edgeSVG)
 
+    this.simulation.nodes(this.nodes)
+    this.simulation.restart()
+  }
+
+  public removeAll() {
+    this.nodes = []
+    this.edges = []
+    this.nodeTable = {}
+    this.nodeSVG.remove()
+    this.edgeSVG.remove()
+    this.nodeTextSVG.remove()
     this.simulation.nodes(this.nodes)
     this.simulation.restart()
   }
@@ -197,6 +207,7 @@ export class GraphBuilder {
   }
 
   private onDragStart(event: any, d: D3Node) {
+    console.log("drag start")
     if (!event.active) this.simulation.alphaTarget(0.3).restart();
     d.fx = d.x;
     d.fy = d.y;
