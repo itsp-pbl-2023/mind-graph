@@ -84,7 +84,7 @@ const Result = () => {
         <ThemeDisplay />
       </ShowResult>
       <WordBox><ShowWord word={chosenNode?.word} /></WordBox>
-      <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
+      <MVPBox>本日のMVPは...<span style={{display:'block', fontSize:40, fontWeight:'bold', padding:'50px', overflowWrap:'break-word'}}>{mvpName}</span></MVPBox>
       <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
       <ReturnButton><Button text='タイトルに戻る' onClick={returnToTitle} /></ReturnButton>
    

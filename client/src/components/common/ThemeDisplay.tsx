@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const StyledUnderLine = styled.h1`
  border-bottom: 10px solid #B4C4FF;
+ display: inline-block;
 `
 
 export const ThemeDisplay = () => {
