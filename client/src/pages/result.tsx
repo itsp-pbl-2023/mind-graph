@@ -11,11 +11,20 @@ import { setUserID } from '../lib/state/user.ts'
 import { useGraph } from '../lib/hooks/graph.ts'
 import { useSetTheme } from '../lib/hooks/theme.ts'
 import { useSetUsers } from '../lib/hooks/users.ts'
-
 import { useSetVoted } from '../lib/hooks/voted.ts'
 import { useUsers } from '../lib/hooks/users.ts'
 import MVPBox from '../components/MVPBox.tsx'
 import ScoreBox from '../components/ScoreBox.tsx'
+import styled from "styled-components"
+
+const ReturnButton = styled.div`
+  text-align: left;
+  left:190px; 
+  top:630px; 
+  position:absolute;
+
+`
+
 
 
 const Result = () => {
@@ -52,15 +61,15 @@ const Result = () => {
 
   return (
     <div  style={{minWidth:'1200px'}}>
-      <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />
-      <div style={{marginLeft:'670px', position: 'absolute'}}>
+      <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />   
+      <div style={{top:'100px' , left:'900px', position: 'absolute'}}>
         <ThemeDisplay />
         <ShowWord word={chosenNode?.word} />
       </div>
       <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
       <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
-      <div style={{textAlign:'left', marginLeft:'48px'}}><Button text='タイトルに戻る' onClick={returnToTitle} /></div>
-      
+      <ReturnButton><Button text='タイトルに戻る' onClick={returnToTitle} /></ReturnButton>
+   
     </div>
   )
 }
