@@ -79,6 +79,12 @@ const Game = () => {
       <StyledColumn>
         <Timer expire={expireDummy}></Timer>
 
+        <ExplainText
+        elements={[
+          '単語を入力して送信ボタンを押す', 
+          '右クリックして2つのノードを選び、接続する', 
+        ]}
+      />
       </StyledColumn>
     </StyledGame>
   )
