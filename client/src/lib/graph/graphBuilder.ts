@@ -28,9 +28,9 @@ export class GraphBuilder {
   private previousSelectedNodeId: string | undefined
   private shiftKeyIsPressed = false
 
-  private onShiftClick: ((nodeId: string) => void) | undefined
+  private onShiftClick: ((gb: GraphBuilder, nodeId: string) => void) | undefined
 
-  constructor(width: number, height: number, onShiftClick?: (nodeId: string) => void) {
+  constructor(width: number, height: number, onShiftClick?: (gb: GraphBuilder, nodeId: string) => void) {
     this.width = width
     this.height = height
 
@@ -176,7 +176,12 @@ export class GraphBuilder {
   }
 
   public getSVG() {
-    return this.svg.node()
+    const el = this.svg.node()
+    if (el) {
+      el.style.width = '100vw';
+      el.style.height = '100vh';
+    }
+    return el
   }
 
   public getSelectedNode() {
@@ -230,10 +235,9 @@ export class GraphBuilder {
   }
 
   private onClickHandler (e: any, d: D3Node) {
-
     e.preventDefault()
     if (this.shiftKeyIsPressed && this.onShiftClick) {
-      this.onShiftClick(d.id)
+      this.onShiftClick(this, d.id)
       return
     }
 

@@ -1,14 +1,12 @@
 import Button from '../components/button'
 import { useNavigate } from 'react-router-dom'
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
-import { NodeGraph } from '../components/common/NodeGraph.tsx'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import createRelatedGraph from '../lib/graph/createRelatedGraph.ts'
 import { getResult, setResult } from '../lib/state/result.ts'
 import ShowWord from '../components/showWord.tsx'
 import { useSetName } from '../lib/hooks/name.ts'
 import { setUserID } from '../lib/state/user.ts'
-import { useGraph } from '../lib/hooks/graph.ts'
 import { useSetTheme } from '../lib/hooks/theme.ts'
 import { useSetUsers } from '../lib/hooks/users.ts'
 import { useSetVoted } from '../lib/hooks/voted.ts'
@@ -16,6 +14,7 @@ import { useUsers } from '../lib/hooks/users.ts'
 import MVPBox from '../components/MVPBox.tsx'
 import ScoreBox from '../components/ScoreBox.tsx'
 import styled from "styled-components"
+import { Graph, useGraph, useGraphBuilder } from '../lib/hooks/graph.tsx'
 
 const ReturnButton = styled.div`
   text-align: left;
@@ -39,24 +38,27 @@ const WordBox = styled.div`
 `
 
 const Result = () => {
-  const { nodes, edges } = useGraph()
+  const { nodes, edges, reset: resetGraph } = useGraph()
   const chosenNodeId = getResult()?.chosenNodeID
   const chosenNode = nodes.find((node) => node.id == chosenNodeId)
-  if ( typeof(chosenNode) == undefined ){
-    console.log("chosenNode Undefined");
-  }
+  const { nodes: relatedNodes, edges: relatedEdges } = useMemo(() => {
+    return createRelatedGraph(nodes, edges, chosenNodeId, 3)
+  }, [nodes, edges, chosenNodeId])
+  const gb = useGraphBuilder(relatedNodes, relatedEdges)
+  useEffect(() => {
+    // TODO
+    // if (gb) gb.setFocusedNode(chosenNodeId)
+  }, [gb, chosenNodeId])
 
   const navigate = useNavigate()
   const setName = useSetName()
   const setTheme = useSetTheme()
   const setUsers = useSetUsers()
   const setVoted = useSetVoted()
-  const { setEdges, setNodes } = useGraph()
 
   const returnToTitle = () => {
     setName(undefined) // disconnect
-    setEdges([])
-    setNodes([])
+    resetGraph()
     setTheme(undefined)
     setUsers([])
     setVoted([])
@@ -69,11 +71,10 @@ const Result = () => {
   const mvp = users.find(item => item.id === getResult()?.mvpUserID);
   const mvpName = mvp?.name;
 
-  const { nodes: relatedNodes, edges: relatedEdges } = useMemo(() => createRelatedGraph(nodes, edges, chosenNodeId, 3), [nodes, edges, chosenNodeId])
 
   return (
     <div  style={{minWidth:'1200px'}}>
-      <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />   
+      <Graph gb={gb} />
       <ShowResult>
         <ThemeDisplay />
         <WordBox>
@@ -83,7 +84,6 @@ const Result = () => {
       <MVPBox>本日のMVPは...<span style={{display:'block', fontSize:40, fontWeight:'bold', padding:'50px', overflowWrap:'break-word'}}>{mvpName}</span></MVPBox>
       <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
       <ReturnButton><Button text='タイトルに戻る' onClick={returnToTitle} /></ReturnButton>
-   
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import { NodeGraph } from "../components/common/NodeGraph"
 import Timer from "../components/timer"
 import { ThemeDisplay } from '../components/common/ThemeDisplay'
 import UserList from "../components/userlistGaming.tsx"
@@ -10,6 +9,8 @@ import InputForm from "../components/input.tsx"
 import ExplainText from "../components/explainText.tsx"
 import { getUserID } from '../lib/state/user.ts'
 import { styled } from "styled-components"
+import { useGraph, useGraphBuilder, Graph } from '../lib/hooks/graph.tsx'
+import { GraphBuilder } from '../lib/graph/graphBuilder.ts'
 
 const StyledGame = styled.div`
   display: flex;
@@ -32,8 +33,6 @@ const StyledAddWord = styled.div`
 
 `
 
-import { useGraph } from '../lib/hooks/graph.ts'
-
 const Game = () => {
   // ダミー変数
   const [expireDummy] = useState(new Date(new Date().getTime() + 60*1000))
@@ -44,42 +43,40 @@ const Game = () => {
     if (text === '') return
     const res = await client.createNode({ word: text, creatorId: getUserID() })
     // 既存のノードが選択されている場合は接続
+    const selectedNode = gb?.getSelectedNode()
     if (selectedNode) client.createEdge({ nodeId1: selectedNode, nodeId2: res.id, creatorId: getUserID() })
     setText('')
   }
 
-  const { nodes, setNodes, edges, setEdges } = useGraph()
+  const { nodes, addNode, edges, addEdge } = useGraph()
+  const onNodeShiftClick = useCallback((gb: GraphBuilder, nodeId: string) => {
+    const selectedNode = gb.getSelectedNode()
+    client.createEdge({ nodeId1: selectedNode, nodeId2: nodeId, creatorId: getUserID() })
+  }, [])
+  const gb = useGraphBuilder(nodes, edges,onNodeShiftClick)
 
   useOnEvent(useCallback((event) => {
     switch (event.event.case) {
       case 'nodeUpdated': {
         const node = event.event.value.node;
         if (!node) return;
-
-        setNodes((nodes) => [...nodes, node])
+        addNode(node)
+        gb?.addNode(node)
         break;
       }
       case 'edgeUpdated': {
         const edge = event.event.value.edge;
         if (!edge) return;
-        
-        setEdges((edges) => [...edges, edge])
+        addEdge(edge)
+        gb?.addEdge(edge)
         break;
       }
     }
-  }, [setEdges, setNodes]))
-
-  // ノード関連
-  const [selectedNode, setSelectedNode] = useState<string | null>(null)
-  const onNodeClick = useCallback((node: string) => setSelectedNode(node), [])
-  const onNodeShiftClick = useCallback((nodeId: string) => {
-    if (!selectedNode) return
-    client.createEdge({ nodeId1: selectedNode, nodeId2: nodeId, creatorId: getUserID() })
-  }, [selectedNode])
+  }, [gb, addNode, addEdge]))
 
   return (
     <StyledGame>
-      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} onShiftClick={onNodeShiftClick}/>
+      <Graph gb={gb} />
       <StyledColumn>
         <UserList />
       </StyledColumn>
