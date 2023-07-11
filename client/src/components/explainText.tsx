@@ -8,8 +8,8 @@ const ExplainTextStyle = styled.ul`
   width: 240px;
   margin: 4px;
   padding: 60px;
-  margin-left:1130px;
-
+  position: absolute;
+  right: 0;
 `
 
 const ExplainText = ({ elements }: { elements: string[] }) => {
