@@ -14,7 +14,7 @@ import './App.css'
 // for routing
 //import Home from './pages/index.tsx'
 
-import Title from './pages/title.tsx';
+import Title from './pages/index.tsx';
 import Waiting from './pages/waiting.tsx';
 import Game from './pages/game.tsx';
 import Voting from './pages/voting.tsx';
