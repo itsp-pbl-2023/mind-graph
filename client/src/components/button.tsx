@@ -21,14 +21,14 @@ const ButtonStyle = styled.button`
   }
 `
 
-const Button = ({ text, onClick }: { text: string, onClick: onClickHandler }) => {
+const Button = ({ text, onClick, disabled=false}: { text: string, onClick: onClickHandler, disabled?:boolean }) => {
 
     const onClickHander = () => {
         onClick();
     }
 
     return (
-      <ButtonStyle onClick={onClickHander}>
+      <ButtonStyle onClick={onClickHander} disabled={disabled}>
           { text }
       </ButtonStyle>
     )
