@@ -23,6 +23,7 @@ export const NodeGraph = ({nodes, edges, onClick, onShiftClick, focusedNodeId}: 
     })
 
     const svgNode = graphBuilder.getSVG()
+    console.log(svgNode)
     const d3Wrapper = d3WrapperRef.current
 
     
@@ -41,7 +42,7 @@ export const NodeGraph = ({nodes, edges, onClick, onShiftClick, focusedNodeId}: 
 
       return () => {
         graphBuilder.dispose()
-        d3Wrapper.removeChild(svgNode)
+        // d3Wrapper.removeChild(svgNode)
       }
     }
   }, [nodes, edges, onClick, onShiftClick, focusedNodeId])

@@ -87,14 +87,17 @@ export class GraphBuilder {
       .force("link", d3.forceLink<D3Node, D3Edge>(this.edges).id(d => d.id))
       .force("charge", forceManyConfig)
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .on("tick", this.tick);
+      .on("tick", this.tick.bind(this));
 
-    this.svg.call(d3.zoom<any, any>().on("zoom", this.onZoom))
+    this.svg.call(d3.zoom<any, any>().on("zoom", this.onZoom.bind(this)))
 
-    this.nodeSVG.call(d3.drag<any, D3Node>().on("start", this.onDragStart).on("drag", this.onDragged).on("end", this.onDragEnd))
+    this.nodeSVG.call(d3.drag<any, D3Node>().on("start", this.onDragStart.bind(this)).on("drag", this.onDragged.bind(this)).on("end", this.onDragEnd.bind(this)))
 
-    this.nodeSVG.on("click", this.onClickHandler)
+    this.nodeSVG.on("click", this.onClickHandler.bind(this))
     
+    window.addEventListener("resize", this.onResize)
+    window.addEventListener("keydown", this.onKeyDown)
+    window.addEventListener("keyup", this.onKeyUp)
   }
 
   public addNode(newNode: GraphNode) {
@@ -113,6 +116,11 @@ export class GraphBuilder {
         .attr("style", "cursor: pointer;")
         .merge(this.nodeSVG)
     this.nodeSVG.append("title").text(d => d.id)
+    this.nodeSVG.on("click", this.onClickHandler)
+    
+    this.nodeSVG.call(d3.drag<any, D3Node>().on("start", this.onDragStart.bind(this)).on("drag", this.onDragged.bind(this)).on("end", this.onDragEnd.bind(this)))
+
+    this.nodeSVG.on("click", this.onClickHandler.bind(this))
     
     this.nodeTextSVG = this.nodeWrapperSVG
       .selectAll("text")
@@ -129,6 +137,10 @@ export class GraphBuilder {
       .attr("style", "width: 100px;cursor: pointer;user-select: none;pointer-events: none;")
     .merge(this.nodeTextSVG)
 
+    this.simulation.nodes(this.nodes)
+    ;(this.simulation.force("link") as d3.ForceLink<D3Node, D3Edge>).links(this.edges)
+    this.simulation.restart()
+    // this.simulation.force("link")?.links(this.edges)
   }
 
   public addEdge(newEdge: Edge) {
@@ -148,9 +160,8 @@ export class GraphBuilder {
       .attr("stroke-width",10)
     .merge(this.edgeSVG)
 
-    window.addEventListener("resize", this.onResize)
-    window.addEventListener("keydown", this.onKeyDown)
-    window.addEventListener("keyup", this.onKeyUp)
+    this.simulation.nodes(this.nodes)
+    this.simulation.restart()
   }
 
   public getSVG() {
