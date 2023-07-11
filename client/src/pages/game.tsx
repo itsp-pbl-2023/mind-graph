@@ -15,12 +15,28 @@ const StyledGame = styled.div`
   display: flex;
 `
 
+const StyledColumn = styled.div`
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  width: 33.3333vw;
+`
+
+const StyledAddWord = styled.div`
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: all;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+
+`
+
 import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
   // ダミー変数
-  const [expireDummy] = useState(new Date(new Date().getTime() + 30*1000))
-
+  const [expireDummy] = useState(new Date(new Date().getTime() + 20*1000))
 
   const [text, setText] = useState('')
 
@@ -56,21 +72,21 @@ const Game = () => {
   // ノード関連
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
   const onNodeClick = useCallback((node: string) => setSelectedNode(node), [])
+  const onNodeShiftClick = useCallback((nodeId: string) => {
+    if (!selectedNode) return
+    client.createEdge({ nodeId1: selectedNode, nodeId2: nodeId, creatorId: getUserID() })
+  }, [selectedNode])
 
   return (
     <StyledGame>
-      <div>
+      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} onShiftClick={onNodeShiftClick}/>
+      <StyledColumn>
         <UserList />
-      </div>
-      <div>
+      </StyledColumn>
+      <StyledColumn>
         <ThemeDisplay />
-        <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
-        <div>
-          <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
-          <Button text='Add Word' onClick={() => send()} />
-        </div>
-      </div>
-      <div>
+      </StyledColumn>
+      <StyledColumn>
         <Timer expire={expireDummy}></Timer>
         <ExplainText
         elements={[
@@ -79,7 +95,11 @@ const Game = () => {
           '右クリックして2つのノードを選び、接続する', 
         ]}
       />
-      </div>
+      </StyledColumn>
+      <StyledAddWord>
+          <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
+          <Button text='Add Word' onClick={() => send()} />
+        </StyledAddWord>
     </StyledGame>
   )
 }

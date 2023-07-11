@@ -14,13 +14,13 @@ const ExplainTextStyle = styled.ul`
 
 const ExplainText = ({ elements }: { elements: string[] }) => {
 
-  const elementsList = elements.map((element: string, id: number) => <li key={id}>{element}</li>)
-
+  const elementsList = elements.slice(1).map((element: string, id: number) => <li key={id}>{element}</li>)
+  const elementTitle = elements[0]
   return (
     <div>
       <ExplainTextStyle>
-        <h3>{ elementsList[0]}</h3>
-        { elementsList.slice(1) }
+        <h3>{ elementTitle }</h3>
+        { elementsList }
       </ExplainTextStyle>
     </div>
   )
