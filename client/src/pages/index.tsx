@@ -1,68 +1,74 @@
-/**
-import { useEffect, useState } from 'react'
-import { hello } from '../lib/api/api-MindGraphService_connectquery'
-import viteLogo from '/vite.svg'
-import { useQuery } from '@tanstack/react-query'
-import reactLogo from '../assets/react.svg'
-import styled from "styled-components";
-import { useSetName } from '../lib/hooks/name.ts'
+import { useNavigate } from "react-router-dom"
+import Logo from "../assets/Logo.svg"
+import {ChangeEvent, useState} from "react"
+import Button from "../components/button"
+import { useSetName } from "../lib/hooks/name"
+import InputForm from "../components/input"
 
-const GamingTitle = styled.h1`
-  @keyframes gaming-title-animation {
-    0% {color: red;}
-    20% {color: yellow;}
-    40% {color: blue;}
-    60% {color: green;}
-    80% {color: lime;}
-    100% {color: purple;}
+import {styled, createGlobalStyle} from "styled-components"
+
+const Page = styled.div `
+  padding: 20px 0px;
+  min-width: 100vw;
+`
+
+const TitleText = styled.p`
+    font-family: "Patrick Hand SC";
+    font-size: 64px;
+    text-shadow: 1px 4px 4px #00000040;
+    margin: 0;
+  `
+const SubTitleText = styled.p`
+    font-size: 32px;
+    font-family: "Patrick Hand SC";
+`
+const Gradiation = createGlobalStyle`
+  body {
+    background: linear-gradient(180deg, #BAE0FD 0%, #F0F9FF 100%);
+    width: 100vw;
+    height: 100vh;
   }
-  animation: gaming-title-animation 2s linear infinite;
-`
-const CountCard = styled.div`
-  padding: 2em;
 `
 
-const Home = () => {
-  const [count, setCount] = useState(0)
-  const { data: helloRes } = useQuery(hello.useQuery({ name: 'Fogrex' }))
+const Title = () => {
 
-  // ユーザーの入力を模倣
-  const setName = useSetName()
-  useEffect(() => {
-    setTimeout(() => setName('Fogrex'), 1000)
-  }, [setName])
 
-  return (
-    <>
-      <div>
-        <a href='https://vitejs.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <GamingTitle>Vite + React</GamingTitle>
-      <CountCard>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-        <p>
-          Hello Response
+  const [userName, setUserName] = useState("");
+
+  const setName = useSetName();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserName(e.target.value);
+  }
+  
+  const navigate = useNavigate();
+  const navigateToWaiting = () => {
+    setName(userName);
+    navigate('/waiting');
+  }
+
+  //TODO コンポーネントを置き換える
+    return (
+      <>
+      <Gradiation></Gradiation>
+      <Page>
+        <TitleText>Mind Graph</TitleText>
+        <SubTitleText>Minna no Nou wo Kashikasuru.</SubTitleText>
+
+        <img src={Logo}  alt="Mind graph logo" width={300}/>
+
+        <form>
           <div>
-            {helloRes?.message}
+            <InputForm type="text" onChange={handleChange} value = {userName} placeholder="名前を入力"></InputForm>
           </div>
-        </p>
-      </CountCard>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+          <Button text="送信" onClick={navigateToWaiting}></Button>
+        </form>
+      </Page> 
+      </>
+    )
 
-export default Home
-*/
+    
+  }
+  
+  export default Title
+  
