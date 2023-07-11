@@ -56,7 +56,7 @@ func (m *mindGraphService) calcNodeScore(ChosenNodeId string) (nodePoints map[st
 	for i := 0; i < MAX_DEPTH; i++ {
 		nextNode := []string{}
 		for _, node := range *selectedNode {
-			if nodeStates[node].finished == false {
+			if !nodeStates[node].finished {
 				nodeStates[node].depth = i
 				nodeStates[node].finished = true
 			}
