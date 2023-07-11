@@ -36,7 +36,7 @@ import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
   // ダミー変数
-  const [expireDummy] = useState(new Date(new Date().getTime() + 30*1000*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 10*1000))
 
 
   const [text, setText] = useState('')
