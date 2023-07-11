@@ -11,6 +11,8 @@ const StyledTimer = styled.div`
   font-size: 36px;
   font-family: 'Montserrat';
   font-weight: 700;
+
+  pointer-events: all;
 `
 
 const msec2second = (msec: number): number => {
