@@ -57,10 +57,9 @@ const Title = () => {
 
         <img src={Logo}  alt="Mind graph logo" width={300}/>
 
-        <p>名前を入力</p>
         <form>
           <div>
-            <InputForm type="text" onChange={handleChange} value = {userName} placeholder="名前の入力"></InputForm>
+            <InputForm type="text" onChange={handleChange} value = {userName} placeholder="名前を入力"></InputForm>
           </div>
           <Button text="送信" onClick={navigateToWaiting}></Button>
         </form>
