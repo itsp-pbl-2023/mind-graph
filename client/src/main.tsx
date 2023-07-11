@@ -9,8 +9,6 @@ import {
 } from "react-router-dom";
 import { transport } from "./lib/client.ts";
 
-import './App.css'
-
 // for routing
 //import Home from './pages/index.tsx'
 
