@@ -6,20 +6,12 @@ const ExplainTextStyle = styled.ul`
   display:inline-block;
   border: 4px solid #B2D8F5;
   text-align: center;
-<<<<<<< HEAD
   width: 50%;
   height: 15vw;
   margin-top: 10%;
   padding: 30px;
   padding-top: 6vw;
-=======
-  width: 20vw;
-  margin: 4px;
-  padding: 60px;
-  position: absolute;
-  right: 0;
-  z-index: 10;
->>>>>>> main
+  z-align:10;
 `
 
 const ExplainText = ({ elements }: { elements: string[] }) => {

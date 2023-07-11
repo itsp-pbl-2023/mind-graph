@@ -10,6 +10,8 @@ import InputForm from "../components/input.tsx"
 import ExplainText from "../components/explainText.tsx"
 import { getUserID } from '../lib/state/user.ts'
 import { styled } from "styled-components"
+import { useGraph } from '../lib/hooks/graph.ts'
+import StyledUserList from "../components/StyledUserList.tsx"
 
 const StyledGame = styled.div`
   display: flex;
@@ -34,17 +36,9 @@ const StyledAddWord = styled.div`
   transform: translate(-50%, -50%);
 
 `
-const StyledUserList = styled.div`
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  left: 7vw;
-  z-index: 10;
 
-`
 
-import { useGraph } from '../lib/hooks/graph.ts'
+
 
 const Game = () => {
   // ダミー変数
