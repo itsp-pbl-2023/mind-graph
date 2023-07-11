@@ -9,7 +9,10 @@ export const useGraphBuilder = (nodes: Node[], edges: Edge[], onShiftClick?: (gb
     nodes.forEach(node => gb.addNode(node))
     edges.forEach(edge => gb.addEdge(edge))
     setGraph(gb)
-    return () => setGraph(undefined)
+    return () => {
+      setGraph(undefined)
+      gb.dispose()
+    }
   }, [nodes, edges, onShiftClick])
   return graph
 }
