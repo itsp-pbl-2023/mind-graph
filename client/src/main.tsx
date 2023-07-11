@@ -12,7 +12,7 @@ import { transport } from "./lib/client.ts";
 import './App.css'
 
 // for routing
-import Home from './pages/index.tsx'
+//import Home from './pages/index.tsx'
 
 import Title from './pages/title.tsx';
 import Waiting from './pages/waiting.tsx';
@@ -37,10 +37,6 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/title",
     element: <Title />,
   },
   {

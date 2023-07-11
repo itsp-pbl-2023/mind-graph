@@ -1,3 +1,4 @@
+/**
 import { useEffect, useState } from 'react'
 import { hello } from '../lib/api/api-MindGraphService_connectquery'
 import viteLogo from '/vite.svg'
@@ -64,3 +65,4 @@ const Home = () => {
 }
 
 export default Home
+*/
