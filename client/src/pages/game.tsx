@@ -17,9 +17,12 @@ const StyledGame = styled.div`
 
 const StyledColumn = styled.div`
   position: relative;
+  text-align:center;
   z-index: 10;
   pointer-events: none;
   width: 33.3333vw;
+  transform: translateY(10%);
+  
 `
 
 const StyledAddWord = styled.div`
@@ -31,12 +34,21 @@ const StyledAddWord = styled.div`
   transform: translate(-50%, -50%);
 
 `
+const StyledUserList = styled.div`
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 7vw;
+  z-index: 10;
+
+`
 
 import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
   // ダミー変数
-  const [expireDummy] = useState(new Date(new Date().getTime() + 20*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 10*1000))
 
   const [text, setText] = useState('')
 
@@ -81,7 +93,7 @@ const Game = () => {
     <StyledGame>
       <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} onShiftClick={onNodeShiftClick}/>
       <StyledColumn>
-        <UserList />
+        <StyledUserList><UserList /></StyledUserList>
       </StyledColumn>
       <StyledColumn>
         <ThemeDisplay />

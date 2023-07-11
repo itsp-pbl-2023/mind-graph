@@ -7,10 +7,14 @@ const StyledTimer = styled.div`
   border: 3px solid;
   background-color: var(--primary-color);
 
-  min-width: 360px;
+  display: inline-block;
+  text-align:center;
+
+  width:60%;
   font-size: 36px;
   font-family: 'Montserrat';
   font-weight: 700;
+  margin-top: 0;
 
   pointer-events: all;
 `
