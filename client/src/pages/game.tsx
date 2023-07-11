@@ -90,6 +90,7 @@ const Game = () => {
         <Timer expire={expireDummy}></Timer>
         <ExplainText
         elements={[
+          'グラフを作ろう！',
           '単語を入力して送信ボタンを押す', 
           '右クリックして2つのノードを選び、接続する', 
         ]}
