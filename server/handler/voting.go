@@ -13,6 +13,7 @@ import (
 type nodeState struct {
 	connectedNodes []string
 	depth          int
+	finished       bool
 }
 
 const INF = 1000000
@@ -38,7 +39,7 @@ func (m *mindGraphService) calcNodeScore(ChosenNodeId string) (nodePoints map[st
 	nodeStates := make(map[string]*nodeState)
 
 	for _, node := range m.graph.nodes {
-		nodeStates[node.id] = &nodeState{connectedNodes: []string{}, depth: INF}
+		nodeStates[node.id] = &nodeState{connectedNodes: []string{}, depth: INF, finished: false}
 	}
 
 	// ノードの接続情報を計算
@@ -55,7 +56,10 @@ func (m *mindGraphService) calcNodeScore(ChosenNodeId string) (nodePoints map[st
 	for i := 0; i < MAX_DEPTH; i++ {
 		nextNode := []string{}
 		for _, node := range *selectedNode {
-			nodeStates[node].depth = i
+			if nodeStates[node].finished == false {
+				nodeStates[node].depth = i
+				nodeStates[node].finished = true
+			}
 			nextNode = append(nextNode, nodeStates[node].connectedNodes...)
 		}
 		selectedNode = &nextNode
