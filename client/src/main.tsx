@@ -9,12 +9,10 @@ import {
 } from "react-router-dom";
 import { transport } from "./lib/client.ts";
 
-import './App.css'
-
 // for routing
-import Home from './pages/index.tsx'
+//import Home from './pages/index.tsx'
 
-import Title from './pages/title.tsx';
+import Title from './pages/index.tsx';
 import Waiting from './pages/waiting.tsx';
 import Game from './pages/game.tsx';
 import Voting from './pages/voting.tsx';
@@ -37,10 +35,6 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/title",
     element: <Title />,
   },
   {

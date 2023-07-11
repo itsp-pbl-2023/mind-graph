@@ -11,11 +11,32 @@ import { setUserID } from '../lib/state/user.ts'
 import { useGraph } from '../lib/hooks/graph.ts'
 import { useSetTheme } from '../lib/hooks/theme.ts'
 import { useSetUsers } from '../lib/hooks/users.ts'
-
 import { useSetVoted } from '../lib/hooks/voted.ts'
 import { useUsers } from '../lib/hooks/users.ts'
 import MVPBox from '../components/MVPBox.tsx'
 import ScoreBox from '../components/ScoreBox.tsx'
+import styled from "styled-components"
+
+const ReturnButton = styled.div`
+  text-align: left;
+  left:200px; 
+  top:630px; 
+  position:absolute;
+
+`
+
+const ShowResult = styled.div`
+  text-align:center;
+  top:0px;
+  left:650px;
+  position:absolute;
+  width: 50%;
+`
+
+const WordBox = styled.div`
+  display: inline-block;
+  text-align:center;
+`
 
 const Result = () => {
   const { nodes, edges } = useGraph()
@@ -41,7 +62,7 @@ const Result = () => {
     setVoted([])
     setResult(undefined)
     setUserID(undefined)
-    navigate('/title')
+    navigate('/')
   }
 
   const users = useUsers();
@@ -52,13 +73,17 @@ const Result = () => {
 
   return (
     <div  style={{minWidth:'1200px'}}>
-      <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />
-      <ThemeDisplay />
-      <p>This is the result page</p>
-      <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
-      <ShowWord word={chosenNode?.word} />
+      <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />   
+      <ShowResult>
+        <ThemeDisplay />
+        <WordBox>
+          <ShowWord word={chosenNode?.word} />
+        </WordBox>
+      </ShowResult>
+      <MVPBox>本日のMVPは...<span style={{display:'block', fontSize:40, fontWeight:'bold', padding:'50px', overflowWrap:'break-word'}}>{mvpName}</span></MVPBox>
       <ScoreBox>あなたのスコア<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{getResult()?.myScore}</span></ScoreBox>
-      <Button text='タイトルに戻る' onClick={returnToTitle} />
+      <ReturnButton><Button text='タイトルに戻る' onClick={returnToTitle} /></ReturnButton>
+   
     </div>
   )
 }

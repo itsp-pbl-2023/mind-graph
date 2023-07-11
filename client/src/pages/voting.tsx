@@ -13,6 +13,31 @@ import { NodeGraph } from '../components/common/NodeGraph.tsx'
 import { useGraph } from '../lib/hooks/graph.ts'
 import { useSetVoted } from '../lib/hooks/voted.ts'
 import Button from '../components/button.tsx'
+import { styled } from 'styled-components'
+
+const LayoutUserList = styled.div`
+  position: fixed;
+  left: 0;
+  z-index: 10;
+`
+
+const LayoutThemeDisplay = styled.div`
+  position: fixed;
+  top: 0;
+  left:50%;
+  transform: translate(-50%, 0);
+  z-index: 10;
+`
+
+const LayoutButton = styled.div`
+  position: fixed;
+  bottom: 0;
+  left:50%;
+  transform: translate(-50%, -50%);
+
+  pointer-events: all;
+  z-index: 10;
+`
 
 const Voting = () => {
   const { nodes, edges } = useGraph()
@@ -28,6 +53,7 @@ const Voting = () => {
     }
     console.log('vote', selectedNodeId)
     await client.voteWord({ nodeId: selectedNodeId, senderId: userId })
+    setIsVoted(true)
   }
 
   useOnEvent(useCallback((e) => {
@@ -45,10 +71,16 @@ const Voting = () => {
     navigate('/result')
   }, [setVoted,navigate]))
 
+  const [isVoted, setIsVoted] = useState(false);
+
   return (
     <div>
-      <ThemeDisplay />
-      <UserList />
+      <LayoutThemeDisplay>
+        <ThemeDisplay />
+      </LayoutThemeDisplay>
+      <LayoutUserList>
+        <UserList />
+      </LayoutUserList>
 
       <ExplainText
         elements={[
@@ -57,7 +89,9 @@ const Voting = () => {
         ]}
       />
       <NodeGraph nodes={nodes} edges={edges} onClick={setSelectedNodeId} />
-      <Button text="投票" onClick={vote}></Button>
+      <LayoutButton>
+        <Button text={isVoted ? "投票済" : "投票"} onClick={vote} disabled={isVoted}></Button>
+      </LayoutButton>
     </div>
   )
 }
