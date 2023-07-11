@@ -48,8 +48,7 @@ const Result = () => {
   }, [nodes, edges, chosenNodeId])
   const gb = useGraphBuilder(relatedNodes, relatedEdges)
   useEffect(() => {
-    // TODO
-    // if (gb) gb.setFocusedNode(chosenNodeId)
+    if (gb && chosenNodeId) gb.setFocusedNode(chosenNodeId)
   }, [gb, chosenNodeId])
 
   const navigate = useNavigate()

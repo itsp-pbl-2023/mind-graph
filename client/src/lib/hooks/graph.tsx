@@ -69,7 +69,9 @@ export const Graph: FC<{ gb?: GraphBuilder }> = ({ gb }) => {
     if (cur && svg) {
       cur.appendChild(svg)
       return () => {
-        cur.removeChild(svg)
+        // svgがchildではなくなる。なんで？
+        // ページ切り替わるタイミングでsvg消えるんで大丈夫だと思います。多分
+        // cur.removeChild(svg)
       }
     }
   }, [graphWrapperRef, svg])

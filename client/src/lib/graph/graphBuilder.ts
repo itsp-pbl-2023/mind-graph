@@ -16,6 +16,7 @@ export class GraphBuilder {
   // svg系
   private svg: d3.Selection<SVGSVGElement, undefined, null, undefined>
   private viewportSVG: d3.Selection<SVGGElement, undefined, null, undefined>
+  private edgeWrapperSVG: d3.Selection<SVGGElement, undefined, null, undefined>
   private edgeSVG: d3.Selection<d3.BaseType | SVGLineElement, D3Edge, SVGGElement, undefined>
   private nodeWrapperSVG: d3.Selection<SVGGElement, undefined, null, undefined>
   private nodeSVG: d3.Selection<d3.BaseType | SVGCircleElement, D3Node, SVGGElement, undefined>
@@ -44,13 +45,15 @@ export class GraphBuilder {
 
     this.viewportSVG = this.svg.append("g")
 
-    this.edgeSVG = this.viewportSVG.append("g")
+    this.edgeWrapperSVG = this.viewportSVG.append("g")
       .attr("stroke", "#00f")
       .attr("stroke-opacity", 0.6)
-    .selectAll("line")
-    .data(this.edges)
-    .join("line")
-    .attr("stroke-width",10)
+
+    this.edgeSVG = this.edgeWrapperSVG
+      .selectAll("line")
+      .data(this.edges)
+      .join("line")
+      .attr("stroke-width",10)
 
     this.nodeWrapperSVG = this.viewportSVG.append("g")
     .attr("stroke", "#aaa")
@@ -96,9 +99,9 @@ export class GraphBuilder {
 
     this.nodeSVG.on("click", this.onClickHandler.bind(this))
     
-    window.addEventListener("resize", this.onResize)
-    window.addEventListener("keydown", this.onKeyDown)
-    window.addEventListener("keyup", this.onKeyUp)
+    window.addEventListener("resize", this.onResize.bind(this))
+    document.addEventListener("keydown", this.onKeyDown.bind(this))
+    document.addEventListener("keyup", this.onKeyUp.bind(this))
   }
 
   public addNode(newNode: GraphNode) {
@@ -151,16 +154,14 @@ export class GraphBuilder {
     updateNodeAttr(this.nodeTable[d3Edge.source])
     updateNodeAttr(this.nodeTable[d3Edge.target])
 
-    this.viewportSVG.append("g")
-      .attr("stroke", "#00f")
-      .attr("stroke-opacity", 0.6)
-      .selectAll("line")
+    this.edgeSVG = this.edgeWrapperSVG.selectAll("line")
       .data(this.edges)
     .join("line")
       .attr("stroke-width",10)
     .merge(this.edgeSVG)
 
     this.simulation.nodes(this.nodes)
+    ;(this.simulation.force("link") as d3.ForceLink<D3Node, D3Edge>).links(this.edges)
     this.simulation.restart()
   }
 
@@ -171,7 +172,50 @@ export class GraphBuilder {
     this.nodeSVG.remove()
     this.edgeSVG.remove()
     this.nodeTextSVG.remove()
+
+    this.edgeWrapperSVG = this.viewportSVG.append("g")
+      .attr("stroke", "#00f")
+      .attr("stroke-opacity", 0.6)
+    this.edgeSVG = this.edgeWrapperSVG
+      .attr("stroke", "#00f")
+      .attr("stroke-opacity", 0.6)
+      .selectAll("line")
+      .data(this.edges)
+      .join("line")
+      .attr("stroke-width",10)
+
+    this.nodeWrapperSVG = this.viewportSVG.append("g")
+      .attr("stroke", "#aaa")
+      .attr("stroke-width", 1.5)
+
+    this.nodeSVG = this.nodeWrapperSVG.selectAll("circle")
+      .data(this.nodes)
+      .join("circle")
+      .attr("r", d => d.radius)
+      .attr("fill", (d) => d.focused ? "#f77" :"#faa")
+      .attr("stroke", "#000")
+      .attr("stroke-width", d => d.isSelected ? 3 : 1)
+      .attr("style", "cursor: pointer;");
+
+    this.nodeTextSVG = this.nodeWrapperSVG
+      .selectAll("text")
+      .data(this.nodes)
+      .join("text")
+      // directly input svg text
+      .html(d => d.wrappedText)
+      .attr("width", 30)
+      .attr("font-size", d => d.fontSize)
+      .attr("stroke-width", 1.5)
+      .attr("stroke", "#000")
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+      .attr("style", "width: 100px;cursor: pointer;user-select: none;pointer-events: none;");
+
+    this.nodeSVG.append("title").text(d => d.id);
+
+
     this.simulation.nodes(this.nodes)
+    ;(this.simulation.force("link") as d3.ForceLink<D3Node, D3Edge>).links(this.edges)
     this.simulation.restart()
   }
 
@@ -184,6 +228,32 @@ export class GraphBuilder {
     return el
   }
 
+  public setFocusedNode(nodeId: string) {
+    const node = this.nodeTable[nodeId]
+    if (node) {
+      node.focused = true
+      updateNodeAttr(node)
+      this.nodeSVG
+        .attr("fill", (d) => d.focused ? "#f77" :"#faa")
+        .attr("r", d => d.radius)
+      this.nodeTextSVG.attr("font-size", d => d.fontSize)
+      this.simulation.nodes(this.nodes)
+    }
+  }
+
+  public unsetFocusedNode(nodeId: string) {
+    const node = this.nodeTable[nodeId]
+    if (node) {
+      node.focused = false
+      updateNodeAttr(node)
+      this.nodeSVG
+        .attr("fill", (d) => d.focused ? "#f77" :"#faa")
+        .attr("r", d => d.radius)
+      this.nodeTextSVG.attr("font-size", d => d.fontSize)
+      this.simulation.nodes(this.nodes)
+    }
+  }
+
   public getSelectedNode() {
     return this.previousSelectedNodeId
   }
@@ -193,8 +263,8 @@ export class GraphBuilder {
     this.simulation.stop()
 
     window.removeEventListener("resize", this.onResize)
-    window.removeEventListener("keydown", this.onKeyDown)
-    window.removeEventListener("keyup", this.onKeyUp)
+    document.removeEventListener("keydown", this.onKeyDown)
+    document.removeEventListener("keyup", this.onKeyUp)
   }
 
   private tick() {
@@ -217,7 +287,6 @@ export class GraphBuilder {
   }
 
   private onDragStart(event: any, d: D3Node) {
-    console.log("drag start")
     if (!event.active) this.simulation.alphaTarget(0.3).restart();
     d.fx = d.x;
     d.fy = d.y;
