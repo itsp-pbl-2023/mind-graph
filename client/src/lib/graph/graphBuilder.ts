@@ -10,7 +10,8 @@ export const GraphBuilder = (
   edges: Edge[],
   width: number,
   height: number,
-  onClick: (nodeId: string) => void = (() => null),
+  onClick: ((nodeId: string) => void) | undefined,
+  onShiftClick: ((nodeId: string) => void) | undefined,
   focusedNodeId?: string,
 ) => {
   const mutableNodes = nodes.map<D3Node>(node => ({...node, ...NODE_WIDTH_D3ATTR_DEFAULT}))
@@ -125,7 +126,13 @@ export const GraphBuilder = (
   }
 
   let previousSelectedNode: D3Node | null = null;
-  const click = (_: any, d: D3Node) => {
+  let isShiftPressed = false;
+  const click = (e: any, d: D3Node) => {
+    e.preventDefault()
+    if (isShiftPressed && onShiftClick) {
+      onShiftClick(d.id)
+      return
+    }
     if (onClick) onClick(d.id)
     if (previousSelectedNode) previousSelectedNode.isSelected = false;
     d.isSelected = true;
@@ -138,18 +145,30 @@ export const GraphBuilder = (
   svg.call(d3.zoom<any, any>().on("zoom", zoom))
 
   node.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
-  node.on("click", click)
-  // nodeText.call(d3.drag<any, D3Node>().on("start", dragstarted).on("drag", dragged).on("end", dragended))
-  // node.call(d3.drag<Element, D3Node>()
-  //   .on("start", dragstarted)
-  //   .on("drag", dragged)
-  //   .on("end", dragended), []);
+  
+  // クリックイベントが存在する場合にのみイベントを登録
+  if (onClick || onShiftClick) node.on("click", click)
 
+  // Shiftキーの状態を監視
+  const keyup = (event: KeyboardEvent) => {
+    if (event.key === "Shift") {
+      isShiftPressed = false;
+    }
+  }
+  const keydown = (event: KeyboardEvent) => {
+    if (event.key === "Shift") {
+      isShiftPressed = true;
+    }
+  }
+  document.addEventListener("keyup", keyup)
+  document.addEventListener("keydown", keydown)
 
   return {
     svg,
     dispose() {
       simulation.stop()
+      document.removeEventListener("keyup", keyup)
+      document.removeEventListener("keydown", keydown)
     }
   }
 }
