@@ -53,6 +53,7 @@ const Voting = () => {
     }
     console.log('vote', selectedNodeId)
     await client.voteWord({ nodeId: selectedNodeId, senderId: userId })
+    setIsVoted(true)
   }
 
   useOnEvent(useCallback((e) => {
@@ -69,6 +70,8 @@ const Voting = () => {
     })
     navigate('/result')
   }, [setVoted,navigate]))
+
+  const [isVoted, setIsVoted] = useState(false);
 
   return (
     <div>
@@ -87,7 +90,7 @@ const Voting = () => {
       />
       <NodeGraph nodes={nodes} edges={edges} onClick={setSelectedNodeId} />
       <LayoutButton>
-        <Button text="投票" onClick={vote}></Button>
+        <Button text={isVoted ? "投票済" : "投票"} onClick={vote} disabled={isVoted}></Button>
       </LayoutButton>
     </div>
   )
