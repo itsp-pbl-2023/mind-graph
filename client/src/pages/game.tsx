@@ -15,19 +15,6 @@ const StyledGame = styled.div`
   display: flex;
 `
 
-const StyledColumn = styled.div`
-  position: relative;
-  z-index: 10;
-  pointer-events: none;
-  width: 33.3333vw;
-`
-
-const StyledAddWord = styled.div`
-  position: fixed;
-  bottom: 0;
-  justify-content: center;
-`
-
 import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
@@ -72,26 +59,27 @@ const Game = () => {
 
   return (
     <StyledGame>
-      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
-      <StyledColumn>
+      <div>
         <UserList />
-      </StyledColumn>
-      <StyledColumn>
+      </div>
+      <div>
         <ThemeDisplay />
-        <StyledAddWord>
+        <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
+        <div>
           <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
           <Button text='Add Word' onClick={() => send()} />
-        </StyledAddWord>
-      </StyledColumn>
-      <StyledColumn>
+        </div>
+      </div>
+      <div>
         <Timer expire={expireDummy}></Timer>
         <ExplainText
         elements={[
+          'グラフを作ろう！',
           '単語を入力して送信ボタンを押す', 
           '右クリックして2つのノードを選び、接続する', 
         ]}
       />
-      </StyledColumn>
+      </div>
     </StyledGame>
   )
 }

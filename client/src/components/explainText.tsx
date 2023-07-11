@@ -19,8 +19,8 @@ const ExplainText = ({ elements }: { elements: string[] }) => {
   return (
     <div>
       <ExplainTextStyle>
-        <h3>投票しよう！</h3>
-        { elementsList }
+        <h3>{ elementsList[0]}</h3>
+        { elementsList.slice(1) }
       </ExplainTextStyle>
     </div>
   )

@@ -52,6 +52,7 @@ const Voting = () => {
 
       <ExplainText
         elements={[
+          '投票しよう',
           'イイネ！と思ったノードを選び、投票ボタンを押す', 
         ]}
       />
