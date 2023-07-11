@@ -18,6 +18,7 @@ import { styled } from 'styled-components'
 const LayoutUserList = styled.div`
   position: fixed;
   left: 0;
+  z-index: 10;
 `
 
 const LayoutThemeDisplay = styled.div`
@@ -25,6 +26,7 @@ const LayoutThemeDisplay = styled.div`
   top: 0;
   left:50%;
   transform: translate(-50%, 0);
+  z-index: 10;
 `
 
 const LayoutButton = styled.div`
