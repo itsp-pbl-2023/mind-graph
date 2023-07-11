@@ -33,7 +33,13 @@ const wrapLongText = (text: string) => {
 }
 
 export const updateNodeAttr = (node: D3Node) => {
-  node.fontSize = calculateFontSizeFromConnection(node.connectionCount)
-  node.radius = calculateTextWidth(node.word, node.fontSize) / 2 + 10
-  node.wrappedText = wrapLongText(node.word)
+  if (node.focused) {
+    node.fontSize = 50
+    node.radius = calculateTextWidth(node.word, node.fontSize) / 2 + 20
+    node.wrappedText = wrapLongText(node.word)
+  } else {
+    node.fontSize = calculateFontSizeFromConnection(node.connectionCount)
+    node.radius = calculateTextWidth(node.word, node.fontSize) / 2 + 10
+    node.wrappedText = wrapLongText(node.word)
+  }
 }

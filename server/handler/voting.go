@@ -10,6 +10,14 @@ import (
 	"github.com/itsp-pbl-2023/mind-graph/grpc/pb"
 )
 
+type nodeState struct {
+	connectedNodes []string
+	depth          int
+}
+
+const INF = 1000000
+const MAX_DEPTH = 4
+
 func (m *mindGraphService) doVote(userID string, nodeID string) (finished bool) {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -25,23 +33,78 @@ func (m *mindGraphService) votedUsers() []string {
 	return lo.Keys(m.votes)
 }
 
-func (m *mindGraphService) calcResult() (nodeID string, mvp string) {
+// 各ノードのスコアを計算する
+func (m *mindGraphService) calcNodeScore(ChosenNodeId string) (nodePoints map[string]int) {
+	nodeStates := make(map[string]*nodeState)
+
+	for _, node := range m.graph.nodes {
+		nodeStates[node.id] = &nodeState{connectedNodes: []string{}, depth: INF}
+	}
+
+	// ノードの接続情報を計算
+	for _, edge := range m.graph.edges {
+		node1 := edge.nodeID1
+		node2 := edge.nodeID2
+
+		nodeStates[node1].connectedNodes = append(nodeStates[node1].connectedNodes, node2)
+		nodeStates[node2].connectedNodes = append(nodeStates[node2].connectedNodes, node1)
+	}
+
+	// chosenNodeIdで選択されたnodeからMAX_DEPTHまでのノードを探索してdepthを計算
+	selectedNode := &[]string{ChosenNodeId}
+	for i := 0; i < MAX_DEPTH; i++ {
+		nextNode := []string{}
+		for _, node := range *selectedNode {
+			nodeStates[node].depth = i
+			nextNode = append(nextNode, nodeStates[node].connectedNodes...)
+		}
+		selectedNode = &nextNode
+	}
+
+	// 最終的なスコアを計算
+	nodePoints = make(map[string]int)
+	for _, node := range m.graph.nodes {
+		nodeState := nodeStates[node.id]
+
+		depth_score := MAX_DEPTH - nodeState.depth
+		if depth_score < 0 {
+			depth_score = 0
+		}
+		depth_score = depth_score * depth_score
+
+		nodePoints[node.id] = 1 + len(nodeState.connectedNodes) + depth_score
+	}
+
+	return nodePoints
+}
+
+func (m *mindGraphService) calcResult() (nodeID string, mvp string, userScores map[string]int) {
 	m.lock.Lock()
 	defer m.lock.Unlock()
 
-	nodePoints := make(map[string]int)
+	nodeVotedCounts := make(map[string]int)
 	for _, nodeID := range m.votes {
-		nodePoints[nodeID]++
+		nodeVotedCounts[nodeID]++
 	}
-	winnerNode := lo.MaxBy(lo.Entries(nodePoints), func(a, b lo.Entry[string, int]) bool {
+	winnerNode := lo.MaxBy(lo.Entries(nodeVotedCounts), func(a, b lo.Entry[string, int]) bool {
 		return a.Value < b.Value
 	})
 
-	mvpUser := lo.MaxBy(lo.Entries(m.scores), func(a, b lo.Entry[string, int]) bool {
+	nodeScores := m.calcNodeScore(winnerNode.Key)
+
+	userScores = make(map[string]int)
+	for _, user := range m.users {
+		userScores[user.id] = 0
+	}
+	for _, node := range m.graph.nodes {
+		userScores[node.senderID] += nodeScores[node.id]
+	}
+
+	mvpUser := lo.MaxBy(lo.Entries(userScores), func(a, b lo.Entry[string, int]) bool {
 		return a.Value < b.Value
 	})
 
-	return winnerNode.Key, mvpUser.Key
+	return winnerNode.Key, mvpUser.Key, userScores
 }
 
 func (m *mindGraphService) VoteWord(_ context.Context, c *connect.Request[pb.VoteWordRequest]) (*connect.Response[pb.Empty], error) {
@@ -54,15 +117,16 @@ func (m *mindGraphService) VoteWord(_ context.Context, c *connect.Request[pb.Vot
 
 	if finished {
 		log.Println("sending result...")
-		nodeID, mvpUserID := m.calcResult()
+		nodeID, mvpUserID, userScores := m.calcResult()
 		m.broadcastVary(func(user *userConnection) *pb.Event {
 			res := &pb.ResultEvent{
 				ChosenNodeId: nodeID,
 				MvpUserId:    mvpUserID,
-				MyScore:      int32(m.scores[user.id]),
+				MyScore:      int32(userScores[user.id]),
 			}
 			return &pb.Event{Event: &pb.Event_Result{Result: res}}
 		})
+		m.reset()
 	}
 
 	res := connect.NewResponse(&pb.Empty{})

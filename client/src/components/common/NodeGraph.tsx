@@ -5,16 +5,17 @@ import { Node, Edge } from "../../lib/api/api_pb"
 interface NodeGraphProps {
   nodes: Node[]
   edges: Edge[]
-  onClick: (id: string) => void
+  onClick?: (id: string) => void
+  focusedNodeId?: string
 }
 
-export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
+export const NodeGraph = ({nodes, edges, onClick, focusedNodeId}: NodeGraphProps) => {
   const d3WrapperRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const {
       svg,
       dispose
-    } = GraphBuilder(nodes, edges, 1000, 600, onClick)
+    } = GraphBuilder(nodes, edges, 1000, 600, onClick, focusedNodeId)
 
     const svgNode = svg.node()
     const d3Wrapper = d3WrapperRef.current
@@ -38,7 +39,7 @@ export const NodeGraph = ({nodes, edges, onClick}: NodeGraphProps) => {
         d3Wrapper.removeChild(svgNode)
       }
     }
-  }, [nodes, edges, onClick])
+  }, [nodes, edges, onClick, focusedNodeId])
 
   return <>
     <div ref={d3WrapperRef}>

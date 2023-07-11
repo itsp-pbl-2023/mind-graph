@@ -5,13 +5,25 @@ import { Node as GraphNode, Edge } from "../api/api_pb"
 import { updateNodeAttr } from "./calcNodeAttr"
 
 // グラフの描画
-export const GraphBuilder = (nodes: GraphNode[], edges: Edge[], width: number, height: number, onClick: (nodeId: string) => void) => {
+export const GraphBuilder = (
+  nodes: GraphNode[],
+  edges: Edge[],
+  width: number,
+  height: number,
+  onClick: (nodeId: string) => void = (() => null),
+  focusedNodeId?: string,
+) => {
   const mutableNodes = nodes.map<D3Node>(node => ({...node, ...NODE_WIDTH_D3ATTR_DEFAULT}))
   const nodeTable: Record<string, D3Node> = {}
   mutableNodes.forEach(node => {
     nodeTable[node.id] = node
   })
   const mutableEdges = edges.map<D3Edge>(edge => ({source: edge.nodeId1, target: edge.nodeId2}))
+
+  // ノードのフォーカス設定
+  if(focusedNodeId) {
+    nodeTable[focusedNodeId].focused = true
+  }
 
   // ノードの接続数を計算
   edges.forEach(edge => {
@@ -44,7 +56,7 @@ export const GraphBuilder = (nodes: GraphNode[], edges: Edge[], width: number, h
   .data(mutableNodes)
   .join("circle")
     .attr("r", d => d.radius)
-    .attr("fill", "#faa")
+    .attr("fill", (d) => d.focused ? "#f77" :"#faa")
     .attr("stroke", "#000")
     .attr("stroke-width", d => d.isSelected ? 3 : 1)
     .attr("style", "cursor: pointer;");
