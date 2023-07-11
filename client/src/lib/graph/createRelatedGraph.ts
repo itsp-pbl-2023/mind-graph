@@ -21,6 +21,8 @@ const createRelatedGraph = (
     nodeRelation[edge.nodeId2].push([edge, edge.nodeId1])
   })
 
+  resultNodeIds.add(selectedWordId)
+  
   // depth数だけ幅優先探索
   let nodeQueue: string[] = [selectedWordId]
   for(let i=0;i<depth;i++) {
