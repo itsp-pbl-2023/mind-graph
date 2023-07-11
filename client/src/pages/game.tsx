@@ -21,7 +21,6 @@ const Game = () => {
   // ダミー変数
   const [expireDummy] = useState(new Date(new Date().getTime() + 20*1000))
 
-
   const [text, setText] = useState('')
 
   const send = async () => {
@@ -67,7 +66,6 @@ const Game = () => {
         <UserList />
       </div>
       <div>
-        <h1>Game</h1>
         <ThemeDisplay />
         <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} onShiftClick={onNodeShiftClick} />
         <div>

@@ -53,7 +53,6 @@ const Result = () => {
   return (
     <div  style={{minWidth:'1200px'}}>
       <NodeGraph nodes={relatedNodes} edges={relatedEdges} focusedNodeId={chosenNodeId || undefined} />
-      <h1>Result</h1>
       <ThemeDisplay />
       <p>This is the result page</p>
       <MVPBox>本日のMVPは...<span style={{fontSize:60, fontWeight:'bold', display:'block', padding:'50px'}}>{mvpName}</span></MVPBox>
