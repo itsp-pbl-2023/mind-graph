@@ -7,7 +7,9 @@ const MVPBox = styled.p`
   text-align: center;
   width: 300px;
   height: 250px;
-  margin-left: 0px;
+  left: 150px;
+  position: absolute;
+  top: 50px;
 
 `
 export default MVPBox
