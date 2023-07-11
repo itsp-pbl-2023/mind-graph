@@ -1,32 +1,9 @@
 import { useUsers } from '../lib/hooks/users';
 import { getUserID } from '../lib/state/user';
 import { useVoted } from '../lib/hooks/voted';
-import styled from "styled-components"
+import { ListStyle, IsMe, NotMe, FlexStyle, CheckboxDesign } from './userlistDesign';
 
 
-const ListStyleIsMe = styled.p`
-  list-style:none;
-  margin: 15px;
-  padding: 2px 32px 2px; 
-  font-family: 'Noto Sans JP';
-  width: 100px;
-  align-items: center;
-  border: 5px solid;
-  border-color: var(--primary-color);
-  background-color: var(--primary-color);
-`;
-
-const ListStyleNotMe = styled.li`
-  list-style:none;
-  margin: 15px;
-  padding: 2px 32px 2px; 
-  font-family: 'Noto Sans JP';
-  width: 100px;
-  align-items: center;
-  border: 5px solid;
-  border-color: var(--primary-color);
-  background-color: var(--background-color);
-`
 
 const UserList = () => {
   const users = useUsers()
@@ -38,14 +15,14 @@ const UserList = () => {
         <ul>
           {users.map( item =>
             item.id === userID?
-              <ListStyleIsMe key={item.id}>
-                {item.name} 
-                <input type="checkbox" id={item.id} checked={voted.includes(item.id)} readOnly/>
-              </ListStyleIsMe>:
-              <ListStyleNotMe key={item.id}>
-                {item.name} 
-                <input type="checkbox" id={item.id} checked={voted.includes(item.id)} readOnly/>
-              </ListStyleNotMe>  
+              <ListStyle key={item.id}><FlexStyle>
+                <IsMe>{item.name} </IsMe>
+                <CheckboxDesign type="checkbox" id={item.id} checked={voted.includes(item.id)} readOnly/>
+                </FlexStyle></ListStyle>:
+              <ListStyle key={item.id}><FlexStyle>
+                <NotMe>{item.name} </NotMe>
+                <CheckboxDesign type="checkbox" id={item.id} checked={voted.includes(item.id)} readOnly/>
+                </FlexStyle></ListStyle>  
           )}
         </ul>
       </div>

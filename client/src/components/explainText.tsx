@@ -5,11 +5,11 @@ const ExplainTextStyle = styled.ul`
   background-color: white;
   border: 4px solid #B2D8F5;
   text-align: center;
-  width: 240px;
+  width: 20vw;
   margin: 4px;
   padding: 60px;
-  margin-left:1130px;
-
+  position: absolute;
+  right: 0;
 `
 
 const ExplainText = ({ elements }: { elements: string[] }) => {

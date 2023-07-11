@@ -15,11 +15,28 @@ const StyledGame = styled.div`
   display: flex;
 `
 
+const StyledColumn = styled.div`
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  width: 33.3333vw;
+`
+
+const StyledAddWord = styled.div`
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: all;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+
+`
+
 import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
   // ダミー変数
-  const [expireDummy] = useState(new Date(new Date().getTime() + 10*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 30*1000*1000))
 
 
   const [text, setText] = useState('')
@@ -59,19 +76,14 @@ const Game = () => {
 
   return (
     <StyledGame>
-      <div>
+      <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
+      <StyledColumn>
         <UserList />
-      </div>
-      <div>
-        <h1>Game</h1>
+      </StyledColumn>
+      <StyledColumn>
         <ThemeDisplay />
-        <NodeGraph nodes={nodes} edges={edges} onClick={onNodeClick} />
-        <div>
-          <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
-          <Button text='Add Word' onClick={() => send()} />
-        </div>
-      </div>
-      <div>
+      </StyledColumn>
+      <StyledColumn>
         <Timer expire={expireDummy}></Timer>
         <ExplainText
         elements={[
@@ -79,7 +91,11 @@ const Game = () => {
           '右クリックして2つのノードを選び、接続する', 
         ]}
       />
-      </div>
+      </StyledColumn>
+      <StyledAddWord>
+          <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
+          <Button text='Add Word' onClick={() => send()} />
+        </StyledAddWord>
     </StyledGame>
   )
 }
