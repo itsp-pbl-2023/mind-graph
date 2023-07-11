@@ -25,14 +25,18 @@ const StyledColumn = styled.div`
 const StyledAddWord = styled.div`
   position: fixed;
   bottom: 0;
-  justify-content: center;
+  z-index: 10;
+  pointer-events: all;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+
 `
 
 import { useGraph } from '../lib/hooks/graph.ts'
 
 const Game = () => {
   // ダミー変数
-  const [expireDummy] = useState(new Date(new Date().getTime() + 30*1000))
+  const [expireDummy] = useState(new Date(new Date().getTime() + 30*1000*1000))
 
 
   const [text, setText] = useState('')
@@ -78,10 +82,6 @@ const Game = () => {
       </StyledColumn>
       <StyledColumn>
         <ThemeDisplay />
-        <StyledAddWord>
-          <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
-          <Button text='Add Word' onClick={() => send()} />
-        </StyledAddWord>
       </StyledColumn>
       <StyledColumn>
         <Timer expire={expireDummy}></Timer>
@@ -92,6 +92,10 @@ const Game = () => {
         ]}
       />
       </StyledColumn>
+      <StyledAddWord>
+          <InputForm type='text' value={text} onChange={(e) => setText(e.target.value)} />
+          <Button text='Add Word' onClick={() => send()} />
+        </StyledAddWord>
     </StyledGame>
   )
 }
