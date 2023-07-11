@@ -3,14 +3,16 @@ import { ThemeDisplay } from '../components/common/ThemeDisplay'
 import ExplainText from '../components/explainText'
 import { client } from '../lib/client.ts'
 import { useOnEvent } from '../lib/hooks/stream.ts'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { setResult } from '../lib/state/result.ts'
 import { useNavigate } from 'react-router-dom'
 import { getUserID } from '../lib/state/user.ts'
 import { useSetVoted } from '../lib/hooks/voted.ts'
 import Button from '../components/button.tsx'
 import { styled } from 'styled-components'
-import { Graph, useGraph, useGraphBuilder } from '../lib/hooks/graph.tsx'
+import { Graph } from '../lib/hooks/graph.tsx'
+import { useGraph } from '../lib/hooks/graph.ts'
+import { useGraphBuilder } from '../lib/hooks/graphBuilder.ts'
 
 const LayoutUserList = styled.div`
   position: fixed;

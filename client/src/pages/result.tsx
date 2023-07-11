@@ -14,7 +14,9 @@ import { useUsers } from '../lib/hooks/users.ts'
 import MVPBox from '../components/MVPBox.tsx'
 import ScoreBox from '../components/ScoreBox.tsx'
 import styled from "styled-components"
-import { Graph, useGraph, useGraphBuilder } from '../lib/hooks/graph.tsx'
+import { Graph } from '../lib/hooks/graph.tsx'
+import { useGraph } from '../lib/hooks/graph.ts'
+import { useGraphBuilder } from '../lib/hooks/graphBuilder.ts'
 
 const ReturnButton = styled.div`
   text-align: left;

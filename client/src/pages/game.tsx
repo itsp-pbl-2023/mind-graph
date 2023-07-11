@@ -9,8 +9,10 @@ import InputForm from "../components/input.tsx"
 import ExplainText from "../components/explainText.tsx"
 import { getUserID } from '../lib/state/user.ts'
 import { styled } from "styled-components"
-import { useGraph, useGraphBuilder, Graph } from '../lib/hooks/graph.tsx'
+import { Graph } from '../lib/hooks/graph.tsx'
 import { GraphBuilder } from '../lib/graph/graphBuilder.ts'
+import { useGraphBuilder } from '../lib/hooks/graphBuilder.ts'
+import { useGraph } from '../lib/hooks/graph.ts'
 
 const StyledGame = styled.div`
   display: flex;
