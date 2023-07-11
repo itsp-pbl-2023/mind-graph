@@ -32,7 +32,7 @@ export const NodeGraph = ({nodes, edges, onClick, focusedNodeId}: NodeGraphProps
       d3Wrapper.style.position = 'fixed';
       d3Wrapper.style.top = '0';
       d3Wrapper.style.left = '0';
-      d3Wrapper.style.zIndex = '-1';
+      d3Wrapper.style.zIndex = '9';
 
       return () => {
         dispose()
