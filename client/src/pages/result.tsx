@@ -62,7 +62,7 @@ const Result = () => {
     setVoted([])
     setResult(undefined)
     setUserID(undefined)
-    navigate('/title')
+    navigate('/')
   }
 
   const users = useUsers();
