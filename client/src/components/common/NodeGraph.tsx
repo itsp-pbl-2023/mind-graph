@@ -13,12 +13,16 @@ interface NodeGraphProps {
 export const NodeGraph = ({nodes, edges, onClick, onShiftClick, focusedNodeId}: NodeGraphProps) => {
   const d3WrapperRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    const {
-      svg,
-      dispose
-    } = GraphBuilder(nodes, edges, 1000, 600, onClick, onShiftClick, focusedNodeId)
+    const graphBuilder = new GraphBuilder(window.innerWidth, window.innerHeight)
 
-    const svgNode = svg.node()
+    nodes.forEach((node) => {
+      graphBuilder.addNode(node)
+    })
+    edges.forEach((edge) => {
+      graphBuilder.addEdge(edge)
+    })
+
+    const svgNode = graphBuilder.getSVG()
     const d3Wrapper = d3WrapperRef.current
 
     
@@ -36,7 +40,7 @@ export const NodeGraph = ({nodes, edges, onClick, onShiftClick, focusedNodeId}: 
       d3Wrapper.style.zIndex = '9';
 
       return () => {
-        dispose()
+        graphBuilder.dispose()
         d3Wrapper.removeChild(svgNode)
       }
     }
