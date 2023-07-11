@@ -10,6 +10,7 @@ const ExplainTextStyle = styled.ul`
   padding: 60px;
   position: absolute;
   right: 0;
+  z-index: 10;
 `
 
 const ExplainText = ({ elements }: { elements: string[] }) => {
