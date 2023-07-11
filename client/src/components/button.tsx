@@ -13,6 +13,8 @@ const ButtonStyle = styled.button`
   margin: 4px;
 
   pointer-events: all;
+  position: relative;
+  z-index: 10;
 
   &:hover {
     background-color: var(--accent-color-hover);
