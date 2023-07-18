@@ -91,7 +91,7 @@ func (m *mindGraphService) calcResult() (nodeID string, mvp string, userScores m
 		nodeVotedCounts[nodeID]++
 	}
 	winnerNode := lo.MaxBy(lo.Entries(nodeVotedCounts), func(a, b lo.Entry[string, int]) bool {
-		return a.Value < b.Value
+		return a.Value > b.Value
 	})
 
 	nodeScores := m.calcNodeScore(winnerNode.Key)
@@ -105,7 +105,7 @@ func (m *mindGraphService) calcResult() (nodeID string, mvp string, userScores m
 	}
 
 	mvpUser := lo.MaxBy(lo.Entries(userScores), func(a, b lo.Entry[string, int]) bool {
-		return a.Value < b.Value
+		return a.Value > b.Value
 	})
 
 	return winnerNode.Key, mvpUser.Key, userScores
