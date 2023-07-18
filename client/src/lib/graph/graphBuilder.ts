@@ -5,6 +5,9 @@ import { Node as GraphNode, Edge } from "../api/api_pb"
 import { updateNodeAttr } from "./calcNodeAttr"
 
 export class GraphBuilder {
+  private static readonly RESTART_ALPHA: number = 0.1
+  private static readonly DRAG_ALPHA: number = 0.3
+
   private width: number
   private height: number
 
@@ -143,7 +146,7 @@ export class GraphBuilder {
 
     this.simulation.nodes(this.nodes)
     ;(this.simulation.force("link") as d3.ForceLink<D3Node, D3Edge>).links(this.edges)
-    this.simulation.restart()
+    this.simulation.alpha(GraphBuilder.RESTART_ALPHA).restart()
   }
 
   public addEdge(newEdge: Edge) {
@@ -162,7 +165,7 @@ export class GraphBuilder {
 
     this.simulation.nodes(this.nodes)
     ;(this.simulation.force("link") as d3.ForceLink<D3Node, D3Edge>).links(this.edges)
-    this.simulation.restart()
+    this.simulation.alpha(GraphBuilder.RESTART_ALPHA).restart()
   }
 
   public removeAll() {
@@ -287,7 +290,7 @@ export class GraphBuilder {
   }
 
   private onDragStart(event: any, d: D3Node) {
-    if (!event.active) this.simulation.alphaTarget(0.3).restart();
+    if (!event.active) this.simulation.alphaTarget(GraphBuilder.DRAG_ALPHA).restart();
     d.fx = d.x;
     d.fy = d.y;
   }
